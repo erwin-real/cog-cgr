@@ -1,0 +1,89 @@
+.body-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    z-index: 1;
+    background-color: #1d1d1d;
+    overflow: hidden;
+    font-family: 'Raleway', sans-serif;
+    .sidenav {
+        img {
+            width: 150px;
+        }
+        .list-group {
+            .list-group-item {
+                background-color: #1d1d1d;
+                border: none;
+                .arrow {
+                    position: absolute;
+                    top: 8px;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-top: 18px solid transparent;
+                    border-bottom: 18px solid transparent;
+                    border-right: 10px solid #f8fafc;
+                }
+                &:hover {
+                    background-color: rgb(22, 22, 22);
+                }
+                a {
+                    display: block;
+                    padding: 0;
+                    text-decoration: none;
+                    color: #dadada;
+                    font-size: 17px;
+                    transition: 0.3s;
+                    font-weight: 500;
+                    .icon {
+                        display: inline-block;
+                        margin-right: 6px;
+                        text-align: center;
+                    }
+                    .help {
+                        margin-right: 15px;
+                    }
+                    .stat {
+                        margin-right: 11px;
+                    }
+                    .logout {
+                        margin-right: 11px;
+                    }
+                    .link {
+                        display: inline-block;
+                    }
+                }
+            }
+            .active {
+                background: linear-gradient(to left, rgba(224, 224, 224, 0.2), rgba(22, 22, 22, 1));
+            }
+            .bot-logout {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+            .username {
+                padding: 30px 0;
+                background-color: #1d1d1d;
+                color: white;
+                border-bottom: 1px solid #3c3c3c;
+                .circle {
+                    margin: auto;
+                    margin-bottom: 5px;
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 100%;
+                    background-color: #2c73b9;
+                }
+                p {
+                    margin: 0;
+                    small {
+                        font-weight: 100;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+.editor {
+    .form-holder {
+        .temp_content {
+            height: 600px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+
+        textarea {
+            height: 100%;
+        }
+    }
+}

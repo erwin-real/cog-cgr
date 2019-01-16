@@ -1,0 +1,30 @@
+.send-holder {
+    .list-preview {
+        height: 350px;
+        overflow-y: auto;
+        border: 1px solid #eaeaea;
+
+        .table {
+            thead {
+                th {
+                    border-top: none;
+                }
+            }
+
+            tbody {
+                tr {
+                    th {
+                        width: 20px;
+                    }
+
+                    td {
+                        max-width: 50px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
