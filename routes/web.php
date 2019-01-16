@@ -15,11 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::routes();
+Route::get('/dashboard', 'DashboardController@index');
 
-// Reset Password
-Route::get('/resetPassword/{id}','DashboardController@showResetPasswordForm');
-Route::post('/resetPassword','DashboardController@resetPassword')->name('resetPassword');
+//Auth::routes();
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -36,4 +34,21 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/dashboard', 'DashboardController@index');
+
+// Reset Password
+Route::get('/resetPassword/{id}','DashboardController@showResetPasswordForm');
+Route::post('/resetPassword','DashboardController@resetPassword')->name('resetPassword');
+
+
+// Guides
+Route::get('/guide/users', 'UsersController@guideUsers');
+
+
+// Users
+Route::get('/users/create', 'UsersController@addUser');
+Route::get('/users/{id}', 'UsersController@showUser');
+Route::post('/users','UsersController@saveUser');
+Route::get('/users','UsersController@users');
+Route::get('/users/{id}/edit','UsersController@editUser');
+Route::delete('/users/{id}','UsersController@destroyUser');
+Route::put('/users/{id}','UsersController@updateUser');

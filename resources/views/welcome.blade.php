@@ -88,10 +88,11 @@
     @endif
     <div class="content">
         <div class="title">
-            Template
+            New
         </div>
+        <div> @include('includes.messages') </div>
         <div>
-            <p>template</p>
+            <p>description</p>
         </div>
     </div>
 </div>
