@@ -15,28 +15,22 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('leaderID');
+            $table->unsignedInteger('leader_id');
+            $table->timestamp('date_cg');
+            $table->string('cluster_area');
+            $table->string('consolidation_report');
+            $table->boolean('is_deleted');
+            $table->string('c2s_leader');
+            $table->string('topic');
+            $table->unsignedInteger('offering');
+            $table->string('present');
+            $table->string('absent');
+            $table->string('type');
+            $table->string('comment');
+            $table->timestamp('date_submitted');
             $table->boolean('is_verified');
             $table->timestamp('date_verified');
-            $table->string('cluster_area');
-
-
-
-
-
-
-
             $table->timestamps();
-
-
-
-
-            $table->boolean('isActive');
-            $table->string('address');
-            $table->string('clusterArea');
-            $table->string('headClusterArea');
-            $table->unsignedInteger('leaderID');
-            $table->timestamp('birthday');
         });
     }
 
