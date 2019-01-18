@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,8 +16,8 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('leader_id');
-            $table->timestamp('date_cg');
+            $table->unsignedInteger('user_id');
+            $table->timestamp('date_cg')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('cluster_area');
             $table->string('consolidation_report');
             $table->boolean('is_deleted');
@@ -27,9 +28,9 @@ class CreateReportsTable extends Migration
             $table->string('absent');
             $table->string('type');
             $table->string('comment');
-            $table->timestamp('date_submitted');
+            $table->timestamp('date_submitted')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->boolean('is_verified');
-            $table->timestamp('date_verified');
+            $table->timestamp('date_verified')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
