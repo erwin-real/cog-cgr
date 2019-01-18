@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
 
 Route::get('/dashboard', 'DashboardController@index');
 
@@ -34,7 +32,6 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
 // Reset Password
 Route::get('/resetPassword/{id}','DashboardController@showResetPasswordForm');
 Route::post('/resetPassword','DashboardController@resetPassword')->name('resetPassword');
@@ -52,3 +49,8 @@ Route::get('/users','UsersController@users');
 Route::get('/users/{id}/edit','UsersController@editUser');
 Route::delete('/users/{id}','UsersController@destroyUser');
 Route::put('/users/{id}','UsersController@updateUser');
+
+
+// Resources
+Route::resource('care_groups', 'CareGroupsController');
+Route::resource('report', 'ReportsController');

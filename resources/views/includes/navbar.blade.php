@@ -28,7 +28,7 @@
                     {{--@if(Auth::user()->type == 'admin')--}}
                         <li class="nav-tem"><a class="nav-link" href="/dashboard">Dashboard</a></li>
                     {{--@endif--}}
-                    <li class="nav-tem"><a class="nav-link" href="/products">Products</a></li>
+                    <li class="nav-tem"><a class="nav-link" href="/cg">Care Groups</a></li>
                     <li class="nav-tem"><a class="nav-link" href="/transactions">Transactions</a></li>
                     <li class="nav-tem"><a class="nav-link" href="/procurement">Procurement</a></li>
                     <li class="nav-tem"><a class="nav-link" href="/loss">Loss</a></li>
