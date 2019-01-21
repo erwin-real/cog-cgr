@@ -38,19 +38,25 @@ class UsersController extends Controller
 
     public function saveUser(Request $request) {
         if ($this->isUserType('admin')) {
+            $user = new User;
 
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'username' => 'required|string|max:255|unique:users',
-                'password' => 'required|string|min:6|confirmed'
-            ]);
+            if ($request->get('username')) {
+                $validatedData = $request->validate([
+                    'name' => 'required',
+                    'username' => 'max:255|unique:users',
+                    'password' => 'confirmed'
+                ]);
+                $user->username = $validatedData['username'];
+            } else {
+                $validatedData = $request->validate([
+                    'name' => 'required',
+                    'password' => 'confirmed'
+                ]);
+            }
 
-            $user = new User(array(
-                'name' => $validatedData['name'],
-                'username' => $validatedData['username'],
-                'password' => bcrypt($validatedData['password']),
-                'remember_token' => $request->get('_token')
-            ));
+            $user->name = $validatedData['name'];
+            $user->password = bcrypt($validatedData['password']);
+            $user->remember_token = $request->get('_token');
 
             if ($request->get('email') == null) $user->email = null;
             else {
@@ -58,7 +64,16 @@ class UsersController extends Controller
                 $user->email = $validateEmail['email'];
             }
 
-            $user->type = 'seller';
+            $user->type = $request->get('type');
+            $user->address = $request->get('address');
+            $user->cluster_area = $request->get('cluster_area');
+            $user->head_cluster_area = $request->get('head_cluster_area');
+            $user->birthday = $request->get('birthday');
+            $user->contact_number = $request->get('number');
+            $user->gender = $request->get('gender');
+            $user->group_age = $request->get('group_age');
+            $user->journey = $request->get('journey');
+            $user->cldp = $request->get('cldp');
             $user->save();
 
             return redirect('/users')
@@ -90,7 +105,7 @@ class UsersController extends Controller
             if ($request->get('email') != $user->email && $request->get('username') != $user->username) {
                 $validatedData = $request->validate([
                     'email' => 'string|email|max:255|unique:users',
-                    'username' => 'required|string|max:255|unique:users'
+                    'username' => 'string|max:255|unique:users'
                 ]);
                 $user->email = $validatedData['email'];
                 $user->username = $validatedData['username'];
@@ -98,7 +113,7 @@ class UsersController extends Controller
                 $validatedData = $request->validate([ 'email' => 'string|email|max:255|unique:users' ]);
                 $user->email = $validatedData['email'];
             } else if ($request->get('username') != $user->username) {
-                $validatedData = $request->validate([ 'username' => 'required|string|max:255|unique:users' ]);
+                $validatedData = $request->validate([ 'username' => 'string|max:255|unique:users' ]);
                 $user->username = $validatedData['username'];
             }
 

@@ -20,11 +20,12 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique()->nullable();
             $table->string('password')->nullable();
+            $table->unsignedInteger('care_group_id')->nullable();
 
             $table->string('name');
             $table->string('type')->default('member');
             $table->boolean('is_leader')->default(0);
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->string('address')->nullable();
             $table->string('cluster_area')->nullable();
             $table->string('head_cluster_area')->nullable();

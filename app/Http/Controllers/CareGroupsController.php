@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\CareGroup;
 use Illuminate\Http\Request;
 
-class CareGroupController extends Controller
+class CareGroupsController extends Controller
 {
     /**
      * Display a listing of the resource.

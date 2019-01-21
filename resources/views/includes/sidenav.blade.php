@@ -20,12 +20,12 @@
                     <div class="arrow d-none {{ request()->is('dashboard') ? 'd-md-none d-lg-block d-xl-block' : '' }}"></div>
                 </li>
                 <li class="list-group-item {{ request()->is('care_groups') ? 'active' : '' }} {{ request()->is('care_groups/*') ? 'active' : '' }} {{ request()->is('guide/care_groups') ? 'active' : '' }}">
-                    <a href="/care_groups">
+                    <a href="/care_groups/">
                         <div class="icon">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="link">
-                            Care Groups
+                            My Care Group
                         </div>
                     </a>
                     <div class="arrow d-none {{ request()->is('care_groups') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('care_groups/*') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('guide/care_groups') ? 'd-md-none d-lg-block d-xl-block' : '' }}"></div>
@@ -37,7 +37,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="link">
-                        Care Groups
+                        All Care Groups
                     </div>
                 </a>
                 <div class="arrow d-none {{ request()->is('care_groups') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('care_groups/*') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('guide/care_groups') ? 'd-md-none d-lg-block d-xl-block' : '' }}"></div>
@@ -48,7 +48,7 @@
                         <i class="fas fa-tasks"></i>
                     </div>
                     <div class="link">
-                        Transactions
+                        Leaders
                     </div>
                 </a>
                 <div class="arrow d-none {{ request()->is('transactions') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('transactions/*') ? 'd-md-none d-lg-block d-xl-block' : '' }} {{ request()->is('guide/transactions') ? 'd-md-none d-lg-block d-xl-block' : '' }}"></div>

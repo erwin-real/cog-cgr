@@ -25,17 +25,18 @@
                         {{--<a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
                     {{--</li>--}}
                 @else
-                    {{--@if(Auth::user()->type == 'admin')--}}
+                    @if(Auth::user()->type == 'admin')
                         <li class="nav-tem"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                    {{--@endif--}}
-                    <li class="nav-tem"><a class="nav-link" href="/cg">Care Groups</a></li>
-                    <li class="nav-tem"><a class="nav-link" href="/transactions">Transactions</a></li>
+                    @endif
+                    <li class="nav-tem"><a class="nav-link" href="/care_groups">Care Groups</a></li>
+                    <li class="nav-tem"><a class="nav-link" href="/care_groups">Care Groups</a></li>
+                    <li class="nav-tem"><a class="nav-link" href="/procurement">Leaders</a></li>
                     <li class="nav-tem"><a class="nav-link" href="/procurement">Procurement</a></li>
                     <li class="nav-tem"><a class="nav-link" href="/loss">Loss</a></li>
-                    {{--@if(Auth::user()->type == 'admin')--}}
+                    @if(Auth::user()->type == 'admin')
                         <li class="nav-tem"><a class="nav-link" href="/reports">Reports</a></li>
                         <li class="nav-tem"><a class="nav-link" href="/users">Users</a></li>
-                    {{--@endif--}}
+                    @endif
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
