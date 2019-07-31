@@ -78,9 +78,6 @@
             <!-- page title area end -->
 
             <div class="main-content-inner">
-                <div class="mt-3 mb-0 alert alert-danger">
-                    <p style="font-size: 20px;">Invalid account !</p>
-                </div>
                 @yield('content')
             </div>
         </div>
