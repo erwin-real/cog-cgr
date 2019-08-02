@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'WelcomeController@welcome');
 
 //Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -30,4 +29,12 @@ Route::post('register', 'Auth\RegisterController@register');
 //Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 //Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get('/dashboard', 'DashboardController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');
+
+//CHANGE PASSWORD
+Route::get('/users/change-password','UserController@showChangePasswordForm');
+Route::post('/users/change-password','UserController@changePassword');
+
+
+// RESOURCES
+Route::resource('users', 'UserController');
