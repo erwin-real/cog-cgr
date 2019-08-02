@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="page-title-area">
+    <div class="page-title-area shadow">
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
@@ -20,10 +20,11 @@
     <div class="main-content-inner">
         <div class="row mt-5 mb-5">
             <div class="col-12">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-body">
-                        <div class="d-sm-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of users</h4>
+                            <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
                             {{--<select class="custome-select border-0 pr-3">--}}
                                 {{--<option selected>Last 24 Hours</option>--}}
                                 {{--<option value="0">01 July 2018</option>--}}

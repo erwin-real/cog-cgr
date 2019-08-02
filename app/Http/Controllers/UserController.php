@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\DeclareDeclare;
 
 class UserController extends Controller
 {
@@ -31,7 +33,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        return view('pages.users.create')
+            ->with('leaders', User::where('is_leader', 1)->orderBy('first_name', 'desc')->get());
     }
 
     /**
@@ -41,7 +44,33 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $user = new User(array(
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'gender' => $request->input('gender'),
+            'birthday' => $request->input('birthday'),
+            'age' => $request->input('age'),
+            'group_age' => $request->input('group_age'),
+            'address' => $request->input('address'),
+            'cluster_area' => $request->input('cluster_area'),
+            'head_cluster_area' => $request->input('head_cluster_area'),
+            'contact' => $request->input('contact'),
+            'journey' => $request->input('journey'),
+            'cldp' => $request->input('cldp'),
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'type' => $request->input('type'),
+            'leader_id' => $request->input('leader_id'),
+            'is_leader' => $request->input('is_leader'),
+            'is_active' => $request->input('is_active')
+        ));
+        $user->save();
+
+        return redirect('/users/'. $user->id)
+            ->with('user', $user)
+            ->with('success', "User Created Successfully !");
     }
 
     /**

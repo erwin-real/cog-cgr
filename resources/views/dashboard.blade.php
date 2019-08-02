@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="page-title-area">
+    <div class="page-title-area shadow">
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 coin-distribution">
-                <div class="card h-full">
+                <div class="card h-full shadow">
                     <div class="card-body">
                         <h4 class="header-title mb-0">Coin Distribution</h4>
                         <div id="coin_distribution"></div>

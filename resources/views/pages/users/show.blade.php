@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="page-title-area">
+    <div class="page-title-area shadow">
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
@@ -18,9 +18,10 @@
     </div>
 
     <div class="main-content-inner">
+        @include('includes.messages')
         <div class="row mt-5 mb-5">
             <div class="col-md-6 col-sm-9">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">User Profile</h4>
