@@ -30,14 +30,14 @@
                             <p> <strong>First Name</strong>: {{ $user->first_name }}</p>
                             <p> <strong>Middle Name</strong>: {{ $user->middle_name ? $user->middle_name : ''}}</p>
                             <p> <strong>Last Name</strong>: {{ $user->last_name }}</p>
-                            <p> <strong>Username</strong>: {{ $user->email ? $user->email : 'none'}}</p>
+                            <p> <strong>Username</strong>: {{ $user->username ? $user->username : 'none'}}</p>
                             <p> <strong>Email</strong>: {{ $user->email ? $user->email : 'none'}}</p>
                             <p> <strong>Leader</strong>: {{ $user->is_leader }}</p>
                             <p> <strong>Active</strong>: {{ $user->is_active }}</p>
                             <p> <strong>Address</strong>: {{ $user->address }}</p>
                             <p> <strong>Cluster Area</strong>: {{ $user->cluster_area }}</p>
                             <p> <strong>Head Cluster Area</strong>: {{ $user->head_cluster_area }}</p>
-                            <p> <strong>Birthday</strong>: {{ $user->birthday }}</p>
+                            <p> <strong>Birthday</strong>: {{ $user->birthday ? date('M d, Y', strtotime($user->birthday)) : ''}}</p>
                             <p> <strong>Contact</strong>: {{ $user->contact }}</p>
                             <p> <strong>Gender</strong>: {{ $user->gender }}</p>
                             <p> <strong>Group Age</strong>: {{ $user->group_age }}</p>
@@ -45,7 +45,7 @@
                             <p> <strong>CLDP</strong>: {{ $user->cldp }}</p>
                         </div>
                         <div class="buttons-holder mt-4">
-                            <a href="/users/{{$user->id}}/edit" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
                             <a href="{{ action('UserController@showChangePasswordForm') }}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
                             <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
                                 <i class="fa fa-trash fa-sm fa-fw"></i>

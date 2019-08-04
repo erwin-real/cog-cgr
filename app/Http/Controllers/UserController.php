@@ -44,28 +44,44 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        $validatedData = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'age' => 'required',
+            'group_age' => 'required',
+            'address' => 'required',
+            'cluster_area' => 'required',
+            'journey' => 'required',
+            'type' => 'required',
+            'leader_id' => 'required',
+            'is_leader' => 'required',
+            'is_active' => 'required'
+        ]);
+
         $user = new User(array(
-            'first_name' => $request->input('first_name'),
+            'first_name' => $validatedData['first_name'],
             'middle_name' => $request->input('middle_name'),
-            'last_name' => $request->input('last_name'),
+            'last_name' => $validatedData['last_name'],
             'email' => $request->input('email'),
-            'gender' => $request->input('gender'),
-            'birthday' => $request->input('birthday'),
-            'age' => $request->input('age'),
-            'group_age' => $request->input('group_age'),
-            'address' => $request->input('address'),
-            'cluster_area' => $request->input('cluster_area'),
-            'head_cluster_area' => $request->input('head_cluster_area'),
-            'contact' => $request->input('contact'),
-            'journey' => $request->input('journey'),
-            'cldp' => $request->input('cldp'),
+            'gender' => $validatedData['gender'],
+            'age' => $validatedData['age'],
+            'group_age' => $validatedData['group_age'],
+            'address' => $validatedData['address'],
+            'cluster_area' => $validatedData['cluster_area'],
             'username' => $request->input('username'),
             'password' => Hash::make($request->input('password')),
-            'type' => $request->input('type'),
-            'leader_id' => $request->input('leader_id'),
-            'is_leader' => $request->input('is_leader'),
-            'is_active' => $request->input('is_active')
+            'leader_id' => $validatedData['leader_id']
         ));
+        $user->birthday = $request->input('birthday');
+        $user->head_cluster_area = $request->input('head_cluster_area');
+        $user->contact = $request->input('contact');
+        $user->journey = $validatedData['journey'];
+        $user->cldp = $request->input('cldp');
+        $user->type = $validatedData['type'];
+        $user->is_leader = $validatedData['is_leader'];
+        $user->is_active = $validatedData['is_active'];
+        $user->remember_token = $request->input('_token');
         $user->save();
 
         return redirect('/users/'. $user->id)
@@ -90,7 +106,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        $user = User::find($id);
+        return view('pages.users.edit')
+            ->with('user', $user)
+            ->with('pass', Hash::needsRehash($user->password));
     }
 
     /**
@@ -101,7 +120,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        dd($request);
     }
 
     /**
