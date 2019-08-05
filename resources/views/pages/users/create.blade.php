@@ -18,6 +18,7 @@
     </div>
 
     <div class="main-content-inner">
+        @include('includes.messages')
         <div class="row mt-5 mb-5">
             <div class="col-md-6 col-sm-9">
                 <div class="card shadow">

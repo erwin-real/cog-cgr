@@ -34,8 +34,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('pages.users.create')
-            ->with('leaders', User::where('is_leader', 1)->orderBy('first_name', 'desc')->get());
+        return view('pages.users.create');
     }
 
     /**
@@ -109,8 +108,8 @@ class UserController extends Controller
     public function edit($id) {
         $user = User::find($id);
         return view('pages.users.edit')
-            ->with('user', $user)
-            ->with('pass', Hash::needsRehash($user->password));
+            ->with('user', $user);
+//            ->with('pass', Hash::needsRehash($user->password));
     }
 
     /**
@@ -148,7 +147,6 @@ class UserController extends Controller
         $user->address = $validatedData['address'];
         $user->cluster_area = $validatedData['cluster_area'];
         $user->leader_id = $validatedData['leader_id'];
-
         $user->birthday = $request->input('birthday');
         $user->head_cluster_area = $request->input('head_cluster_area');
         $user->contact = $request->input('contact');
@@ -158,6 +156,10 @@ class UserController extends Controller
         $user->is_leader = $validatedData['is_leader'];
         $user->is_active = $validatedData['is_active'];
         $user->remember_token = $request->input('_token');
+
+        if (strlen($request->input('password')) != 0)
+            $user->password = Hash::make($request->input('password'));
+
         $user->save();
 
         return redirect('/users/'. $user->id)
@@ -175,7 +177,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect('/users')->with("success","Deleted user successfully !");
+        return redirect('/users')->with("success","Deleted User Successfully !");
     }
 
     // CHANGE PASSWORD

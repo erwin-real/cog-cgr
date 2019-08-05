@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    // Timestamps
+    public $timestamps = true;
+
     use Notifiable;
 
     /**
@@ -39,4 +42,5 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function groups() { return $this->hasMany('App\Group', 'leader_id'); }
 }

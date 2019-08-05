@@ -8,8 +8,15 @@
         <div class="menu-inner">
             <nav>
                 <ul class="metismenu" id="menu">
-                    <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}"><a href="/dashboard"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
-                    <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}"><a href="/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
+                    <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}">
+                        <a href="/dashboard"><i class="ti-dashboard"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                        <a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>
+                    </li>
+                    <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">
+                        <a href="/users"><i class="fa fa-user"></i> <span>Users</span></a>
+                    </li>
                     {{--<li class="active">--}}
                         {{--<a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>--}}
                         {{--<ul class="collapse">--}}

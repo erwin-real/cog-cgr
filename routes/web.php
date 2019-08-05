@@ -38,3 +38,4 @@ Route::post('/users/change-password','UserController@changePassword');
 
 // RESOURCES
 Route::resource('users', 'UserController');
+Route::resource('caregroups', 'GroupController');
