@@ -46,7 +46,7 @@
                         </div>
                         <div class="buttons-holder mt-4">
                             <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="{{ action('UserController@showChangePasswordForm') }}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
+                            <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
                             <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
                                 <i class="fa fa-trash fa-sm fa-fw"></i>
                                 Delete

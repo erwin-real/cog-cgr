@@ -269,21 +269,6 @@
                                     </div>
                                 </div>
 
-                                {{--PASSWORD--}}
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-12 col-form-label text-md-left">Password</label>
-
-                                    <div class="col-md-12">
-                                        <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
-
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--TYPE--}}
                                 <div class="form-group row">
                                     <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>

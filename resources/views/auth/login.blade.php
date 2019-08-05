@@ -41,18 +41,50 @@
                 @csrf
                 <div class="login-form-head">
                     <h4>Sign In</h4>
-                    <p>Hello there, Sign in and start managing your Admin Template</p>
+                    <p>Hello there !</p>
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                    @endif
+
+                    @if ($errors->has('username'))
+                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                    @endif
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                    @endif
                 </div>
                 <div class="login-form-body">
                     <div class="form-gp">
                         <label for="exampleInputEmail1">Email address / Username</label>
                         <input name="username" type="text" id="exampleInputEmail1">
                         <i class="ti-email"></i>
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                        @endif
+
+                        @if ($errors->has('username'))
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                        @endif
                     </div>
                     <div class="form-gp">
                         <label for="exampleInputPassword1">Password</label>
                         <input name="password" type="password" id="exampleInputPassword1">
                         <i class="ti-lock"></i>
+                        @if ($errors->has('password'))
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                        @endif
                     </div>
                     {{--<div class="row mb-4 rmber-area">--}}
                         {{--<div class="col-6">--}}
