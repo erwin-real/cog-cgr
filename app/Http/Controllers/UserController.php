@@ -172,7 +172,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect('/users')->with("success","Deleted user successfully !");
     }
 
     // CHANGE PASSWORD
