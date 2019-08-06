@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
+//    TYPES OF USERS:
+//    1. ADMIN
+//    2. CLUSTER HEAD
+//    3. CG LEADER
+
     // Timestamps
     public $timestamps = true;
 
@@ -21,7 +27,10 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name', 'middle_name', 'last_name', 'username',
         'email', 'password', 'leader_id', 'address',
-        'cluster_area', 'gender', 'group_age', 'age'
+        'cluster_area', 'gender', 'group_age', 'age',
+        'birthday', 'head_cluster_area', 'contact',
+        'journey', 'cldp', 'type', 'is_leader',
+        'is_active', 'remember_token'
     ];
 
     /**

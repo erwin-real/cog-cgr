@@ -35,7 +35,7 @@
                                     <label for="leader" class="col-md-12 col-form-label text-md-left">Leader <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }}" id="leader" required autofocus>
+                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
                                             @endforeach
@@ -54,7 +54,7 @@
                                     <label for="day_cg" class="col-md-12 col-form-label text-md-left">Day <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="day_cg" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }}" id="day_cg" required autofocus>
+                                        <select name="day_cg" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="day_cg" required autofocus>
                                             <option value="Sunday">Sunday</option>
                                             <option value="Monday">Monday</option>
                                             <option value="Tuesday">Tuesday</option>
@@ -117,7 +117,19 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-0 text-center">
+                                {{-- MEMBERS --}}
+                                <div class="form-group row">
+                                    <label for="members" class="col-md-12 col-form-label text-md-left">Members <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <ol id="members" class="ml-4">
+                                            <li class="mb-1"><input class="mb-1" id="members" type="text" name="members[]" required><span class="text-danger" style="cursor: pointer;" onclick="deleteItem(this)"> X</span></li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
+
+                                <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
                                             <i class="fa fa-user-plus"></i> Save
@@ -133,5 +145,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function append() {
+            let newItem = document.createElement("li");
+            newItem.classList.add('mb-1');
+
+            let input = document.createElement("input");
+            input.id='members';
+            input.classList.add('mb-1');
+            input.type = 'text';
+            input.name = 'members[]';
+            input.setAttribute("required", "required");
+            newItem.appendChild(input);
+
+            let span = document.createElement("span");
+            span.style = 'cursor: pointer; color: #e74a3b;';
+            span.setAttribute("onclick","deleteItem(this)");
+            span.innerHTML = " X";
+            newItem.appendChild(span);
+
+            let list = document.getElementById("members");
+            list.insertBefore(newItem, list.childNodes[list.childNodes.length]);
+        }
+
+        function deleteItem(r) {
+            document.getElementById("members").removeChild(r.parentNode);
+        }
+
+    </script>
 
 @endsection

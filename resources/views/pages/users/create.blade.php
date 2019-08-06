@@ -140,7 +140,7 @@
                                     <label for="group_age" class="col-md-12 col-form-label text-md-left">Group Age <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }}" id="group_age" required autofocus>
+                                        <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
                                             <option value="youth">Youth</option>
                                             <option value="men">Men</option>
                                             <option value="women">Women</option>
@@ -219,7 +219,7 @@
                                     <label for="journey" class="col-md-12 col-form-label text-md-left">Journey <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="journey" class="form-control{{ $errors->has('journey') ? ' is-invalid' : '' }}" id="journey" required autofocus>
+                                        <select name="journey" class="form-control{{ $errors->has('journey') ? ' is-invalid' : '' }} py-0" id="journey" required autofocus>
                                             <option value="pre-believer">Pre-Believer</option>
                                             <option value="believer">Believer</option>
                                             <option value="disciple">Disciple</option>
@@ -239,7 +239,7 @@
                                     <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP</label>
 
                                     <div class="col-md-12">
-                                        <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }}" id="cldp" autofocus>
+                                        <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>

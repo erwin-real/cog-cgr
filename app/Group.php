@@ -10,7 +10,7 @@ class Group extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'leader_id', 'date_cg', 'time_cg', 'cluster_area', 'venue'
+        'leader_id', 'day_cg', 'time_cg', 'cluster_area', 'venue'
     ];
 
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }

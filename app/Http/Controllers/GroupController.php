@@ -17,12 +17,12 @@ class GroupController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
+    public function index(Request $request) {
+//        dd($request);
+//        dd(Group::where('leader_id', $request->input('id'))->first());
+        if ($request->has('id') && Group::where('leader_id', $request->input('id'))->first())
+            return view('pages.groups.show')->with('group', Group::where('leader_id', $request->input('id'))->get());
+
         return view('pages.groups.index')->with('groups', Group::orderBy('created_at', 'desc')->paginate(20));
     }
 
@@ -42,6 +42,22 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+        if (!$request->has('members'))
+            return redirect('/caregroups/create')
+                ->with('users', User::all())
+                ->with('error', "Please add member/s !");
+
+        $my_arr = $request->get('members');
+        $dups = $new_arr = array();
+        foreach ($my_arr as $key => $val) {
+            if (!isset($new_arr[$val])) $new_arr[$val] = $key;
+            else {
+                if (isset($dups[$val])) $dups[$val][] = $key;
+                else $dups[$val] = array($key);
+            }
+        }
+        if ($dups) return redirect('/purchaseRequests/create')->with('error', 'Cannot create the request because it has duplicate materials!');
+
         $validatedData = $request->validate([
             'leader' => 'required',
             'day_cg' => 'required',
@@ -54,14 +70,18 @@ class GroupController extends Controller
             'leader_id' => $validatedData['leader'],
             'time_cg' => $validatedData['time_cg'],
             'venue' => $validatedData['venue'],
+            'day_cg' => $validatedData['day_cg'],
             'cluster_area' => $validatedData['cluster_area']
         ));
-        $group->day_cg = $validatedData['day_cg'];
         $group->save();
 
         $leader = User::find($validatedData['leader']);
         $leader->is_leader = 1;
         $leader->save();
+
+        for($i = 0; $i < count($request->input('members')); $i++) {
+
+        }
 
         return redirect('/caregroups/'. $group->id)
             ->with('group', $group)

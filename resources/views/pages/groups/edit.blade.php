@@ -37,7 +37,7 @@
                                     <label for="leader" class="col-md-12 col-form-label text-md-left">Leader <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }}" id="leader" required autofocus>
+                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
                                             @endforeach
@@ -56,7 +56,7 @@
                                     <label for="day_cg" class="col-md-12 col-form-label text-md-left">Day <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="day_cg" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }}" id="day_cg" required autofocus>
+                                        <select name="day_cg" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="day_cg" required autofocus>
                                             <option value="Sunday" {{$group->day_cg == 'Sunday' ? 'selected' : ''}}>Sunday</option>
                                             <option value="Monday" {{$group->day_cg == 'Monday' ? 'selected' : ''}}>Monday</option>
                                             <option value="Tuesday" {{$group->day_cg == 'Tuesday' ? 'selected' : ''}}>Tuesday</option>

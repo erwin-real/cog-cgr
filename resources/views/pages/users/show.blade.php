@@ -30,6 +30,7 @@
                             <p> <strong>First Name</strong>: {{ $user->first_name }}</p>
                             <p> <strong>Middle Name</strong>: {{ $user->middle_name ? $user->middle_name : ''}}</p>
                             <p> <strong>Last Name</strong>: {{ $user->last_name }}</p>
+                            <p> <strong>Type</strong>: {{ $user->type }}</p>
                             <p> <strong>Username</strong>: {{ $user->username ? $user->username : 'none'}}</p>
                             <p> <strong>Email</strong>: {{ $user->email ? $user->email : 'none'}}</p>
                             <p> <strong>Leader</strong>: {{ $user->is_leader }}</p>
@@ -38,11 +39,14 @@
                             <p> <strong>Cluster Area</strong>: {{ $user->cluster_area }}</p>
                             <p> <strong>Head Cluster Area</strong>: {{ $user->head_cluster_area }}</p>
                             <p> <strong>Birthday</strong>: {{ $user->birthday ? date('M d, Y', strtotime($user->birthday)) : ''}}</p>
+                            <p> <strong>Age</strong>: {{ $user->age }} years old</p>
                             <p> <strong>Contact</strong>: {{ $user->contact }}</p>
                             <p> <strong>Gender</strong>: {{ $user->gender }}</p>
                             <p> <strong>Group Age</strong>: {{ $user->group_age }}</p>
                             <p> <strong>Journey</strong>: {{ $user->journey }}</p>
                             <p> <strong>CLDP</strong>: {{ $user->cldp }}</p>
+                            <p> <strong>Date Created</strong>: {{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</p>
+                            <p> <strong>Date Updated</strong>: {{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</p>
                         </div>
                         <div class="buttons-holder mt-4">
                             <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>

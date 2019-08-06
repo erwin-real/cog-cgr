@@ -11,12 +11,32 @@
                     <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}">
                         <a href="/dashboard"><i class="ti-dashboard"></i> <span>Dashboard</span></a>
                     </li>
-                    <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
-                        <a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>
-                    </li>
+                    @if(Auth::user()->is_leader == 1 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                            <a href="/caregroups?id={{Auth::user()->id}}"><i class="fa fa-users"></i> <span>My Care Group</span></a>
+                        </li>
+                    @endif
+
+                    @if(Auth::user()->type == 'cluster head' && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                            <a href="/caregroups?cluster_area={{Auth::user()->head_cluster_area}}"><i class="fa fa-users"></i> <span>{{Auth::user()->head_cluster_area}} CG</span></a>
+                        </li>
+                    @endif
+
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                            <a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>
+                        </li>
+                    @endif
+
                     <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">
                         <a href="/users"><i class="fa fa-user"></i> <span>Users</span></a>
                     </li>
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('accounts') || request()->is('accounts/*') ? 'active border-left-info' : '' }}">
+                            <a href="/accounts"><i class="fa fa-user-secret"></i> <span>Accounts</span></a>
+                        </li>
+                    @endif
                     {{--<li class="active">--}}
                         {{--<a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>--}}
                         {{--<ul class="collapse">--}}

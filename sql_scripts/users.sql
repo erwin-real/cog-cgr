@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `accounts`
 --
 
 CREATE TABLE `users` (
@@ -56,7 +56,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `accounts`
 --
 
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `username`, `password`, `email`, `email_verified_at`, `leader_id`, `type`, `is_leader`, `is_active`, `address`, `cluster_area`, `head_cluster_area`, `birthday`, `contact`, `gender`, `group_age`, `journey`, `cldp`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -67,7 +67,7 @@ INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `username`,
 --
 
 --
--- Indexes for table `users`
+-- Indexes for table `accounts`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -78,7 +78,7 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

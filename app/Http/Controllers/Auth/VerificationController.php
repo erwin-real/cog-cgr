@@ -21,7 +21,7 @@ class VerificationController extends Controller
     use VerifiesEmails;
 
     /**
-     * Where to redirect users after verification.
+     * Where to redirect accounts after verification.
      *
      * @var string
      */

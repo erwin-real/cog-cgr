@@ -32,10 +32,11 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::get('/dashboard', 'DashboardController@index');
 
 //CHANGE PASSWORD
-Route::get('/users/change-password','UserController@showChangePasswordForm');
-Route::post('/users/change-password','UserController@changePassword');
+Route::get('/accounts/change-password','AccountController@showChangePasswordForm');
+Route::post('/accounts/change-password','AccountController@changePassword');
 
 
 // RESOURCES
 Route::resource('users', 'UserController');
+Route::resource('accounts', 'AccountController');
 Route::resource('caregroups', 'GroupController');
