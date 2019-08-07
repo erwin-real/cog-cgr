@@ -119,29 +119,6 @@
                                     </div>
                                 </div>
 
-                                {{-- MEMBERS --}}
-                                <div class="form-group row">
-                                    <label for="members" class="col-md-12 col-form-label text-md-left">Members <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <ol id="members" class="ml-4">
-                                            @foreach($group->members as $member)
-                                                <li class="mb-1">
-                                                    <select id="members" class="mb-1" name="members[]" required="required">
-                                                        @foreach($users as $user)
-                                                            @if($user->id != Auth::user()->id && $user->type != 'master')
-                                                                <option value="{{$user->id}}" {{$user->id === $member->id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <span onclick="deleteItem(this)" style="cursor: pointer; color: rgb(231, 74, 59);"> X</span>
-                                                </li>
-                                            @endforeach
-                                        </ol>
-                                    </div>
-                                </div>
-                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
-
                                 <div class="form-group row mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
@@ -158,48 +135,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var values = [];
-        var ids = [];
-        @foreach($users as $user)
-        @if($user->id != Auth::user()->id && $user->type != 'master')
-        values.push('{{$user->first_name}} {{$user->last_name}}');
-        ids.push('{{$user->id}}');
-        @endif
-        @endforeach
-        function append() {
-            let newItem = document.createElement("li");
-            newItem.classList.add('mb-1');
-
-            let selectList = document.createElement("select");
-            selectList.classList.add('mb-1');
-            selectList.name = 'members[]';
-            selectList.setAttribute("required", "required");
-
-            for (let i = 0; i < values.length; i++) {
-                let option = document.createElement("option");
-                option.setAttribute("value", ids[i]);
-                option.text = values[i];
-                selectList.appendChild(option);
-            }
-
-            newItem.appendChild(selectList);
-
-            let span = document.createElement("span");
-            span.style = 'cursor: pointer; color: #e74a3b;';
-            span.setAttribute("onclick","deleteItem(this)");
-            span.innerHTML = " X";
-            newItem.appendChild(span);
-
-            let list = document.getElementById("members");
-            list.insertBefore(newItem, list.childNodes[list.childNodes.length]);
-        }
-
-        function deleteItem(r) {
-            document.getElementById("members").removeChild(r.parentNode);
-        }
-
-    </script>
 
 @endsection

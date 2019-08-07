@@ -26,7 +26,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name', 'middle_name', 'last_name', 'username',
-        'email', 'password', 'leader_id', 'address',
+        'email', 'password', 'leader_id', 'cg_id', 'address',
         'cluster_area', 'gender', 'group_age', 'age',
         'birthday', 'head_cluster_area', 'contact',
         'journey', 'cldp', 'type', 'is_leader',
@@ -51,5 +51,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function groups() { return $this->hasMany('App\Group', 'leader_id'); }
+    public function groups() {
+        return $this->hasMany('App\Group', 'leader_id');
+    }
+
+    public function caregroup() {
+        return $this->belongsTo('App\Group', 'cg_id');
+    }
+
+    public function leader() {
+        return $this->belongsTo('App\User', 'leader_id');
+    }
+
+    public function members() {
+        return $this->hasMany('App\User', 'leader_id');
+    }
 }

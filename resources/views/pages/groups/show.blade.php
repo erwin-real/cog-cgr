@@ -23,15 +23,59 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">Care Group Info</h4>
+                            <h4 class="header-title mb-0">Care Group Details</h4>
                         </div>
                         <div class="ml-5 mt-4">
                             <p> <strong>Leader</strong>: {{ $group->leader->first_name }} {{ $group->leader->last_name }}</p>
                             <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
                             <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                             <p> <strong>Venue</strong>: {{ $group->venue }}</p>
-                            <p> <strong>Cluster Area</strong>: {{ $group->cluster_area }}</p>
+                            <p> <strong>Cluster Area</strong>: {{ ucfirst($group->cluster_area) }}</p>
+                            <p> <strong>Cluster Head</strong>: SOOOOOOOOON!</p>
                         </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+                            <p class="font-weight-bold">Members:</p>
+                        </div>
+
+                        <div class="market-status-table">
+                            @if ($group->members->isEmpty())
+                                <p> There are no members yet.</p>
+                            @else
+                                {{--{{$accounts->links()}}--}}
+                                <div class="table-responsive">
+                                    <table class="table table-hover text-center">
+                                        <thead>
+                                        <tr>
+                                            {{--<th>Leader</th>--}}
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Birthday</th>
+                                            <th>Age</th>
+                                            <th>Contact</th>
+                                            <th>Journey</th>
+                                            <th>CLDP</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($group->members as $member)
+                                            <tr>
+                                                {{--<td><a href="/users/{{$member->leader_id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>--}}
+                                                <td><a href="/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                <td>{{$member->address}}</td>
+                                                <td>{{ $member->birthday ? date('M d, Y', strtotime($member->birthday)) : '' }}</td>
+                                                <td>{{$member->age}}</td>
+                                                <td>{{$member->contact}}</td>
+                                                <td>{{ucfirst($member->journey)}}</td>
+                                                <td>{{$member->cldp}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+
                         <div class="buttons-holder mt-4">
                             <a href="{{ action('GroupController@edit', $group->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
                             <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delGroupModal">

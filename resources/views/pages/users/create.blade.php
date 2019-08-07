@@ -240,6 +240,7 @@
 
                                     <div class="col-md-12">
                                         <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>
+                                            <option value="0">0</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -293,6 +294,21 @@
                                         @if ($errors->has('type'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('type') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--CARE GROUP ID--}}
+                                <div class="form-group row">
+                                    <label for="cg_id" class="col-md-12 col-form-label text-md-left">Care Group ID</label>
+
+                                    <div class="col-md-12">
+                                        <input id="cg_id" type="number" class="form-control{{ $errors->has('cg_id') ? ' is-invalid' : '' }}" name="cg_id" required autofocus>
+
+                                        @if ($errors->has('cg_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cg_id') }}</strong>
                                             </span>
                                         @endif
                                     </div>

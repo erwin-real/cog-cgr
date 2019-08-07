@@ -82,7 +82,6 @@ class AccountController extends Controller
             'is_active' => $validatedData['is_active'],
             'remember_token' => $request->input('_token')
         ));
-
         $account->save();
 
         return redirect('/accounts/'. $account->id)

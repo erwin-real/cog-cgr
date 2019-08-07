@@ -123,7 +123,16 @@
 
                                     <div class="col-md-12">
                                         <ol id="members" class="ml-4">
-                                            <li class="mb-1"><input class="mb-1" id="members" type="text" name="members[]" required><span class="text-danger" style="cursor: pointer;" onclick="deleteItem(this)"> X</span></li>
+                                            <li class="mb-1">
+                                                <select id="members" class="mb-1" name="members[]" required="required">
+                                                    @foreach($users as $user)
+                                                        @if($user->id != Auth::user()->id && $user->type != 'master')
+                                                            <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            <span onclick="deleteItem(this)" style="cursor: pointer; color: rgb(231, 74, 59);"> X</span>
+                                            </li>
                                         </ol>
                                     </div>
                                 </div>
@@ -147,17 +156,31 @@
     </div>
 
     <script>
+        var values = [];
+        var ids = [];
+        @foreach($users as $user)
+            @if($user->id != Auth::user()->id && $user->type != 'master')
+                values.push('{{$user->first_name}} {{$user->last_name}}');
+                ids.push('{{$user->id}}');
+            @endif
+        @endforeach
         function append() {
             let newItem = document.createElement("li");
             newItem.classList.add('mb-1');
 
-            let input = document.createElement("input");
-            input.id='members';
-            input.classList.add('mb-1');
-            input.type = 'text';
-            input.name = 'members[]';
-            input.setAttribute("required", "required");
-            newItem.appendChild(input);
+            let selectList = document.createElement("select");
+            selectList.classList.add('mb-1');
+            selectList.name = 'members[]';
+            selectList.setAttribute("required", "required");
+
+            for (let i = 0; i < values.length; i++) {
+                let option = document.createElement("option");
+                option.setAttribute("value", ids[i]);
+                option.text = values[i];
+                selectList.appendChild(option);
+            }
+
+            newItem.appendChild(selectList);
 
             let span = document.createElement("span");
             span.style = 'cursor: pointer; color: #e74a3b;';

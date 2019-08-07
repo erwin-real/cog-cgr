@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('middle_name')->nullable();
@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('age');
             $table->char('group_age', 5);
             $table->text('address');
-            $table->string('cluster_area')->unique();
-            $table->string('head_cluster_area')->nullable();
+            $table->string('cluster_area');
+            $table->string('head_cluster_area')->nullable()->unique();
             $table->string('contact')->nullable();
             $table->char('journey', 20)->default('pre-believer');
             $table->tinyInteger('cldp')->nullable();
@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('type')->default('member');
             $table->unsignedInteger('leader_id');
+            $table->unsignedInteger('cg_id')->nullable();
             $table->boolean('is_leader')->default(0);
             $table->boolean('is_active')->default(1);
             $table->rememberToken();

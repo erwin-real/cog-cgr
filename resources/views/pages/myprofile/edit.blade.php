@@ -77,31 +77,31 @@
                                     </div>
                                 </div>
 
-                                {{--EMAIL--}}
+                                {{--ADDRESS--}}
                                 <div class="form-group row">
-                                    <label for="email" class="col-md-12 col-form-label text-md-left">Email Address</label>
+                                    <label for="address" class="col-md-12 col-form-label text-md-left">Address <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{$user->email}}" autofocus>
+                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{$user->address}}" required autofocus>
 
-                                        @if ($errors->has('email'))
+                                        @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
+                                                <strong>{{ $errors->first('address') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
 
-                                {{--GENDER--}}
+                                {{--CLUSTER AREA--}}
                                 <div class="form-group row">
-                                    <label for="gender" class="col-md-12 col-form-label text-md-left">Gender (m/f) <span class="text-danger">*</span></label>
+                                    <label for="cluster_area" class="col-md-12 col-form-label text-md-left">Cluster Area <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{$user->gender}}" required autofocus>
+                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" value="{{$user->cluster_area}}" required autofocus>
 
-                                        @if ($errors->has('gender'))
+                                        @if ($errors->has('cluster_area'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('gender') }}</strong>
+                                                <strong>{{ $errors->first('cluster_area') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -156,51 +156,6 @@
                                     </div>
                                 </div>
 
-                                {{--ADDRESS--}}
-                                <div class="form-group row">
-                                    <label for="address" class="col-md-12 col-form-label text-md-left">Address <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{$user->address}}" required autofocus>
-
-                                        @if ($errors->has('address'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('address') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--CLUSTER AREA--}}
-                                <div class="form-group row">
-                                    <label for="cluster_area" class="col-md-12 col-form-label text-md-left">Cluster Area <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" value="{{$user->cluster_area}}" required autofocus>
-
-                                        @if ($errors->has('cluster_area'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('cluster_area') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--HEAD CLUSTER AREA--}}
-                                <div class="form-group row">
-                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area</label>
-
-                                    <div class="col-md-12">
-                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" value="{{$user->head_cluster_area}}" autofocus>
-
-                                        @if ($errors->has('head_cluster_area'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('head_cluster_area') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--CONTACT--}}
                                 <div class="form-group row">
                                     <label for="contact" class="col-md-12 col-form-label text-md-left">Contact #</label>
@@ -211,6 +166,21 @@
                                         @if ($errors->has('contact'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('contact') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--GENDER--}}
+                                <div class="form-group row">
+                                    <label for="gender" class="col-md-12 col-form-label text-md-left">Gender (m/f) <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{$user->gender}}" required autofocus>
+
+                                        @if ($errors->has('gender'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('gender') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -256,6 +226,21 @@
                                     </div>
                                 </div>
 
+                                {{--EMAIL--}}
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-12 col-form-label text-md-left">Email Address</label>
+
+                                    <div class="col-md-12">
+                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{$user->email}}" autofocus>
+
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 {{--USERNAME--}}
                                 <div class="form-group row">
                                     <label for="username" class="col-md-12 col-form-label text-md-left">Username</label>
@@ -266,96 +251,6 @@
                                         @if ($errors->has('username'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('username') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--PASSWORD--}}
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-12 col-form-label text-md-left">Password</label>
-
-                                    <div class="col-md-12">
-                                        <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
-
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--TYPE--}}
-                                <div class="form-group row">
-                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="type" type="text" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}" name="type" value="{{$user->type}}" required autofocus>
-
-                                        @if ($errors->has('type'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('type') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--CARE GROUP ID--}}
-                                <div class="form-group row">
-                                    <label for="cg_id" class="col-md-12 col-form-label text-md-left">Care Group ID</label>
-
-                                    <div class="col-md-12">
-                                        <input id="cg_id" type="number" class="form-control{{ $errors->has('cg_id') ? ' is-invalid' : '' }}" name="cg_id" value="{{$user->cg_id}}" required autofocus>
-
-                                        @if ($errors->has('cg_id'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('cg_id') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--LEADER ID--}}
-                                <div class="form-group row">
-                                    <label for="leader_id" class="col-md-12 col-form-label text-md-left">Leader ID <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="leader_id" type="number" class="form-control{{ $errors->has('leader_id') ? ' is-invalid' : '' }}" name="leader_id" value="{{$user->leader_id}}" required autofocus>
-
-                                        @if ($errors->has('leader_id'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('leader_id') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--IS LEADER--}}
-                                <div class="form-group row">
-                                    <label for="is_leader" class="col-md-12 col-form-label text-md-left">Is Leader? (0 or 1) <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="is_leader" type="number" class="form-control{{ $errors->has('is_leader') ? ' is-invalid' : '' }}" name="is_leader" value="{{$user->is_leader}}" required autofocus>
-
-                                        @if ($errors->has('is_leader'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('is_leader') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--IS ACTIVE--}}
-                                <div class="form-group row">
-                                    <label for="is_active" class="col-md-12 col-form-label text-md-left">Is Active? (0 or 1) <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="is_active" type="number" class="form-control{{ $errors->has('is_active') ? ' is-invalid' : '' }}" name="is_active" value="{{$user->is_active}}" required autofocus>
-
-                                        @if ($errors->has('is_active'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('is_active') }}</strong>
                                             </span>
                                         @endif
                                     </div>

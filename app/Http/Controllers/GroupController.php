@@ -56,7 +56,7 @@ class GroupController extends Controller
                 else $dups[$val] = array($key);
             }
         }
-        if ($dups) return redirect('/purchaseRequests/create')->with('error', 'Cannot create the request because it has duplicate materials!');
+        if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
 
         $validatedData = $request->validate([
             'leader' => 'required',
@@ -71,7 +71,7 @@ class GroupController extends Controller
             'time_cg' => $validatedData['time_cg'],
             'venue' => $validatedData['venue'],
             'day_cg' => $validatedData['day_cg'],
-            'cluster_area' => $validatedData['cluster_area']
+            'cluster_area' => strtolower($validatedData['cluster_area'])
         ));
         $group->save();
 
@@ -80,7 +80,10 @@ class GroupController extends Controller
         $leader->save();
 
         for($i = 0; $i < count($request->input('members')); $i++) {
-
+            $member = User::find($request->input('members')[$i]);
+            $member->leader_id = $validatedData['leader'];
+            $member->cg_id = $group->id;
+            $member->save();
         }
 
         return redirect('/caregroups/'. $group->id)
@@ -118,6 +121,22 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+        if (!$request->has('members'))
+            return redirect('/caregroups/create')
+                ->with('users', User::all())
+                ->with('error', "Please add member/s !");
+
+        $my_arr = $request->get('members');
+        $dups = $new_arr = array();
+        foreach ($my_arr as $key => $val) {
+            if (!isset($new_arr[$val])) $new_arr[$val] = $key;
+            else {
+                if (isset($dups[$val])) $dups[$val][] = $key;
+                else $dups[$val] = array($key);
+            }
+        }
+        if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
+
         $validatedData = $request->validate([
             'leader' => 'required',
             'day_cg' => 'required',
@@ -137,6 +156,13 @@ class GroupController extends Controller
         $leader = User::find($validatedData['leader']);
         $leader->is_leader = 1;
         $leader->save();
+
+        for($i = 0; $i < count($request->input('members')); $i++) {
+            $member = User::find($request->input('members')[$i]);
+            $member->leader_id = $validatedData['leader'];
+            $member->cg_id = $group->id;
+            $member->save();
+        }
 
         return redirect('/caregroups/'. $group->id)
             ->with('group', $group)

@@ -14,4 +14,6 @@ class Group extends Model
     ];
 
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
+
+    public function members() { return $this->hasMany('App\User', 'cg_id'); }
 }

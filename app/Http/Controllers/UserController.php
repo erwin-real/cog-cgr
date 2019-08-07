@@ -44,6 +44,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+//        dd($request);
         $validatedData = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -63,25 +64,28 @@ class UserController extends Controller
             'first_name' => $validatedData['first_name'],
             'middle_name' => $request->input('middle_name'),
             'last_name' => $validatedData['last_name'],
-            'email' => $request->input('email'),
-            'gender' => $validatedData['gender'],
+            'gender' => strtolower($validatedData['gender']),
             'age' => $validatedData['age'],
             'group_age' => $validatedData['group_age'],
             'address' => $validatedData['address'],
-            'cluster_area' => $validatedData['cluster_area'],
-            'username' => $request->input('username'),
+            'cluster_area' => strtolower($validatedData['cluster_area']),
             'password' => Hash::make($request->input('password')),
-            'leader_id' => $validatedData['leader_id']
+            'leader_id' => $validatedData['leader_id'],
+            'birthday' => $request->input('birthday'),
+            'contact' => $request->input('contact'),
+            'journey' => $validatedData['journey'],
+            'cldp' => $request->input('cldp'),
+            'cg_id' => $request->input('cg_id'),
+            'type' => $validatedData['type'],
+            'is_leader' => $validatedData['is_leader'],
+            'is_active' => $validatedData['is_active'],
+            'remember_token' => $request->input('_token')
         ));
-        $user->birthday = $request->input('birthday');
-        $user->head_cluster_area = $request->input('head_cluster_area');
-        $user->contact = $request->input('contact');
-        $user->journey = $validatedData['journey'];
-        $user->cldp = $request->input('cldp');
-        $user->type = $validatedData['type'];
-        $user->is_leader = $validatedData['is_leader'];
-        $user->is_active = $validatedData['is_active'];
-        $user->remember_token = $request->input('_token');
+
+        $user->email = ($request->input('email') || strlen($request->input('email')) > 0) ? $request->input('email') : null;
+        $user->head_cluster_area = ($request->input('head_cluster_area') || strlen($request->input('head_cluster_area')) > 0) ? $request->input('head_cluster_area') : null;
+        $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
+
         $user->save();
 
         return redirect('/users/'. $user->id)
@@ -139,23 +143,26 @@ class UserController extends Controller
         $user->first_name = $validatedData['first_name'];
         $user->middle_name = $request->input('middle_name');
         $user->last_name = $validatedData['last_name'];
-        $user->email = $request->input('email');
-        $user->gender = $validatedData['gender'];
+        $user->gender = strtolower($validatedData['gender']);
         $user->age = $validatedData['age'];
         $user->group_age = $validatedData['group_age'];
-        $user->username = $request->input('username');
         $user->address = $validatedData['address'];
-        $user->cluster_area = $validatedData['cluster_area'];
+        $user->cluster_area = strtolower($validatedData['cluster_area']);
         $user->leader_id = $validatedData['leader_id'];
         $user->birthday = $request->input('birthday');
-        $user->head_cluster_area = $request->input('head_cluster_area');
         $user->contact = $request->input('contact');
         $user->journey = $validatedData['journey'];
         $user->cldp = $request->input('cldp');
+        $user->cg_id = $request->input('cg_id');
         $user->type = $validatedData['type'];
         $user->is_leader = $validatedData['is_leader'];
         $user->is_active = $validatedData['is_active'];
         $user->remember_token = $request->input('_token');
+
+        $user->email = ($request->input('email') || strlen($request->input('email')) > 0) ? $request->input('email') : null;
+        $user->head_cluster_area = ($request->input('head_cluster_area') || strlen($request->input('head_cluster_area')) > 0) ? strtolower($request->input('head_cluster_area')) : null;
+        $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
+
 
         if (strlen($request->input('password')) != 0)
             $user->password = Hash::make($request->input('password'));

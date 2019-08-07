@@ -14,24 +14,22 @@
 
 Route::get('/', 'WelcomeController@welcome');
 
+// DASHBOARD
+Route::get('/dashboard', 'DashboardController@index');
+
 //Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+// MY CARE GROUP
+Route::get('/my-care-group', 'MyCareGroupController@index');
+Route::get('/my-care-group/{group}/edit', 'MyCareGroupController@edit');
 
-// Password Reset Routes...
-//Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-//Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-//Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+// MY PROFILE
+Route::get('/my-profile', 'MyProfileController@index');
 
-Route::get('/dashboard', 'DashboardController@index');
-
-//CHANGE PASSWORD
+// CHANGE PASSWORD
 Route::get('/accounts/change-password','AccountController@showChangePasswordForm');
 Route::post('/accounts/change-password','AccountController@changePassword');
 
@@ -40,3 +38,14 @@ Route::post('/accounts/change-password','AccountController@changePassword');
 Route::resource('users', 'UserController');
 Route::resource('accounts', 'AccountController');
 Route::resource('caregroups', 'GroupController');
+
+
+// Registration Routes...
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+//Route::post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+//Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+//Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+//Route::post('password/reset', 'Auth\ResetPasswordController@reset');
