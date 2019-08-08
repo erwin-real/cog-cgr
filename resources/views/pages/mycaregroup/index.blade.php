@@ -60,19 +60,21 @@
                                                     <th>Contact</th>
                                                     <th>Journey</th>
                                                     <th>CLDP</th>
+                                                    <th>Active</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($group->members as $member)
                                                     <tr>
                                                         {{--<td><a href="/users/{{$member->leader_id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>--}}
-                                                        <td><a href="/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                        <td><a href="/my-care-group/members/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
                                                         <td>{{$member->address}}</td>
                                                         <td>{{$member->birthday ? date('M d, Y', strtotime($member->birthday)) : ''}}</td>
                                                         <td>{{$member->age}}</td>
                                                         <td>{{$member->contact}}</td>
                                                         <td>{{ucfirst($member->journey)}}</td>
                                                         <td>{{$member->cldp}}</td>
+                                                        <td>{{$member->is_active == 1 ? 'Yes' : 'No'}}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

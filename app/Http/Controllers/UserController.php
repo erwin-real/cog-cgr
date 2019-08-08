@@ -214,6 +214,6 @@ class UserController extends Controller
     }
 
     public function isUserType($type) {
-        return (User::find(auth()->user()->id)->type == $type) ? true : false;
+        return (auth()->user()->type == $type) ? true : false;
     }
 }

@@ -6,10 +6,10 @@
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
                     <h4 class="page-title pull-left">My Profile</h4>
-                    {{--<ul class="breadcrumbs pull-left">--}}
-                        {{--<li><a href="/users">Users</a></li>--}}
-                        {{--<li><span>{{$user->first_name}} {{$user->last_name}}</span></li>--}}
-                    {{--</ul>--}}
+                    <ul class="breadcrumbs pull-left">
+                        <li><a href="/my-profile">Users</a></li>
+                        <li><span>{{$user->first_name}} {{$user->last_name}}</span></li>
+                    </ul>
                 </div>
             </div>
             @include('includes.user-profile')
@@ -24,7 +24,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">My Profile</h4>
+                            <h4 class="header-title mb-0">{{ucfirst($user->type)}}'s Profile</h4>
                         </div>
                         <div class="ml-5 mt-4">
 
@@ -47,7 +47,7 @@
                             @if($user->leader_id != 0)
                                 <p> <strong>Leader</strong>: <a href="/my-profile/users/{{$user->leader->id}}">{{ $user->leader->first_name.' '.$user->leader->last_name }}</a></p>
                             @else
-                                <p> <strong>Leader</strong>: </p>
+                                {{--<p> <strong>Leader</strong>: </p>--}}
                             @endif
                         </div>
 

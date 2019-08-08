@@ -5,10 +5,9 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">My Profile</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/users">Users</a></li>
-                        <li><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></li>
+                        <li><a href="/my-profile">My Profile</a></li>
                         <li><span>Change Password</span></li>
                     </ul>
                 </div>
@@ -28,8 +27,7 @@
                             <h4 class="header-title mb-0">Change Password</h4>
                         </div>
                         <div class="ml-5 mt-4">
-                            <form class="form-horizontal" method="POST" action="/users/change-password">
-                                <input type="hidden" name="id" value="{{$user->id}}">
+                            <form class="form-horizontal" method="POST" action="/my-profile/change-password">
                                 {{ csrf_field() }}
 
                                 <div class="form-group row{{ $errors->has('current-password') ? ' has-error' : '' }}">

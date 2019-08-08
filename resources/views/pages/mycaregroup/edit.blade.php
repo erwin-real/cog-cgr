@@ -5,10 +5,10 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Care Groups</h4>
+                    <h4 class="page-title pull-left">My Care Group</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/caregroups">Care Groups</a></li>
-                        <li><a href="/caregroups/{{$group->id}}">{{$group->id}}</a></li>
+                        <li><a href="/my-care-group">My Care Group</a></li>
+                        <li><a href="#">{{$group->day_cg}} {{ date('h:i A', strtotime($group->time_cg)) }}</a></li>
                         <li><span>Update</span></li>
                     </ul>
                 </div>
@@ -25,31 +25,31 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">Update Care Group</h4>
+                            <h4 class="header-title mb-0">Update My Care Group</h4>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ action('GroupController@update', $group->id) }}" method="POST">
+                            <form action="{{ action('MyCareGroupController@update', $group->id) }}" method="POST">
                                 <input type="hidden" name="_method" value="PUT">
                                 @csrf
 
                                 {{-- LEADER --}}
-                                <div class="form-group row">
-                                    <label for="leader" class="col-md-12 col-form-label text-md-left">Leader <span class="text-danger">*</span></label>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="leader" class="col-md-12 col-form-label text-md-left">Leader <span class="text-danger">*</span></label>--}}
 
-                                    <div class="col-md-12">
-                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
-                                            @endforeach
-                                        </select>
+                                    {{--<div class="col-md-12">--}}
+                                        {{--<select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>--}}
+                                            {{--@foreach($users as $user)--}}
+                                                {{--<option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>--}}
+                                            {{--@endforeach--}}
+                                        {{--</select>--}}
 
-                                        @if ($errors->has('leader'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('leader') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
+                                        {{--@if ($errors->has('leader'))--}}
+                                            {{--<span class="invalid-feedback" role="alert">--}}
+                                                {{--<strong>{{ $errors->first('leader') }}</strong>--}}
+                                            {{--</span>--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
                                 {{-- DAY OF CARE GROUP --}}
                                 <div class="form-group row">
@@ -119,6 +119,28 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label for="members" class="col-md-12 col-form-label text-md-left">Members <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <ol id="members" class="ml-4">
+                                            @foreach($group->members as $member)
+                                                <li class="mb-1">
+                                                    <select id="members" class="mb-1" name="members[]" required="required">
+                                                        @foreach($users as $user)
+                                                            @if($user->id != Auth::user()->id && $user->type != 'master')
+                                                                <option value="{{$user->id}}" {{$user->id === $member->id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <span onclick="deleteItem(this)" style="cursor: pointer; color: rgb(231, 74, 59);"> X</span>
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    </div>
+                                </div>
+                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
+
                                 <div class="form-group row mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
@@ -135,5 +157,48 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var values = [];
+        var ids = [];
+        @foreach($users as $user)
+        @if($user->id != Auth::user()->id && $user->type != 'master')
+        values.push('{{$user->first_name}} {{$user->last_name}}');
+        ids.push('{{$user->id}}');
+        @endif
+        @endforeach
+        function append() {
+            let newItem = document.createElement("li");
+            newItem.classList.add('mb-1');
+
+            let selectList = document.createElement("select");
+            selectList.classList.add('mb-1');
+            selectList.name = 'members[]';
+            selectList.setAttribute("required", "required");
+
+            for (let i = 0; i < values.length; i++) {
+                let option = document.createElement("option");
+                option.setAttribute("value", ids[i]);
+                option.text = values[i];
+                selectList.appendChild(option);
+            }
+
+            newItem.appendChild(selectList);
+
+            let span = document.createElement("span");
+            span.style = 'cursor: pointer; color: #e74a3b;';
+            span.setAttribute("onclick","deleteItem(this)");
+            span.innerHTML = " X";
+            newItem.appendChild(span);
+
+            let list = document.getElementById("members");
+            list.insertBefore(newItem, list.childNodes[list.childNodes.length]);
+        }
+
+        function deleteItem(r) {
+            document.getElementById("members").removeChild(r.parentNode);
+        }
+
+    </script>
 
 @endsection

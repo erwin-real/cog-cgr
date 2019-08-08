@@ -5,15 +5,15 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">My Profile</h4>
+                    <h4 class="page-title pull-left">My Care Group</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/my-profile">My Profile</a></li>
+                        <li><a href="/my-care-group">My Care Group</a></li>
+                        <li><a href="/my-care-group/members/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></li>
                         <li><span>Update</span></li>
                     </ul>
                 </div>
             </div>
             @include('includes.user-profile')
-
         </div>
     </div>
 
@@ -24,10 +24,10 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">Update My Profile</h4>
+                            <h4 class="header-title mb-0">Update User: {{$member->first_name}} {{$member->last_name}}</h4>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ action('MyProfileController@update') }}" method="POST">
+                            <form action="{{ action('MemberController@update', $member->id) }}" method="POST">
                                 <input type="hidden" name="_method" value="PUT">
                                 @csrf
 
@@ -36,7 +36,7 @@
                                     <label for="first_name" class="col-md-12 col-form-label text-md-left">First Name <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{$user->first_name}}" required autofocus>
+                                        <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{$member->first_name}}" required autofocus>
 
                                         @if ($errors->has('first_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -51,7 +51,7 @@
                                     <label for="middle_name" class="col-md-12 col-form-label text-md-left">Middle Name</label>
 
                                     <div class="col-md-12">
-                                        <input id="middle_name" type="text" class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" name="middle_name" value="{{$user->middle_name}}" autofocus>
+                                        <input id="middle_name" type="text" class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" name="middle_name" value="{{$member->middle_name}}" autofocus>
 
                                         @if ($errors->has('middle_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
                                     <label for="last_name" class="col-md-12 col-form-label text-md-left">Last Name <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{$user->last_name}}" required autofocus>
+                                        <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{$member->last_name}}" required autofocus>
 
                                         @if ($errors->has('last_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                     <label for="address" class="col-md-12 col-form-label text-md-left">Address <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{$user->address}}" required autofocus>
+                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{$member->address}}" required autofocus>
 
                                         @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
@@ -96,7 +96,7 @@
                                     <label for="cluster_area" class="col-md-12 col-form-label text-md-left">Cluster Area <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" value="{{$user->cluster_area}}" required autofocus>
+                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" value="{{$member->cluster_area}}" required autofocus>
 
                                         @if ($errors->has('cluster_area'))
                                             <span class="invalid-feedback" role="alert">
@@ -111,7 +111,7 @@
                                     <label for="birthday" class="col-md-12 col-form-label text-md-left">Birthday</label>
 
                                     <div class="col-md-12">
-                                        <input id="birthday" type="date" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" value="{{$user->birthday}}" autofocus>
+                                        <input id="birthday" type="date" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" value="{{$member->birthday}}" autofocus>
 
                                         @if ($errors->has('birthday'))
                                             <span class="invalid-feedback" role="alert">
@@ -126,7 +126,7 @@
                                     <label for="age" class="col-md-12 col-form-label text-md-left">Age <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{$user->age}}" required autofocus>
+                                        <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{$member->age}}" required autofocus>
 
                                         @if ($errors->has('age'))
                                             <span class="invalid-feedback" role="alert">
@@ -142,9 +142,9 @@
 
                                     <div class="col-md-12">
                                         <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
-                                            <option value="youth" {{$user->group_age == 'youth' ? 'selected' : ''}}>Youth</option>
-                                            <option value="men" {{$user->group_age == 'men' ? 'selected' : ''}}>Men</option>
-                                            <option value="women" {{$user->group_age == 'women' ? 'selected' : ''}}>Women</option>
+                                            <option value="youth" {{$member->group_age == 'youth' ? 'selected' : ''}}>Youth</option>
+                                            <option value="men" {{$member->group_age == 'men' ? 'selected' : ''}}>Men</option>
+                                            <option value="women" {{$member->group_age == 'women' ? 'selected' : ''}}>Women</option>
                                         </select>
 
                                         @if ($errors->has('group_age'))
@@ -160,7 +160,7 @@
                                     <label for="contact" class="col-md-12 col-form-label text-md-left">Contact #</label>
 
                                     <div class="col-md-12">
-                                        <input id="contact" type="number" class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}" name="contact" value="{{$user->contact}}" autofocus>
+                                        <input id="contact" type="number" class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}" name="contact" value="{{$member->contact}}" autofocus>
 
                                         @if ($errors->has('contact'))
                                             <span class="invalid-feedback" role="alert">
@@ -175,7 +175,7 @@
                                     <label for="gender" class="col-md-12 col-form-label text-md-left">Gender (m/f) <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{$user->gender}}" required autofocus>
+                                        <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{$member->gender}}" required autofocus>
 
                                         @if ($errors->has('gender'))
                                             <span class="invalid-feedback" role="alert">
@@ -186,51 +186,51 @@
                                 </div>
 
                                 {{--JOURNEY--}}
-                                {{--<div class="form-group row">--}}
-                                    {{--<label for="journey" class="col-md-12 col-form-label text-md-left">Journey <span class="text-danger">*</span></label>--}}
+                                <div class="form-group row">
+                                    <label for="journey" class="col-md-12 col-form-label text-md-left">Journey <span class="text-danger">*</span></label>
 
-                                    {{--<div class="col-md-12">--}}
-                                        {{--<select name="journey" class="form-control{{ $errors->has('journey') ? ' is-invalid' : '' }} py-0" id="journey" required autofocus>--}}
-                                            {{--<option value="pre-believer" {{$user->journey == 'pre-believer' ? 'selected' : ''}}>Pre-Believer</option>--}}
-                                            {{--<option value="believer" {{$user->journey == 'believer' ? 'selected' : ''}}>Believer</option>--}}
-                                            {{--<option value="disciple" {{$user->journey == 'disciple' ? 'selected' : ''}}>Disciple</option>--}}
-                                            {{--<option value="leader" {{$user->journey == 'leader' ? 'selected' : ''}}>Leader</option>--}}
-                                        {{--</select>--}}
+                                    <div class="col-md-12">
+                                        <select name="journey" class="form-control{{ $errors->has('journey') ? ' is-invalid' : '' }} py-0" id="journey" required autofocus>
+                                            <option value="pre-believer" {{$member->journey == 'pre-believer' ? 'selected' : ''}}>Pre-Believer</option>
+                                            <option value="believer" {{$member->journey == 'believer' ? 'selected' : ''}}>Believer</option>
+                                            <option value="disciple" {{$member->journey == 'disciple' ? 'selected' : ''}}>Disciple</option>
+                                            <option value="leader" {{$member->journey == 'leader' ? 'selected' : ''}}>Leader</option>
+                                        </select>
 
-                                        {{--@if ($errors->has('journey'))--}}
-                                            {{--<span class="invalid-feedback" role="alert">--}}
-                                                {{--<strong>{{ $errors->first('journey') }}</strong>--}}
-                                            {{--</span>--}}
-                                        {{--@endif--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                        @if ($errors->has('journey'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('journey') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 {{--CDLP--}}
-                                {{--<div class="form-group row">--}}
-                                    {{--<label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP</label>--}}
+                                <div class="form-group row">
+                                    <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP</label>
 
-                                    {{--<div class="col-md-12">--}}
-                                        {{--<select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>--}}
-                                            {{--<option value="0" {{$user->cldp == '0' ? 'selected' : ''}}>0</option>--}}
-                                            {{--<option value="1" {{$user->cldp == '1' ? 'selected' : ''}}>1</option>--}}
-                                            {{--<option value="2" {{$user->cldp == '2' ? 'selected' : ''}}>2</option>--}}
-                                            {{--<option value="3" {{$user->cldp == '3' ? 'selected' : ''}}>3</option>--}}
-                                        {{--</select>--}}
+                                    <div class="col-md-12">
+                                        <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>
+                                            <option value="0" {{$member->cldp == '0' ? 'selected' : ''}}>0</option>
+                                            <option value="1" {{$member->cldp == '1' ? 'selected' : ''}}>1</option>
+                                            <option value="2" {{$member->cldp == '2' ? 'selected' : ''}}>2</option>
+                                            <option value="3" {{$member->cldp == '3' ? 'selected' : ''}}>3</option>
+                                        </select>
 
-                                        {{--@if ($errors->has('cldp'))--}}
-                                            {{--<span class="invalid-feedback" role="alert">--}}
-                                                {{--<strong>{{ $errors->first('cldp') }}</strong>--}}
-                                            {{--</span>--}}
-                                        {{--@endif--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                        @if ($errors->has('cldp'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cldp') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 {{--EMAIL--}}
                                 <div class="form-group row">
                                     <label for="email" class="col-md-12 col-form-label text-md-left">Email Address</label>
 
                                     <div class="col-md-12">
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{$user->email}}" autofocus>
+                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{$member->email}}" autofocus>
 
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
@@ -240,20 +240,38 @@
                                     </div>
                                 </div>
 
-                                {{--USERNAME--}}
+                                {{--IS ACTIVE--}}
                                 <div class="form-group row">
-                                    <label for="username" class="col-md-12 col-form-label text-md-left">Username</label>
+                                    <label for="is_active" class="col-md-12 col-form-label text-md-left">Is Active?</label>
 
                                     <div class="col-md-12">
-                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{$user->username}}" autofocus>
+                                        <select name="is_active" class="form-control{{ $errors->has('is_active') ? ' is-invalid' : '' }} py-0" id="is_active" autofocus>
+                                            <option value="1" {{$member->is_active == '1' ? 'selected' : ''}}>Yes</option>
+                                            <option value="0" {{$member->is_active == '0' ? 'selected' : ''}}>No</option>
+                                        </select>
 
-                                        @if ($errors->has('username'))
+                                        @if ($errors->has('cldp'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('username') }}</strong>
+                                                <strong>{{ $errors->first('cldp') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
+
+                                {{--USERNAME--}}
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="username" class="col-md-12 col-form-label text-md-left">Username</label>--}}
+
+                                    {{--<div class="col-md-12">--}}
+                                        {{--<input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{$member->username}}" autofocus>--}}
+
+                                        {{--@if ($errors->has('username'))--}}
+                                            {{--<span class="invalid-feedback" role="alert">--}}
+                                                {{--<strong>{{ $errors->first('username') }}</strong>--}}
+                                            {{--</span>--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
                                 {{--SUBMIT BUTTON--}}
                                 <div class="form-group row mb-0 text-center">

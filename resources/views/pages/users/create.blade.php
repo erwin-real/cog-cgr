@@ -304,7 +304,7 @@
                                     <label for="cg_id" class="col-md-12 col-form-label text-md-left">Care Group ID</label>
 
                                     <div class="col-md-12">
-                                        <input id="cg_id" type="number" class="form-control{{ $errors->has('cg_id') ? ' is-invalid' : '' }}" name="cg_id" required autofocus>
+                                        <input id="cg_id" type="number" class="form-control{{ $errors->has('cg_id') ? ' is-invalid' : '' }}" name="cg_id" autofocus>
 
                                         @if ($errors->has('cg_id'))
                                             <span class="invalid-feedback" role="alert">
