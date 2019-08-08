@@ -5,17 +5,12 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth');
-    }
+
+    public function __construct() { $this->middleware('auth'); }
 
     public function index(Request $request) {
 //        dd($request);
@@ -46,6 +41,11 @@ class GroupController extends Controller
             return redirect('/caregroups/create')
                 ->with('users', User::all())
                 ->with('error', "Please add member/s !");
+
+        for($i = 0; $i < count($request->input('members')); $i++) {
+            if (Auth::user()->id == $request->input('members')[$i])
+                return redirect('/caregroups/create')->with('error', 'Invalid members');
+        }
 
         $my_arr = $request->get('members');
         $dups = $new_arr = array();
@@ -125,6 +125,11 @@ class GroupController extends Controller
             return redirect('/caregroups/create')
                 ->with('users', User::all())
                 ->with('error', "Please add member/s !");
+
+        for($i = 0; $i < count($request->input('members')); $i++) {
+            if (Auth::user()->id == $request->input('members')[$i])
+                return redirect('/caregroups/'.$id.'/edit')->with('error', 'Invalid members');
+        }
 
         $my_arr = $request->get('members');
         $dups = $new_arr = array();

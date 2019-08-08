@@ -24,6 +24,11 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+// CLUSTER CARE GROUPS
+Route::get('/cluster', 'ClusterController@index');
+Route::get('/cluster/{group}', 'ClusterController@show');
+
+
 // MY CARE GROUP
 Route::get('/my-care-group', 'MyCareGroupController@index');
 Route::get('/my-care-group/{group}/edit', 'MyCareGroupController@edit');

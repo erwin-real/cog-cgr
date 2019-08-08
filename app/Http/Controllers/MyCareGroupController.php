@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class MyCareGroupController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth');
-    }
+    public function __construct() { $this->middleware('auth'); }
 
     public function index() {
-        return view('pages.mycaregroup.index')->with('user', Auth::user());
+        if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+            return view('pages.mycaregroup.index')->with('user', Auth::user());
+
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
     }
 
     /**

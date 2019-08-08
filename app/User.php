@@ -51,6 +51,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function clusterCareGroups() {
+        return $this->hasMany('App\Group', "cluster_area", "head_cluster_area");
+    }
+
     public function groups() {
         return $this->hasMany('App\Group', 'leader_id');
     }

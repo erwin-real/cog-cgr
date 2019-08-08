@@ -11,9 +11,10 @@
                     <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}">
                         <a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
-                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
-                        <li class="{{ request()->is('my-care-group') || request()->is('my-care-group/*') ? 'active border-left-info' : '' }}">
-                            <a href="/my-care-group"><i class="fa fa-users"></i> <span>My Care Group</span></a>
+
+                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type == 'cluster head')
+                        <li class="{{ request()->is('cluster') || request()->is('cluster/*') ? 'active border-left-info' : '' }}">
+                            <a href="/cluster"><i class="fa fa-users"></i> <span>{{ucfirst(Auth::user()->head_cluster_area)}} Care Groups</span></a>
                         </li>
                     @endif
 
@@ -23,15 +24,21 @@
                         {{--</li>--}}
                     {{--@endif--}}
 
-                    {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
-                        {{--<li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">--}}
-                            {{--<a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>--}}
-                        {{--</li>--}}
-                    {{--@endif--}}
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                            <a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>
+                        </li>
+                    @endif
 
                     @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                         <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">
                             <a href="/users"><i class="fa fa-user"></i> <span>Users</span></a>
+                        </li>
+                    @endif
+
+                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+                        <li class="{{ request()->is('my-care-group') || request()->is('my-care-group/*') ? 'active border-left-info' : '' }}">
+                            <a href="/my-care-group"><i class="fa fa-users"></i> <span>My Care Group</span></a>
                         </li>
                     @endif
 

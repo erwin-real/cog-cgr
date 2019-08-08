@@ -9,14 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class MyProfileController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth');
-    }
+    public function __construct() { $this->middleware('auth'); }
 
     public function index() {
         return view('pages.myprofile.index')->with('user', Auth::user());

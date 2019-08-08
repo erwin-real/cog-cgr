@@ -36,7 +36,13 @@
                                 <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                                 <p> <strong>Venue</strong>: {{ $group->venue }}</p>
                                 <p> <strong>Cluster Area</strong>: {{ ucfirst($group->cluster_area) }}</p>
-                                <p> <strong>Cluster Head</strong>: SOOOOOOOOON!</p>
+                                <p> <strong>Cluster Head</strong>:
+                                    @if($group->clusterHead->id == Auth::user()->id)
+                                        <a href="/my-profile">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                    @else
+                                        <a href="/my-profile/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                    @endif
+                                </p>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mt-4 mb-3">

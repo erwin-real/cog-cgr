@@ -16,4 +16,6 @@ class Group extends Model
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
 
     public function members() { return $this->hasMany('App\User', 'cg_id'); }
+
+    public function clusterHead() { return $this->hasOne('App\User', 'head_cluster_area', 'cluster_area'); }
 }
