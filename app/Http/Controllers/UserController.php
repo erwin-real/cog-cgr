@@ -168,14 +168,13 @@ class UserController extends Controller
         if ($this->isAdminOrMaster()) {
             $user = User::find($request->input('id'));
             $validatedData = $request->validate([
-                'current-password' => 'required',
                 'new-password' => 'required|string|min:6|confirmed',
             ]);
             //Change Password
             $user->password = bcrypt($validatedData['new-password']);
             $user->save();
 
-            return redirect('/users/' . $user->id)->with("success", "Password changed successfully !");
+            return redirect('/users/' . $user->id)->with("success", "User's Password changed successfully !");
         }
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
