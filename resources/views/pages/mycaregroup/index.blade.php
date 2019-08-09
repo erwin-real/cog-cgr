@@ -31,16 +31,26 @@
                             <div class="ml-5 my-4">
 
                                 {{-- BASIC INFO --}}
-                                <p> <strong>Care Group Leader</strong>: {{ $group->leader->first_name }} {{ $group->leader->last_name }}</p>
+                                <p> <strong>Care Group Leader</strong>:
+                                    @if($group->leader_id != Auth::id())
+                                        <a href="/my-profile/users/{{$group->leader->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
+                                    @else
+                                        <a href="/my-profile">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
+                                    @endif
+                                </p>
                                 <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
                                 <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                                 <p> <strong>Venue</strong>: {{ $group->venue }}</p>
                                 <p> <strong>Cluster Area</strong>: {{ ucfirst($group->cluster_area) }}</p>
                                 <p> <strong>Cluster Head</strong>:
-                                    @if($group->clusterHead->id == Auth::user()->id)
-                                        <a href="/my-profile">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                    @if($group->clusterHead)
+                                        @if($group->clusterHead->id == Auth::id())
+                                            <a href="/my-profile">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                        @else
+                                            <a href="/my-profile/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                        @endif
                                     @else
-                                        <a href="/my-profile/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                        <span>none</span>
                                     @endif
                                 </p>
                             </div>
@@ -58,7 +68,6 @@
                                         <table class="table table-hover text-center">
                                             <thead>
                                                 <tr>
-                                                    {{--<th>Leader</th>--}}
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>Birthday</th>
@@ -70,19 +79,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($group->members as $member)
-                                                    <tr>
-                                                        {{--<td><a href="/users/{{$member->leader_id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>--}}
-                                                        <td><a href="/my-care-group/members/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
-                                                        <td>{{$member->address}}</td>
-                                                        <td>{{$member->birthday ? date('M d, Y', strtotime($member->birthday)) : ''}}</td>
-                                                        <td>{{$member->age}}</td>
-                                                        <td>{{$member->contact}}</td>
-                                                        <td>{{ucfirst($member->journey)}}</td>
-                                                        <td>{{$member->cldp}}</td>
-                                                        <td>{{$member->is_active == 1 ? 'Yes' : 'No'}}</td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach($group->members as $member)
+                                                <tr>
+                                                    @if($member->id == Auth::id())
+                                                        <td><a href="/my-profile">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                    @else
+                                                        <td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                    @endif
+                                                    <td>{{$member->address}}</td>
+                                                    <td>{{ $member->birthday ? date('M d, Y', strtotime($member->birthday)) : '' }}</td>
+                                                    <td>{{$member->age}}</td>
+                                                    <td>{{$member->contact}}</td>
+                                                    <td>{{ucfirst($member->journey)}}</td>
+                                                    <td>{{$member->cldp}}</td>
+                                                    <td>{{$member->is_active == 1 ? 'Yes' : 'No'}}</td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>

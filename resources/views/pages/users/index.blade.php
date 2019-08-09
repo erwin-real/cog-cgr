@@ -26,10 +26,6 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of users</h4>
                             <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
-                            {{--<select class="custome-select border-0 pr-3">--}}
-                                {{--<option selected>Last 24 Hours</option>--}}
-                                {{--<option value="0">01 July 2018</option>--}}
-                            {{--</select>--}}
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($users->isEmpty())
@@ -39,27 +35,34 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover text-center">
                                         <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Username</th>
-                                            <th>Type</th>
-                                            <th>Date Added</th>
-                                            <th>Date Modified</th>
-                                            {{--<th>Actions</th>--}}
-                                        </tr>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Cluster Area</th>
+                                                <th>Type</th>
+                                                <th>Active</th>
+                                                <th>Date Added</th>
+                                                <th>Date Modified</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($users as $user)
                                                 <tr>
-                                                    <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
-                                                    <td>{{$user->username}}</td>
-                                                    <td>{{$user->type}}</td>
+                                                    @if($user->id == Auth::id())
+                                                        <td><a href="/my-profile">{{$user->first_name}} {{$user->last_name}}</a></td>
+                                                    @else
+                                                        <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
+                                                    @endif
+                                                    <td>{{ucfirst($user->cluster_area)}}</td>
+
+                                                    @if($user->type == 'cluster head')
+                                                        <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_cluster_area)}}</td>
+                                                    @else
+                                                        <td>{{ucfirst($user->type)}}</td>
+                                                    @endif
+
+                                                    <td>{{ucfirst($user->is_active == 1 ? 'Yes' : 'No')}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</td>
-                                                    {{--<td>--}}
-                                                    {{--<a href="/products/{{$product->id}}/edit"><i class="fa fa-tools"></i></a>--}}
-                                                    {{--<a href="/combinations?id={{$product->id}}"><i class="fa fa-cogs"></i></a>--}}
-                                                    {{--</td>--}}
                                                 </tr>
                                             @endforeach
                                         </tbody>

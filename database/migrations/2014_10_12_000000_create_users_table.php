@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('cldp')->nullable();
             $table->string('username')->nullable()->unique();
             $table->string('password')->nullable();
+
             $table->string('type')->default('member');
             $table->unsignedInteger('leader_id');
             $table->unsignedInteger('cg_id')->nullable();

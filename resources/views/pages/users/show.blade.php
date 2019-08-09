@@ -48,19 +48,26 @@
                             @else
                                 <p> <strong>Leader</strong>: </p>
                             @endif
-                            <p> <strong>Active</strong>: {{ $user->is_active }}</p>
+                            <p> <strong>Active</strong>: {{ $user->is_active == '1' ? 'Yes' : 'No' }}</p>
+                            <p> <strong>Is Leader</strong>: {{ $user->is_leader == '1' ? 'Yes' : 'No'}}</p>
 
                             {{-- TECHNICAL INFO --}}
                             <p> <strong>Type</strong>: {{ $user->type }}</p>
-                            <p> <strong>Is Leader</strong>: {{ $user->is_leader}}</p>
-                            <p> <strong>Username</strong>: {{ $user->username ? $user->username : 'none'}}</p>
-                            <p> <strong>Head Cluster Area</strong>: {{ $user->head_cluster_area ? $user->head_cluster_area : 'none' }}</p>
+
+                            @if($user->type == 'cluster head')
+                                <p> <strong>Head Cluster Area</strong>: {{ $user->head_cluster_area ? $user->head_cluster_area : 'none' }}</p>
+                            @endif
+                            <p> <strong>Username</strong>: {{ $user->username ? $user->username : ''}}</p>
                             <p> <strong>Date Created</strong>: {{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</p>
                             <p> <strong>Date Updated</strong>: {{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</p>
                         </div>
                         <div class="buttons-holder mt-4">
                             <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
+
+                            @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                                <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
+                            @endif
+
                             <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
                                 <i class="fa fa-trash fa-sm fa-fw"></i>
                                 Delete

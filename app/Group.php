@@ -18,4 +18,6 @@ class Group extends Model
     public function members() { return $this->hasMany('App\User', 'cg_id'); }
 
     public function clusterHead() { return $this->hasOne('App\User', 'head_cluster_area', 'cluster_area'); }
+
+    public function activeMembers() { return $this->hasMany('App\User', 'cg_id')->where('is_active', 1); }
 }

@@ -97,7 +97,10 @@
                                     <label for="gender" class="col-md-12 col-form-label text-md-left">Gender (m/f) <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="gender" type="text" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }}" name="gender" value="{{$user->gender}}" required autofocus>
+                                        <select name="gender" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }} py-0" id="gender" autofocus>
+                                            <option value="m" {{$user->gender == 'm' ? 'selected' : ''}}>Male</option>
+                                            <option value="f" {{$user->gender == 'f' ? 'selected' : ''}}>Female</option>
+                                        </select>
 
                                         @if ($errors->has('gender'))
                                             <span class="invalid-feedback" role="alert">
@@ -181,21 +184,6 @@
                                         @if ($errors->has('cluster_area'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('cluster_area') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--HEAD CLUSTER AREA--}}
-                                <div class="form-group row">
-                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area</label>
-
-                                    <div class="col-md-12">
-                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" value="{{$user->head_cluster_area}}" autofocus>
-
-                                        @if ($errors->has('head_cluster_area'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('head_cluster_area') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -288,10 +276,15 @@
 
                                 {{--TYPE--}}
                                 <div class="form-group row">
-                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>
+                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type</label>
 
                                     <div class="col-md-12">
-                                        <input id="type" type="text" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}" name="type" value="{{$user->type}}" required autofocus>
+                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleClusterHead()">
+                                            <option value="member" {{$user->type == 'member' ? 'selected' : ''}}>Member</option>
+                                            <option value="leader" {{$user->type == 'leader' ? 'selected' : ''}}>Leader</option>
+                                            <option value="cluster head" {{$user->type == 'cluster head' ? 'selected' : ''}}>Cluster Head</option>
+                                            <option value="admin" {{$user->type == 'admin' ? 'selected' : ''}}>Admin</option>
+                                        </select>
 
                                         @if ($errors->has('type'))
                                             <span class="invalid-feedback" role="alert">
@@ -301,31 +294,16 @@
                                     </div>
                                 </div>
 
-                                {{--CARE GROUP ID--}}
-                                <div class="form-group row">
-                                    <label for="cg_id" class="col-md-12 col-form-label text-md-left">Care Group ID</label>
+                                {{--HEAD CLUSTER AREA--}}
+                                <div class="form-group row" id="cluster-head-div" style="display: none">
+                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area</label>
 
                                     <div class="col-md-12">
-                                        <input id="cg_id" type="number" class="form-control{{ $errors->has('cg_id') ? ' is-invalid' : '' }}" name="cg_id" value="{{$user->cg_id}}" required autofocus>
+                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" value="{{$user->head_cluster_area}}" autofocus>
 
-                                        @if ($errors->has('cg_id'))
+                                        @if ($errors->has('head_cluster_area'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('cg_id') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--LEADER ID--}}
-                                <div class="form-group row">
-                                    <label for="leader_id" class="col-md-12 col-form-label text-md-left">Leader ID <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="leader_id" type="number" class="form-control{{ $errors->has('leader_id') ? ' is-invalid' : '' }}" name="leader_id" value="{{$user->leader_id}}" required autofocus>
-
-                                        @if ($errors->has('leader_id'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('leader_id') }}</strong>
+                                                <strong>{{ $errors->first('head_cluster_area') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -333,10 +311,13 @@
 
                                 {{--IS LEADER--}}
                                 <div class="form-group row">
-                                    <label for="is_leader" class="col-md-12 col-form-label text-md-left">Is Leader? (0 or 1) <span class="text-danger">*</span></label>
+                                    <label for="is_leader" class="col-md-12 col-form-label text-md-left">Is Leader?</label>
 
                                     <div class="col-md-12">
-                                        <input id="is_leader" type="number" class="form-control{{ $errors->has('is_leader') ? ' is-invalid' : '' }}" name="is_leader" value="{{$user->is_leader}}" required autofocus>
+                                        <select name="is_leader" class="form-control{{ $errors->has('is_leader') ? ' is-invalid' : '' }} py-0" id="is_leader" autofocus>
+                                            <option value="1" {{$user->is_leader == '1' ? 'selected' : ''}}>Yes</option>
+                                            <option value="0" {{$user->is_leader == '0' ? 'selected' : ''}}>No</option>
+                                        </select>
 
                                         @if ($errors->has('is_leader'))
                                             <span class="invalid-feedback" role="alert">
@@ -348,10 +329,13 @@
 
                                 {{--IS ACTIVE--}}
                                 <div class="form-group row">
-                                    <label for="is_active" class="col-md-12 col-form-label text-md-left">Is Active? (0 or 1) <span class="text-danger">*</span></label>
+                                    <label for="is_active" class="col-md-12 col-form-label text-md-left">Is Active?</label>
 
                                     <div class="col-md-12">
-                                        <input id="is_active" type="number" class="form-control{{ $errors->has('is_active') ? ' is-invalid' : '' }}" name="is_active" value="{{$user->is_active}}" required autofocus>
+                                        <select name="is_active" class="form-control{{ $errors->has('is_active') ? ' is-invalid' : '' }} py-0" id="is_active" autofocus>
+                                            <option value="1" {{$user->is_active == '1' ? 'selected' : ''}}>Yes</option>
+                                            <option value="0" {{$user->is_active == '0' ? 'selected' : ''}}>No</option>
+                                        </select>
 
                                         @if ($errors->has('is_active'))
                                             <span class="invalid-feedback" role="alert">
@@ -377,5 +361,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleClusterHead() {
+            var x = document.getElementById("type").value;
+            if (x === 'cluster head') document.getElementById('cluster-head-div').style = 'display: block';
+            else document.getElementById('cluster-head-div').style = 'display: none';
+        }
+    </script>
 
 @endsection

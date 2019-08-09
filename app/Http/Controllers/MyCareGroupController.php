@@ -12,7 +12,7 @@ class MyCareGroupController extends Controller
     public function __construct() { $this->middleware('auth'); }
 
     public function index() {
-        if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+        if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'master')
             return view('pages.mycaregroup.index')->with('user', Auth::user());
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
@@ -82,7 +82,7 @@ class MyCareGroupController extends Controller
 
             for ($i = 0; $i < count($request->input('members')); $i++) {
                 $member = User::find($request->input('members')[$i]);
-                $member->leader_id = Auth::user()->id;
+                $member->leader_id = Auth::id();
                 $member->cg_id = $group->id;
                 $member->save();
             }

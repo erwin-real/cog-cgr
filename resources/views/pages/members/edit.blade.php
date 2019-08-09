@@ -250,9 +250,9 @@
                                             <option value="0" {{$member->is_active == '0' ? 'selected' : ''}}>No</option>
                                         </select>
 
-                                        @if ($errors->has('cldp'))
+                                        @if ($errors->has('is_active'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('cldp') }}</strong>
+                                                <strong>{{ $errors->first('is_active') }}</strong>
                                             </span>
                                         @endif
                                     </div>

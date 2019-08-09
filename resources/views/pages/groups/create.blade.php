@@ -126,7 +126,7 @@
                                             <li class="mb-1">
                                                 <select id="members" class="mb-1" name="members[]" required="required">
                                                     @foreach($users as $user)
-                                                        @if($user->id != Auth::user()->id && $user->type != 'master')
+                                                        @if($user->id != Auth::id() && $user->type != 'master')
                                                             <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
                                                         @endif
                                                     @endforeach

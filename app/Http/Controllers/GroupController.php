@@ -15,10 +15,12 @@ class GroupController extends Controller
     public function index(Request $request) {
 //        dd($request);
 //        dd(Group::where('leader_id', $request->input('id'))->first());
-        if ($request->has('id') && Group::where('leader_id', $request->input('id'))->first())
-            return view('pages.groups.show')->with('group', Group::where('leader_id', $request->input('id'))->get());
+//        if ($request->has('id') && Group::where('leader_id', $request->input('id'))->first())
+//            return view('pages.groups.show')->with('group', Group::where('leader_id', $request->input('id'))->get());
+        if ($this->isAdminOrMaster())
+            return view('pages.groups.index')->with('groups', Group::orderBy('created_at', 'desc')->paginate(20));
 
-        return view('pages.groups.index')->with('groups', Group::orderBy('created_at', 'desc')->paginate(20));
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to see all care groups.');
     }
 
     /**
@@ -27,7 +29,10 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('pages.groups.create')->with('users', User::all());
+        if ($this->isAdminOrMaster())
+            return view('pages.groups.create')->with('users', User::all());
+
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to create care groups.');
     }
 
     /**
@@ -37,58 +42,64 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        if (!$request->has('members'))
-            return redirect('/caregroups/create')
-                ->with('users', User::all())
-                ->with('error', "Please add member/s !");
+        if ($this->isAdminOrMaster()) {
 
-        for($i = 0; $i < count($request->input('members')); $i++) {
-            if (Auth::user()->id == $request->input('members')[$i])
-                return redirect('/caregroups/create')->with('error', 'Invalid members');
-        }
+            if (!$request->has('members'))
+                return redirect('/caregroups/create')
+                    ->with('users', User::all())
+                    ->with('error', "Please add member/s !");
 
-        $my_arr = $request->get('members');
-        $dups = $new_arr = array();
-        foreach ($my_arr as $key => $val) {
-            if (!isset($new_arr[$val])) $new_arr[$val] = $key;
-            else {
-                if (isset($dups[$val])) $dups[$val][] = $key;
-                else $dups[$val] = array($key);
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                if (Auth::id() == $request->input('members')[$i])
+                    return redirect('/caregroups/create')->with('error', 'Invalid members');
             }
+
+            $my_arr = $request->get('members');
+            $dups = $new_arr = array();
+            foreach ($my_arr as $key => $val) {
+                if (!isset($new_arr[$val])) $new_arr[$val] = $key;
+                else {
+                    if (isset($dups[$val])) $dups[$val][] = $key;
+                    else $dups[$val] = array($key);
+                }
+            }
+            if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
+
+            $validatedData = $request->validate([
+                'leader' => 'required',
+                'day_cg' => 'required',
+                'time_cg' => 'required',
+                'venue' => 'required',
+                'cluster_area' => 'required'
+            ]);
+
+            $group = new Group(array(
+                'leader_id' => $validatedData['leader'],
+                'time_cg' => $validatedData['time_cg'],
+                'venue' => $validatedData['venue'],
+                'day_cg' => $validatedData['day_cg'],
+                'cluster_area' => strtolower($validatedData['cluster_area'])
+            ));
+            $group->save();
+
+            $leader = User::find($validatedData['leader']);
+            $leader->is_leader = 1;
+            if ($leader->type == 'member') $leader->type = 'leader';
+            $leader->save();
+
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                $member = User::find($request->input('members')[$i]);
+                $member->leader_id = $validatedData['leader'];
+                $member->cg_id = $group->id;
+                $member->save();
+            }
+
+            return redirect('/caregroups/' . $group->id)
+                ->with('group', $group)
+                ->with('success', "Care Group Created Successfully !");
+
         }
-        if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
-
-        $validatedData = $request->validate([
-            'leader' => 'required',
-            'day_cg' => 'required',
-            'time_cg' => 'required',
-            'venue' => 'required',
-            'cluster_area' => 'required'
-        ]);
-
-        $group = new Group(array(
-            'leader_id' => $validatedData['leader'],
-            'time_cg' => $validatedData['time_cg'],
-            'venue' => $validatedData['venue'],
-            'day_cg' => $validatedData['day_cg'],
-            'cluster_area' => strtolower($validatedData['cluster_area'])
-        ));
-        $group->save();
-
-        $leader = User::find($validatedData['leader']);
-        $leader->is_leader = 1;
-        $leader->save();
-
-        for($i = 0; $i < count($request->input('members')); $i++) {
-            $member = User::find($request->input('members')[$i]);
-            $member->leader_id = $validatedData['leader'];
-            $member->cg_id = $group->id;
-            $member->save();
-        }
-
-        return redirect('/caregroups/'. $group->id)
-            ->with('group', $group)
-            ->with('success', "Care Group Created Successfully !");
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to create care groups.');
     }
 
     /**
@@ -98,7 +109,10 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        return view('pages.groups.show')->with('group', Group::find($id));
+        if ($this->isAdminOrMaster())
+            return view('pages.groups.show')->with('group', Group::find($id));
+
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to see that care group.');
     }
 
     /**
@@ -108,9 +122,12 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        return view('pages.groups.edit')
-            ->with('group', Group::find($id))
-            ->with('users', User::all());
+        if ($this->isAdminOrMaster())
+            return view('pages.groups.edit')
+                ->with('group', Group::find($id))
+                ->with('users', User::all());
+
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to update that care group.');
     }
 
     /**
@@ -121,57 +138,63 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        if (!$request->has('members'))
-            return redirect('/caregroups/create')
-                ->with('users', User::all())
-                ->with('error', "Please add member/s !");
+        if ($this->isAdminOrMaster()) {
 
-        for($i = 0; $i < count($request->input('members')); $i++) {
-            if (Auth::user()->id == $request->input('members')[$i])
-                return redirect('/caregroups/'.$id.'/edit')->with('error', 'Invalid members');
-        }
+            if (!$request->has('members'))
+                return redirect('/caregroups/create')
+                    ->with('users', User::all())
+                    ->with('error', "Please add member/s !");
 
-        $my_arr = $request->get('members');
-        $dups = $new_arr = array();
-        foreach ($my_arr as $key => $val) {
-            if (!isset($new_arr[$val])) $new_arr[$val] = $key;
-            else {
-                if (isset($dups[$val])) $dups[$val][] = $key;
-                else $dups[$val] = array($key);
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                if (Auth::user()->id == $request->input('members')[$i])
+                    return redirect('/caregroups/' . $id . '/edit')->with('error', 'Invalid members');
             }
+
+            $my_arr = $request->get('members');
+            $dups = $new_arr = array();
+            foreach ($my_arr as $key => $val) {
+                if (!isset($new_arr[$val])) $new_arr[$val] = $key;
+                else {
+                    if (isset($dups[$val])) $dups[$val][] = $key;
+                    else $dups[$val] = array($key);
+                }
+            }
+            if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
+
+            $validatedData = $request->validate([
+                'leader' => 'required',
+                'day_cg' => 'required',
+                'time_cg' => 'required',
+                'venue' => 'required',
+                'cluster_area' => 'required'
+            ]);
+
+            $group = Group::find($id);
+            $group->leader_id = $validatedData['leader'];
+            $group->time_cg = $validatedData['time_cg'];
+            $group->venue = $validatedData['venue'];
+            $group->cluster_area = $validatedData['cluster_area'];
+            $group->day_cg = $validatedData['day_cg'];
+            $group->save();
+
+            $leader = User::find($validatedData['leader']);
+            $leader->is_leader = 1;
+            if ($leader->type == 'member') $leader->type = 'leader';
+            $leader->save();
+
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                $member = User::find($request->input('members')[$i]);
+                $member->leader_id = $validatedData['leader'];
+                $member->cg_id = $group->id;
+                $member->save();
+            }
+
+            return redirect('/caregroups/' . $group->id)
+                ->with('group', $group)
+                ->with('success', "Care Group Updated Successfully !");
         }
-        if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
 
-        $validatedData = $request->validate([
-            'leader' => 'required',
-            'day_cg' => 'required',
-            'time_cg' => 'required',
-            'venue' => 'required',
-            'cluster_area' => 'required'
-        ]);
-
-        $group = Group::find($id);
-        $group->leader_id = $validatedData['leader'];
-        $group->time_cg = $validatedData['time_cg'];
-        $group->venue = $validatedData['venue'];
-        $group->cluster_area = $validatedData['cluster_area'];
-        $group->day_cg = $validatedData['day_cg'];
-        $group->save();
-
-        $leader = User::find($validatedData['leader']);
-        $leader->is_leader = 1;
-        $leader->save();
-
-        for($i = 0; $i < count($request->input('members')); $i++) {
-            $member = User::find($request->input('members')[$i]);
-            $member->leader_id = $validatedData['leader'];
-            $member->cg_id = $group->id;
-            $member->save();
-        }
-
-        return redirect('/caregroups/'. $group->id)
-            ->with('group', $group)
-            ->with('success', "Care Group Updated Successfully !");
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to update that care group.');
     }
 
     /**
@@ -181,9 +204,15 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $group = Group::find($id);
-        $group->delete();
+        if ($this->isAdminOrMaster()) {
+            $group = Group::find($id);
+            $group->delete();
 
-        return redirect('/caregroups')->with("success","Deleted Care Group Successfully !");
+            return redirect('/caregroups')->with("success", "Deleted Care Group Successfully !");
+        }
+
+        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to delete that care group.');
     }
+
+    private function isAdminOrMaster() { return (Auth::user()->type == 'admin' || Auth::user()->type == 'master') ? true : false; }
 }

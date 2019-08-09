@@ -22,23 +22,10 @@ class MyProfileController extends Controller
         return redirect('/my-profile');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit() {
         return view('pages.myprofile.edit')->with('user', Auth::user());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request) {
         $validatedData = $request->validate([
             'first_name' => 'required',

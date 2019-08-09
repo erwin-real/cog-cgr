@@ -28,7 +28,6 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/cluster', 'ClusterController@index');
 Route::get('/cluster/{group}', 'ClusterController@show');
 
-
 // MY CARE GROUP
 Route::get('/my-care-group', 'MyCareGroupController@index');
 Route::get('/my-care-group/{group}/edit', 'MyCareGroupController@edit');
@@ -45,15 +44,18 @@ Route::get('/my-profile/users/{user}', 'MyProfileController@show');
 Route::get('/my-profile/edit', 'MyProfileController@edit');
 Route::put('/my-profile', 'MyProfileController@update');
 
-// CHANGE PASSWORD
+// MY PROFILE CHANGE PASSWORD
 Route::get('/my-profile/change-password','MyProfileController@showChangePasswordForm');
 Route::post('/my-profile/change-password','MyProfileController@changePassword');
 
+// USERS CHANGE PASSWORD
+Route::get('/users/change-password','UserController@showChangePasswordForm');
+Route::post('/users/change-password','UserController@changePassword');
+
 // RESOURCES
 Route::resource('users', 'UserController');
-//Route::resource('accounts', 'AccountController');
 Route::resource('caregroups', 'GroupController');
-
+//Route::resource('accounts', 'AccountController');
 
 // Registration Routes...
 //Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

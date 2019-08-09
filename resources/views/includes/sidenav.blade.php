@@ -36,13 +36,13 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'admin' && Auth::user()->type != 'master')
+                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'master' && Auth::user()->type != 'member')
                         <li class="{{ request()->is('my-care-group') || request()->is('my-care-group/*') ? 'active border-left-info' : '' }}">
                             <a href="/my-care-group"><i class="fa fa-users"></i> <span>My Care Group</span></a>
                         </li>
                     @endif
 
-                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') || request()->is('users/*') ? 'active border-left-info' : '' }}">
+                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') ? 'active border-left-info' : '' }}">
                         <a href="/my-profile"><i class="fa fa-user"></i> <span>My Profile</span></a>
                     </li>
                     {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
