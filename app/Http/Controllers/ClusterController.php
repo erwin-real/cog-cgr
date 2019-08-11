@@ -14,23 +14,21 @@ class ClusterController extends Controller
         if(
             Auth::user()->is_leader == 1 &&
             count(Auth::user()->groups) > 0 &&
-            Auth::user()->type == 'cluster head' &&
-            Auth::user()->type != 'master'
+            Auth::user()->type == 'cluster head'
         )
             return view('pages.cluster.index')->with('groups', Auth::user()->clusterCareGroups);
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see Cluster Care Groups.');
     }
 
     public function show($id) {
         if(
             Auth::user()->is_leader == 1 &&
             count(Auth::user()->groups) > 0 &&
-            Auth::user()->type == 'cluster head' &&
-            Auth::user()->type != 'master'
+            Auth::user()->type == 'cluster head'
         )
             return view('pages.cluster.show')->with('group', Group::find($id));
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see Cluster Care Groups.');
     }
 }

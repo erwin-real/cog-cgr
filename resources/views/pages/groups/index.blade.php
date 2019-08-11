@@ -36,15 +36,25 @@
                                     <table class="table table-hover text-center">
                                         <thead>
                                             <tr>
-                                                <th>Leader</th>
+                                                {{--<th>Leader</th>--}}
+                                                {{--<th>Members</th>--}}
+                                                {{--<th>Active</th>--}}
+                                                {{--<th>Day</th>--}}
+                                                {{--<th>Time</th>--}}
+                                                {{--<th>Venue</th>--}}
+                                                {{--<th>Cluster Area</th>--}}
+                                                {{--<th>Date Added</th>--}}
+                                                {{--<th>Date Modified</th>--}}
+
+                                                <th>@sortablelink('leader.first_name', 'Leader',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>Members</th>
                                                 <th>Active</th>
-                                                <th>Day</th>
-                                                <th>Time</th>
-                                                <th>Venue</th>
-                                                <th>Cluster Area</th>
-                                                <th>Date Added</th>
-                                                <th>Date Modified</th>
+                                                <th>@sortablelink('day_cg', 'Day',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('time_cg', 'Time',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('venue', 'Venue',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('cluster_area', 'Cluster Area',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('created_at', 'Date Added',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('updated_at', 'Date Modified',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -59,8 +69,8 @@
                                                     <td>{{count($group->activeMembers)}}</td>
                                                     <td>{{$group->day_cg}}</td>
                                                     <td>{{ date('h:i A', strtotime($group->time_cg)) }}</td>
-                                                    <td>{{$group->venue}}</td>
-                                                    <td>{{$group->cluster_area}}</td>
+                                                    <td>{{ucfirst($group->venue)}}</td>
+                                                    <td>{{ucfirst($group->cluster_area)}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($group->created_at)) }}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($group->updated_at)) }}</td>
                                                 </tr>

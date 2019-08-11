@@ -36,22 +36,25 @@
                                     <table class="table table-hover text-center">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Cluster Area</th>
-                                                <th>Type</th>
-                                                <th>Active</th>
-                                                <th>Date Added</th>
-                                                <th>Date Modified</th>
+                                                {{--<th>Name</th>--}}
+                                                {{--<th>Cluster Area</th>--}}
+                                                {{--<th>Type</th>--}}
+                                                {{--<th>Active</th>--}}
+                                                {{--<th>Date Added</th>--}}
+                                                {{--<th>Date Modified</th>--}}
+
+                                                <th>@sortablelink('first_name', 'Name',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('cluster_area', 'Cluster Area',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('type', 'Type',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('is_active', 'Active',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('created_at', 'Date Added',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('updated_at', 'Date Modified',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($users as $user)
                                                 <tr>
-                                                    @if($user->id == Auth::id())
-                                                        <td><a href="/my-profile">{{$user->first_name}} {{$user->last_name}}</a></td>
-                                                    @else
-                                                        <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
-                                                    @endif
+                                                    <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
                                                     <td>{{ucfirst($user->cluster_area)}}</td>
 
                                                     @if($user->type == 'cluster head')

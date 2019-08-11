@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function index() {
         if ($this->isAdminOrMaster())
-            return view('pages.users.index')->with('users', User::orderBy('created_at', 'desc')->paginate(20));
+            return view('pages.users.index')->with('users', User::sortable()->paginate(20));
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see all users.');
     }
@@ -130,8 +130,8 @@ class UserController extends Controller
             $user->head_cluster_area = ($request->input('head_cluster_area') || strlen($request->input('head_cluster_area')) > 0) ? strtolower($request->input('head_cluster_area')) : null;
             $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
 
-            if (strlen($request->input('password')) != 0)
-                $user->password = Hash::make($request->input('password'));
+//            if (strlen($request->input('password')) != 0)
+//                $user->password = Hash::make($request->input('password'));
 
             $user->save();
 
@@ -170,7 +170,7 @@ class UserController extends Controller
             $validatedData = $request->validate([
                 'new-password' => 'required|string|min:6|confirmed',
             ]);
-            //Change Password
+
             $user->password = bcrypt($validatedData['new-password']);
             $user->save();
 

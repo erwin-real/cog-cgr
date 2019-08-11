@@ -5,17 +5,29 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Authenticatable
 {
 
 //    TYPES OF USERS:
+//    0. MASTER
 //    1. ADMIN
 //    2. CLUSTER HEAD
 //    3. CG LEADER
 
-    // Timestamps
+    use Sortable;
+
     public $timestamps = true;
+
+    public $sortable = [
+        'first_name', 'middle_name', 'last_name', 'username',
+        'email', 'leader_id', 'cg_id', 'address',
+        'cluster_area', 'gender', 'group_age', 'age',
+        'birthday', 'head_cluster_area', 'contact',
+        'journey', 'cldp', 'type', 'is_leader',
+        'is_active', 'created_at', 'updated_at'
+    ];
 
     use Notifiable;
 

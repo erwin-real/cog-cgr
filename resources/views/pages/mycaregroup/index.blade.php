@@ -87,7 +87,7 @@
                                                         <td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
                                                     @endif
                                                     <td>{{$member->address}}</td>
-                                                    <td>{{ $member->birthday ? date('M d, Y', strtotime($member->birthday)) : '' }}</td>
+                                                    <td>{{$member->birthday ? date('M d, Y', strtotime($member->birthday)) : ''}}</td>
                                                     <td>{{$member->age}}</td>
                                                     <td>{{$member->contact}}</td>
                                                     <td>{{ucfirst($member->journey)}}</td>

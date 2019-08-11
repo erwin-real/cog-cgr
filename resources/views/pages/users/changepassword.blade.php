@@ -32,22 +32,6 @@
                                 <input type="hidden" name="id" value="{{$user->id}}">
                                 {{ csrf_field() }}
 
-                                <div class="form-group row{{ $errors->has('current-password') ? ' has-error' : '' }}">
-                                    <label for="current-password" class="col-md-4 col-form-label">{{ __('Current Password') }} <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-6">
-                                        <input id="current-password" type="password"
-                                               class="form-control{{ $errors->has('current-password') ? ' is-invalid' : '' }}"
-                                               name="current-password" value="{{ old('current-password') }}" required autofocus>
-
-                                        @if ($errors->has('current-password'))
-                                            <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('current-password') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 <div class="form-group row{{ $errors->has('new-password') ? ' has-error' : '' }}">
                                     <label for="new-password" class="col-md-4 col-form-label">{{ __('New Password') }} <span class="text-danger">*</span></label>
 

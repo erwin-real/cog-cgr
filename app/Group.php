@@ -3,11 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Group extends Model
 {
-    // Timestamps
+
+    use Sortable;
+
     public $timestamps = true;
+
+    public $sortable = [
+        'leader_id', 'day_cg', 'time_cg', 'cluster_area',
+        'venue', 'updated_at', 'created_at'
+    ];
 
     protected $fillable = [
         'leader_id', 'day_cg', 'time_cg', 'cluster_area', 'venue'

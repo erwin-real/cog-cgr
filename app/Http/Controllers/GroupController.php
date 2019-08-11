@@ -18,7 +18,7 @@ class GroupController extends Controller
 //        if ($request->has('id') && Group::where('leader_id', $request->input('id'))->first())
 //            return view('pages.groups.show')->with('group', Group::where('leader_id', $request->input('id'))->get());
         if ($this->isAdminOrMaster())
-            return view('pages.groups.index')->with('groups', Group::orderBy('created_at', 'desc')->paginate(20));
+            return view('pages.groups.index')->with('groups', Group::sortable()->paginate(20));
 
         return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to see all care groups.');
     }
