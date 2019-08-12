@@ -5,9 +5,13 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">{{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/users">Users</a></li>
+                        <li>
+                            <a href="/users">
+                                {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                            </a>
+                        </li>
                         <li><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></li>
                         <li><span>Update</span></li>
                     </ul>
@@ -140,16 +144,23 @@
                                     </div>
                                 </div>
 
+
                                 {{--GROUP AGE--}}
                                 <div class="form-group row">
                                     <label for="group_age" class="col-md-12 col-form-label text-md-left">Group Age <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
-                                            <option value="youth" {{$user->group_age == 'youth' ? 'selected' : ''}}>Youth</option>
-                                            <option value="men" {{$user->group_age == 'men' ? 'selected' : ''}}>Men</option>
-                                            <option value="women" {{$user->group_age == 'women' ? 'selected' : ''}}>Women</option>
-                                        </select>
+                                        @if(Auth::user()->type == 'department head')
+                                            <input type="text" name="group_age"
+                                                   class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }}"
+                                                   value="{{ucfirst(Auth::user()->head_department)}}" readonly autofocus required>
+                                        @else
+                                            <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
+                                                <option value="youth" {{$user->group_age == 'youth' ? 'selected' : ''}}>Youth</option>
+                                                <option value="men" {{$user->group_age == 'men' ? 'selected' : ''}}>Men</option>
+                                                <option value="women" {{$user->group_age == 'women' ? 'selected' : ''}}>Women</option>
+                                            </select>
+                                        @endif
 
                                         @if ($errors->has('group_age'))
                                             <span class="invalid-feedback" role="alert">
@@ -264,10 +275,11 @@
                                     <label for="type" class="col-md-12 col-form-label text-md-left">Type</label>
 
                                     <div class="col-md-12">
-                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleClusterHead()">
+                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleHeads()">
                                             <option value="member" {{$user->type == 'member' ? 'selected' : ''}}>Member</option>
                                             <option value="leader" {{$user->type == 'leader' ? 'selected' : ''}}>Leader</option>
                                             <option value="cluster head" {{$user->type == 'cluster head' ? 'selected' : ''}}>Cluster Head</option>
+                                            <option value="department head" {{$user->type == 'department head' ? 'selected' : ''}}>Department Head</option>
                                             <option value="admin" {{$user->type == 'admin' ? 'selected' : ''}}>Admin</option>
                                         </select>
 
@@ -289,6 +301,25 @@
                                         @if ($errors->has('head_cluster_area'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('head_cluster_area') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--HEAD DEPARTMENT--}}
+                                <div class="form-group row" id="department-head-div" style="display: none">
+                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head</label>
+
+                                    <div class="col-md-12">
+                                        <select name="head_department" class="form-control{{ $errors->has('head_department') ? ' is-invalid' : '' }} py-0" id="head_department" autofocus>
+                                            <option value="youth" {{$user->head_department == 'youth' ? 'selected' : ''}}>Youth</option>
+                                            <option value="men" {{$user->head_department == 'men' ? 'selected' : ''}}>Men</option>
+                                            <option value="women" {{$user->head_department == 'women' ? 'selected' : ''}}>Women</option>
+                                        </select>
+
+                                        @if ($errors->has('head_department'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('head_department') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -348,10 +379,18 @@
     </div>
 
     <script>
-        function toggleClusterHead() {
-            var x = document.getElementById("type").value;
-            if (x === 'cluster head') document.getElementById('cluster-head-div').style = 'display: block';
-            else document.getElementById('cluster-head-div').style = 'display: none';
+        toggleHeads();
+        function toggleHeads() {
+            if (document.getElementById("type").value === 'cluster head') {
+                document.getElementById('cluster-head-div').style = 'display: block';
+                document.getElementById('department-head-div').style = 'display: none';
+            } else if (document.getElementById("type").value === 'department head') {
+                document.getElementById('department-head-div').style = 'display: block';
+                document.getElementById('cluster-head-div').style = 'display: none';
+            } else {
+                document.getElementById('cluster-head-div').style = 'display: none';
+                document.getElementById('department-head-div').style = 'display: none';
+            }
         }
     </script>
 

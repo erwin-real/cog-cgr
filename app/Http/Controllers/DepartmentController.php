@@ -7,40 +7,35 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class GroupController extends Controller
+class DepartmentController extends Controller
 {
 
     public function __construct() { $this->middleware('auth'); }
 
-    public function index(Request $request) {
-//        dd($request);
-//        dd(Group::where('leader_id', $request->input('id'))->first());
-//        if ($request->has('id') && Group::where('leader_id', $request->input('id'))->first())
-//            return view('pages.groups.show')->with('group', Group::where('leader_id', $request->input('id'))->get());
-        if ($this->isAdminOrMaster())
-            return view('pages.groups.index')->with('groups', Group::sortable()->paginate(20));
+    public function index() {
+        if($this->isLeaderAndDeptHead())
+            return view('pages.department.index')->with('groups', Auth::user()->departmentGroups);
 
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to see all care groups.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see Department Care Groups.');
     }
 
     public function create() {
-        if ($this->isAdminOrMaster())
-            return view('pages.groups.create')->with('users', User::all());
+        if($this->isLeaderAndDeptHead())
+            return view('pages.department.create')->with('users', User::all());
 
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to create care groups.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to create a care group.');
     }
 
     public function store(Request $request) {
-        if ($this->isAdminOrMaster()) {
-
+        if($this->isLeaderAndDeptHead()) {
             if (!$request->has('members'))
-                return redirect('/caregroups/create')
+                return redirect('/department/create')
                     ->with('users', User::all())
                     ->with('error', "Please add member/s !");
 
             for ($i = 0; $i < count($request->input('members')); $i++) {
                 if (Auth::id() == $request->input('members')[$i])
-                    return redirect('/caregroups/create')->with('error', 'Invalid members');
+                    return redirect('/department/create')->with('error', 'Invalid members');
             }
 
             $my_arr = $request->get('members');
@@ -52,20 +47,20 @@ class GroupController extends Controller
                     else $dups[$val] = array($key);
                 }
             }
-            if ($dups) return redirect('/caregroups/create')->with('error', 'Cannot create the care group because it has duplicate members!');
+            if ($dups) return redirect('/department/create')->with('error', 'Cannot create the care group because it has duplicate members!');
 
             $validatedData = $request->validate([
                 'leader' => 'required',
-                'department' => 'required',
                 'day_cg' => 'required',
                 'time_cg' => 'required',
                 'venue' => 'required',
                 'cluster_area' => 'required'
             ]);
 
+//            dd($request);
             $group = new Group(array(
                 'leader_id' => $validatedData['leader'],
-                'department' => $validatedData['department'],
+                'department' => Auth::user()->head_department,
                 'time_cg' => $validatedData['time_cg'],
                 'venue' => $validatedData['venue'],
                 'day_cg' => $validatedData['day_cg'],
@@ -85,41 +80,40 @@ class GroupController extends Controller
                 $member->save();
             }
 
-            return redirect('/caregroups/' . $group->id)
+            return redirect('/department/' . $group->id)
                 ->with('group', $group)
                 ->with('success', "Care Group Created Successfully !");
-
         }
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to create care groups.');
+
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to create a care group.');
     }
 
     public function show($id) {
-        if ($this->isAdminOrMaster())
-            return view('pages.groups.show')->with('group', Group::find($id));
+        if($this->isLeaderAndDeptHead())
+            return view('pages.department.show')->with('group', Group::find($id));
 
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to see that care group.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that care group.');
     }
 
     public function edit($id) {
-        if ($this->isAdminOrMaster())
-            return view('pages.groups.edit')
+        if($this->isLeaderAndDeptHead())
+            return view('pages.department.edit')
                 ->with('group', Group::find($id))
                 ->with('users', User::all());
 
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to update that care group.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to update that care group.');
     }
 
     public function update(Request $request, $id) {
-        if ($this->isAdminOrMaster()) {
-
+        if($this->isLeaderAndDeptHead()) {
             if (!$request->has('members'))
-                return redirect('/caregroups/create')
+                return redirect('/department/create')
                     ->with('users', User::all())
                     ->with('error', "Please add member/s !");
 
             for ($i = 0; $i < count($request->input('members')); $i++) {
                 if (Auth::user()->id == $request->input('members')[$i])
-                    return redirect('/caregroups/' . $id . '/edit')->with('error', 'Invalid members');
+                    return redirect('/department/' . $id . '/edit')->with('error', 'Invalid members');
             }
 
             $my_arr = $request->get('members');
@@ -131,11 +125,10 @@ class GroupController extends Controller
                     else $dups[$val] = array($key);
                 }
             }
-            if ($dups) return redirect('/caregroups/' . $id . '/edit')->with('error', 'Cannot create the care group because it has duplicate members!');
+            if ($dups) return redirect('/department/' . $id . '/edit')->with('error', 'Cannot create the care group because it has duplicate members!');
 
             $validatedData = $request->validate([
                 'leader' => 'required',
-                'department' => 'required',
                 'day_cg' => 'required',
                 'time_cg' => 'required',
                 'venue' => 'required',
@@ -144,7 +137,7 @@ class GroupController extends Controller
 
             $group = Group::find($id);
             $group->leader_id = $validatedData['leader'];
-            $group->department = $validatedData['department'];
+            $group->department = Auth::user()->head_department;
             $group->time_cg = $validatedData['time_cg'];
             $group->venue = $validatedData['venue'];
             $group->cluster_area = $validatedData['cluster_area'];
@@ -163,24 +156,26 @@ class GroupController extends Controller
                 $member->save();
             }
 
-            return redirect('/caregroups/' . $group->id)
+            return redirect('/department/' . $group->id)
                 ->with('group', $group)
                 ->with('success', "Care Group Updated Successfully !");
         }
 
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to update that care group.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to update this care group.');
     }
 
     public function destroy($id) {
-        if ($this->isAdminOrMaster()) {
-            $group = Group::find($id);
-            $group->delete();
+        if($this->isLeaderAndDeptHead())
+            return view('pages.department.index')->with('groups', Auth::user()->departmentGroups);
 
-            return redirect('/caregroups')->with("success", "Deleted Care Group Successfully !");
-        }
-
-        return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to delete that care group.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see delete that care group.');
     }
 
-    private function isAdminOrMaster() { return (Auth::user()->type == 'admin' || Auth::user()->type == 'master') ? true : false; }
+    private function isLeaderAndDeptHead() {
+        return (
+            Auth::user()->is_leader == 1 &&
+            count(Auth::user()->groups) > 0 &&
+            Auth::user()->type == 'department head'
+        ) ? true : false;
+    }
 }

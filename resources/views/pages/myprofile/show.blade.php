@@ -49,6 +49,16 @@
                             @else
                                 {{--<p> <strong>Leader</strong>: </p>--}}
                             @endif
+
+                            <p>
+                                @if($user->type == 'cluster head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_cluster_area) }}
+                                @elseif($user->type == 'department head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_department) }}
+                                @elseif($user->type == 'admin')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }}
+                                @endif
+                            </p>
                         </div>
 
                         @if($user->id == Auth::id() || Auth::user()->type == 'admin')

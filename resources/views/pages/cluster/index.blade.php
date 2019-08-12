@@ -39,6 +39,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Leader</th>
+                                                <th>Department</th>
                                                 <th>Members</th>
                                                 <th>Active</th>
                                                 <th>Day</th>
@@ -57,6 +58,7 @@
                                                     @else
                                                         <td><a href="/cluster/{{$group->id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>
                                                     @endif
+                                                    <td>{{$group->department}}</td>
                                                     <td>{{count($group->members)}}</td>
                                                     <td>{{count($group->activeMembers)}}</td>
                                                     <td>{{$group->day_cg}}</td>

@@ -5,7 +5,9 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">
+                        {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                    </h4>
                     <ul class="breadcrumbs pull-left">
                         {{--<li><a href="index.html">Home</a></li>--}}
                         {{--<li><span>Dashboard</span></li>--}}
@@ -24,7 +26,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">List of users</h4>
+                            <h4 class="header-title mb-0">List of {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                             <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
                         </div>
                         <div class="market-status-table mt-4">
@@ -46,6 +48,9 @@
                                                 <th>@sortablelink('first_name', 'Name',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>@sortablelink('cluster_area', 'Cluster Area',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>@sortablelink('type', 'Type',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                @if(Auth::user()->type != 'department head')
+                                                    <th>@sortablelink('group_age', 'Group Age',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                @endif
                                                 <th>@sortablelink('is_active', 'Active',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>@sortablelink('created_at', 'Date Added',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>@sortablelink('updated_at', 'Date Modified',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
@@ -59,8 +64,14 @@
 
                                                     @if($user->type == 'cluster head')
                                                         <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_cluster_area)}}</td>
+                                                    @elseif($user->type == 'department head')
+                                                        <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_department)}}</td>
                                                     @else
                                                         <td>{{ucfirst($user->type)}}</td>
+                                                    @endif
+
+                                                    @if(Auth::user()->type != 'department head')
+                                                        <td>{{ucfirst($user->group_age)}}</td>
                                                     @endif
 
                                                     <td>{{ucfirst($user->is_active == 1 ? 'Yes' : 'No')}}</td>

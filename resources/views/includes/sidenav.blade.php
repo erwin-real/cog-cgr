@@ -18,6 +18,12 @@
                         </li>
                     @endif
 
+                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type == 'department head')
+                        <li class="{{ request()->is('department') || request()->is('department/*') ? 'active border-left-info' : '' }}">
+                            <a href="/department"><i class="fa fa-users"></i> <span>{{ucfirst(Auth::user()->head_department)}} Care Groups</span></a>
+                        </li>
+                    @endif
+
                     {{--@if(Auth::user()->type == 'cluster head' && Auth::user()->type != 'admin' && Auth::user()->type != 'master')--}}
                         {{--<li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">--}}
                             {{--<a href="/caregroups?cluster_area={{Auth::user()->head_cluster_area}}"><i class="fa fa-users"></i> <span>{{Auth::user()->head_cluster_area}} CG</span></a>--}}
@@ -26,13 +32,19 @@
 
                     @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                         <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
-                            <a href="/caregroups"><i class="fa fa-users"></i> <span>Care Groups</span></a>
+                            <a href="/caregroups"><i class="fa fa-users"></i> <span>All Care Groups</span></a>
                         </li>
                     @endif
 
-                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master' || Auth::user()->type == 'department head')
                         <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">
-                            <a href="/users"><i class="fa fa-user"></i> <span>Users</span></a>
+                            <a href="/users"><i class="fa fa-user"></i>
+                                @if(Auth::user()->type == 'department head')
+                                    <span>{{ucfirst(Auth::user()->head_department)}}</span>
+                                @else
+                                    <span>Users</span>
+                                @endif
+                            </a>
                         </li>
                     @endif
 

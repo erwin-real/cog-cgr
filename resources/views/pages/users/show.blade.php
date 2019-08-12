@@ -5,9 +5,13 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">{{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/users">Users</a></li>
+                        <li>
+                            <a href="/users">
+                                {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                            </a>
+                        </li>
                         <li><span>{{$user->first_name}} {{$user->last_name}}</span></li>
                     </ul>
                 </div>
@@ -52,11 +56,17 @@
                             <p> <strong>Is Leader</strong>: {{ $user->is_leader == '1' ? 'Yes' : 'No'}}</p>
 
                             {{-- TECHNICAL INFO --}}
-                            <p> <strong>Type</strong>: {{ $user->type }}</p>
 
-                            @if($user->type == 'cluster head')
-                                <p> <strong>Head Cluster Area</strong>: {{ $user->head_cluster_area ? $user->head_cluster_area : 'none' }}</p>
-                            @endif
+                            <p>
+                                @if($user->type == 'cluster head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_cluster_area) }}
+                                @elseif($user->type == 'department head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_department) }}
+                                @else
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }}
+                                @endif
+                            </p>
+
                             <p> <strong>Username</strong>: {{ $user->username ? $user->username : ''}}</p>
                             <p> <strong>Date Created</strong>: {{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</p>
                             <p> <strong>Date Updated</strong>: {{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</p>

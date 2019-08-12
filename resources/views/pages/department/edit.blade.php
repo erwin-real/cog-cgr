@@ -5,10 +5,10 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Care Groups</h4>
+                    <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Care Groups</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/caregroups">Care Groups</a></li>
-                        <li><a href="/caregroups/{{$group->id}}">{{$group->id}}</a></li>
+                        <li><a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups</a></li>
+                        <li><a href="/department/{{$group->id}}">{{$group->id}}</a></li>
                         <li><span>Update</span></li>
                     </ul>
                 </div>
@@ -28,7 +28,7 @@
                             <h4 class="header-title mb-0">Update Care Group</h4>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ action('GroupController@update', $group->id) }}" method="POST">
+                            <form action="{{ action('DepartmentController@update', $group->id) }}" method="POST">
                                 <input type="hidden" name="_method" value="PUT">
                                 @csrf
 
@@ -39,32 +39,15 @@
                                     <div class="col-md-12">
                                         <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
                                             @foreach($users as $user)
-                                                <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
+                                                @if($user->id != Auth::id() && $user->type != 'master')
+                                                    <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
 
                                         @if ($errors->has('leader'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('leader') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{-- DEPARTMENT --}}
-                                <div class="form-group row">
-                                    <label for="department" class="col-md-12 col-form-label text-md-left">Department <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <select name="department" class="form-control{{ $errors->has('department') ? ' is-invalid' : '' }} py-0" id="department" autofocus required>
-                                            <option value="youth" {{$group->department == 'youth' ? 'selected' : ''}}>Youth</option>
-                                            <option value="men" {{$group->department == 'men' ? 'selected' : ''}}>Men</option>
-                                            <option value="women" {{$group->department == 'women' ? 'selected' : ''}}>Women</option>
-                                        </select>
-
-                                        @if ($errors->has('department'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('department') }}</strong>
                                             </span>
                                         @endif
                                     </div>

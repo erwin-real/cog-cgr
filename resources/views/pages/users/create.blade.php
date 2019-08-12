@@ -5,9 +5,13 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">{{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/users">Users</a></li>
+                        <li>
+                            <a href="/users">
+                                {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                            </a>
+                        </li>
                         <li><span>Create</span></li>
                     </ul>
                 </div>
@@ -143,11 +147,17 @@
                                     <label for="group_age" class="col-md-12 col-form-label text-md-left">Group Age <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
-                                            <option value="youth">Youth</option>
-                                            <option value="men">Men</option>
-                                            <option value="women">Women</option>
-                                        </select>
+                                        @if(Auth::user()->type == 'department head')
+                                            <input type="text" name="group_age"
+                                                   class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }}"
+                                                   value="{{ucfirst(Auth::user()->head_department)}}" readonly autofocus required>
+                                        @else
+                                            <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
+                                                <option value="youth">Youth</option>
+                                                <option value="men">Men</option>
+                                                <option value="women">Women</option>
+                                            </select>
+                                        @endif
 
                                         @if ($errors->has('group_age'))
                                             <span class="invalid-feedback" role="alert">
@@ -277,11 +287,16 @@
                                     <label for="type" class="col-md-12 col-form-label text-md-left">Type</label>
 
                                     <div class="col-md-12">
-                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleClusterHead()">
+                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleHeads()">
                                             <option value="member">Member</option>
                                             <option value="leader">Leader</option>
                                             <option value="cluster head">Cluster Head</option>
-                                            <option value="admin">Admin</option>
+
+                                            @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin')
+                                                <option value="department head">Department Head</option>
+                                                <option value="admin">Admin</option>
+                                            @endif
+
                                         </select>
 
                                         @if ($errors->has('type'))
@@ -302,6 +317,25 @@
                                         @if ($errors->has('head_cluster_area'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('head_cluster_area') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--HEAD DEPARTMENT--}}
+                                <div class="form-group row" id="department-head-div" style="display: none">
+                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head</label>
+
+                                    <div class="col-md-12">
+                                        <select name="head_department" class="form-control{{ $errors->has('head_department') ? ' is-invalid' : '' }} py-0" id="head_department" autofocus>
+                                            <option value="youth">Youth</option>
+                                            <option value="men">Men</option>
+                                            <option value="women">Women</option>
+                                        </select>
+
+                                        @if ($errors->has('head_department'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('head_department') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -361,10 +395,17 @@
     </div>
 
     <script>
-        function toggleClusterHead() {
-            var x = document.getElementById("type").value;
-            if (x === 'cluster head') document.getElementById('cluster-head-div').style = 'display: block';
-            else document.getElementById('cluster-head-div').style = 'display: none';
+        function toggleHeads() {
+            if (document.getElementById("type").value === 'cluster head') {
+                document.getElementById('cluster-head-div').style = 'display: block';
+                document.getElementById('department-head-div').style = 'display: none';
+            } else if (document.getElementById("type").value === 'department head') {
+                document.getElementById('department-head-div').style = 'display: block';
+                document.getElementById('cluster-head-div').style = 'display: none';
+            } else {
+                document.getElementById('cluster-head-div').style = 'display: none';
+                document.getElementById('department-head-div').style = 'display: none';
+            }
         }
     </script>
 

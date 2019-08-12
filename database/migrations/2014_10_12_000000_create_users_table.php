@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->text('address');
             $table->string('cluster_area');
             $table->string('head_cluster_area')->nullable()->unique();
+            $table->string('head_department')->nullable()->unique();
             $table->string('contact')->nullable();
             $table->char('journey', 20)->default('pre-believer');
             $table->tinyInteger('cldp')->nullable();

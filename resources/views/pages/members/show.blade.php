@@ -43,6 +43,17 @@
                             <p> <strong>CLDP</strong>: {{ $member->cldp }}</p>
                             <p> <strong>Is Active</strong>? {{ $member->is_active == 1 ? 'Yes' : 'No' }}</p>
                             <p> <strong>Email</strong>: {{ $member->email ? $member->email : 'none'}}</p>
+
+                            <p>
+                                @if($user->type == 'cluster head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_cluster_area) }}
+                                @elseif($user->type == 'department head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_department) }}
+                                @elseif($user->type == 'admin')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }}
+                                @endif
+                            </p>
+
                             <p> <strong>Username</strong>: {{ $member->username ? $member->username : 'none'}}</p>
 
                             @if($member->leader_id != 0 && $member->leader_id != Auth()->user()->id)

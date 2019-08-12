@@ -5,9 +5,13 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Users</h4>
+                    <h4 class="page-title pull-left">{{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/users">Users</a></li>
+                        <li>
+                            <a href="/users">
+                                {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                            </a>
+                        </li>
                         <li><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></li>
                         <li><span>Change Password</span></li>
                     </ul>

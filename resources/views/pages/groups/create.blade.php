@@ -49,6 +49,25 @@
                                     </div>
                                 </div>
 
+                                {{-- DEPARTMENT --}}
+                                <div class="form-group row">
+                                    <label for="department" class="col-md-12 col-form-label text-md-left">Department <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <select name="department" class="form-control{{ $errors->has('department') ? ' is-invalid' : '' }} py-0" id="department" autofocus required>
+                                            <option value="youth">Youth</option>
+                                            <option value="men">Men</option>
+                                            <option value="women">Women</option>
+                                        </select>
+
+                                        @if ($errors->has('department'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('department') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 {{-- DAY OF CARE GROUP --}}
                                 <div class="form-group row">
                                     <label for="day_cg" class="col-md-12 col-form-label text-md-left">Day <span class="text-danger">*</span></label>

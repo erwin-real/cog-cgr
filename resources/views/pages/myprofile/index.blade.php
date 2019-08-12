@@ -41,13 +41,24 @@
                             <p> <strong>Gender</strong>: {{ $user->gender == 'f' ? 'Female' : 'Male' }}</p>
                             <p> <strong>Journey</strong>: {{ ucfirst($user->journey) }}</p>
                             <p> <strong>CLDP</strong>: {{ $user->cldp }}</p>
+
+                            <p>
+                                @if($user->type == 'cluster head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_cluster_area) }}
+                                @elseif($user->type == 'department head')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }} - {{ ucfirst($user->head_department) }}
+                                @elseif($user->type == 'admin')
+                                    <strong>Type</strong>: {{ ucfirst($user->type) }}
+                                @endif
+                            </p>
+
                             <p> <strong>Email</strong>: {{ $user->email ? $user->email : 'none'}}</p>
                             <p> <strong>Username</strong>: {{ $user->username ? $user->username : 'none'}}</p>
 
                             @if($user->leader_id != 0)
                                 <p> <strong>Leader</strong>: <a href="/my-profile/users/{{$user->leader->id}}">{{ $user->leader->first_name.' '.$user->leader->last_name }}</a></p>
-                            @else
-                                <p> <strong>Leader</strong>: </p>
+                            {{--@else--}}
+                                {{--<p> <strong>Leader</strong>: </p>--}}
                             @endif
                         </div>
 

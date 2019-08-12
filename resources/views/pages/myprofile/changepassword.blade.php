@@ -81,45 +81,10 @@
                                 </div>
                             </form>
                         </div>
-                        {{--<div class="buttons-holder mt-4">--}}
-                            {{--<a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>--}}
-                            {{--<a href="{{ action('UserController@showChangePasswordForm') }}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>--}}
-                            {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">--}}
-                                {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}
-                                {{--Delete--}}
-                            {{--</button>--}}
-
-                        {{--</div>--}}
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- DELETE Modal-->
-    <div class="modal fade" id="delUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete User?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Are you sure you want to delete this user?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-                    <form action="{{ action('UserController@destroy', $user->id) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

@@ -28,6 +28,10 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/cluster', 'ClusterController@index');
 Route::get('/cluster/{group}', 'ClusterController@show');
 
+// DEPARTMENT CARE GROUPS
+//Route::get('/department', 'DepartmentGroupController@index');
+//Route::get('/department/{group}', 'DepartmentGroupController@show');
+
 // MY CARE GROUP
 Route::get('/my-care-group', 'MyCareGroupController@index');
 Route::get('/my-care-group/{group}/edit', 'MyCareGroupController@edit');
@@ -55,6 +59,7 @@ Route::post('/users/change-password','UserController@changePassword');
 // RESOURCES
 Route::resource('users', 'UserController');
 Route::resource('caregroups', 'GroupController');
+Route::resource('department', 'DepartmentController');
 //Route::resource('accounts', 'AccountController');
 
 // Registration Routes...

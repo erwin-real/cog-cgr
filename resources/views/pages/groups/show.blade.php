@@ -36,6 +36,18 @@
                             <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
                             <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                             <p> <strong>Venue</strong>: {{ $group->venue }}</p>
+                            <p> <strong>Department</strong>: {{ $group->department }}</p>
+                            <p> <strong>Department Head</strong>:
+                                @if($group->departmentHead)
+                                    @if($group->departmentHead->id == Auth::id())
+                                        <a href="/my-profile">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                    @else
+                                        <a href="/my-profile/users/{{$group->departmentHead->id}}">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                    @endif
+                                @else
+                                    <span>none</span>
+                                @endif
+                            </p>
                             <p> <strong>Cluster Area</strong>: {{ ucfirst($group->cluster_area) }}</p>
                             <p> <strong>Cluster Head</strong>:
                                 @if($group->clusterHead)
@@ -102,7 +114,6 @@
                                 <i class="fa fa-trash fa-sm fa-fw"></i>
                                 Delete
                             </button>
-
                         </div>
 
                     </div>
