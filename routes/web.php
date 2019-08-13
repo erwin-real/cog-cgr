@@ -60,6 +60,7 @@ Route::post('/users/change-password','UserController@changePassword');
 Route::resource('users', 'UserController');
 Route::resource('caregroups', 'GroupController');
 Route::resource('department', 'DepartmentController');
+Route::resource('reports', 'ReportController');
 //Route::resource('accounts', 'AccountController');
 
 // Registration Routes...
