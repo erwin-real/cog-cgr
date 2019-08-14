@@ -17,15 +17,15 @@ class Report extends Model
     protected $fillable = [
         'leader_id', 'cg_id', 'type', 'day_cg', 'time_cg', 'venue',
         'cluster_area', 'topic', 'offering', 'present', 'absent',
-        'consolidation_report', 'date_submitted', 'is_verified_ch', 'comment_ch',
-        'date_verified_ch', 'is_verified_dh', 'comment_dh', 'date_verified_dh'
+        'consolidation_report', 'date_submitted', 'comment_ch',
+        'date_verified_ch', 'comment_dh', 'date_verified_dh'
     ];
 
     protected $sortable = [
         'leader_id', 'cg_id', 'type', 'day_cg', 'time_cg', 'venue',
         'cluster_area', 'topic', 'offering', 'present', 'absent',
-        'consolidation_report', 'date_submitted', 'is_verified_ch', 'comment_ch',
-        'date_verified_ch', 'is_verified_dh', 'comment_dh', 'date_verified_dh'
+        'consolidation_report', 'date_submitted', 'comment_ch',
+        'date_verified_ch', 'comment_dh', 'date_verified_dh'
     ];
 
 }

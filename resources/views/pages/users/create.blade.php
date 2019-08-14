@@ -39,7 +39,9 @@
                                     <label for="first_name" class="col-md-12 col-form-label text-md-left">First Name <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" required autofocus>
+                                        <input id="first_name" type="text"
+                                               class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}"
+                                               name="first_name" required autofocus value="{{old('first_name')}}">
 
                                         @if ($errors->has('first_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -54,7 +56,9 @@
                                     <label for="middle_name" class="col-md-12 col-form-label text-md-left">Middle Name</label>
 
                                     <div class="col-md-12">
-                                        <input id="middle_name" type="text" class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" name="middle_name" autofocus>
+                                        <input id="middle_name" type="text"
+                                               class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}"
+                                               name="middle_name" autofocus value="{{old('middle_name')}}">
 
                                         @if ($errors->has('middle_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -69,7 +73,9 @@
                                     <label for="last_name" class="col-md-12 col-form-label text-md-left">Last Name <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" required autofocus>
+                                        <input id="last_name" type="text"
+                                               class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}"
+                                               name="last_name" required autofocus value="{{old('last_name')}}">
 
                                         @if ($errors->has('last_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -84,7 +90,9 @@
                                     <label for="email" class="col-md-12 col-form-label text-md-left">Email Address</label>
 
                                     <div class="col-md-12">
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" autofocus>
+                                        <input id="email" type="email"
+                                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                               name="email" autofocus value="{{old('email')}}">
 
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
@@ -100,8 +108,8 @@
 
                                     <div class="col-md-12">
                                         <select name="gender" class="form-control{{ $errors->has('gender') ? ' is-invalid' : '' }} py-0" id="gender" autofocus>
-                                            <option value="m">Male</option>
-                                            <option value="f">Female</option>
+                                            <option value="m" {{old('gender') == 'm' ? 'selected' : ''}}>Male</option>
+                                            <option value="f" {{old('gender') == 'f' ? 'selected' : ''}}>Female</option>
                                         </select>
 
                                         @if ($errors->has('gender'))
@@ -117,7 +125,9 @@
                                     <label for="birthday" class="col-md-12 col-form-label text-md-left">Birthday</label>
 
                                     <div class="col-md-12">
-                                        <input id="birthday" type="date" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" autofocus>
+                                        <input id="birthday" type="date"
+                                               class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+                                               name="birthday" autofocus value="{{old('birthday')}}">
 
                                         @if ($errors->has('birthday'))
                                             <span class="invalid-feedback" role="alert">
@@ -132,7 +142,9 @@
                                     <label for="age" class="col-md-12 col-form-label text-md-left">Age <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" required autofocus>
+                                        <input id="age" type="number"
+                                               class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}"
+                                               name="age" required autofocus value="{{old('age')}}">
 
                                         @if ($errors->has('age'))
                                             <span class="invalid-feedback" role="alert">
@@ -153,9 +165,9 @@
                                                    value="{{ucfirst(Auth::user()->head_department)}}" readonly autofocus required>
                                         @else
                                             <select name="group_age" class="form-control{{ $errors->has('group_age') ? ' is-invalid' : '' }} py-0" id="group_age" required autofocus>
-                                                <option value="youth">Youth</option>
-                                                <option value="men">Men</option>
-                                                <option value="women">Women</option>
+                                                <option value="youth" {{old('gender') == 'youth' ? 'selected' : ''}}>Youth</option>
+                                                <option value="men" {{old('gender') == 'men' ? 'selected' : ''}}>Men</option>
+                                                <option value="women" {{old('gender') == 'women' ? 'selected' : ''}}>Women</option>
                                             </select>
                                         @endif
 
@@ -172,7 +184,9 @@
                                     <label for="address" class="col-md-12 col-form-label text-md-left">Address <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" required autofocus>
+                                        <input id="address" type="text"
+                                               class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                               name="address" required autofocus value="{{old('address')}}">
 
                                         @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
@@ -187,7 +201,9 @@
                                     <label for="cluster_area" class="col-md-12 col-form-label text-md-left">Cluster Area <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" required autofocus>
+                                        <input id="cluster_area" type="text"
+                                               class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}"
+                                               name="cluster_area" required autofocus value="{{old('cluster_area')}}">
 
                                         @if ($errors->has('cluster_area'))
                                             <span class="invalid-feedback" role="alert">
@@ -202,7 +218,9 @@
                                     <label for="contact" class="col-md-12 col-form-label text-md-left">Contact #</label>
 
                                     <div class="col-md-12">
-                                        <input id="contact" type="number" class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}" name="contact" autofocus>
+                                        <input id="contact" type="number"
+                                               class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}"
+                                               name="contact" autofocus value="{{old('contact')}}">
 
                                         @if ($errors->has('contact'))
                                             <span class="invalid-feedback" role="alert">
@@ -218,10 +236,10 @@
 
                                     <div class="col-md-12">
                                         <select name="journey" class="form-control{{ $errors->has('journey') ? ' is-invalid' : '' }} py-0" id="journey" required autofocus>
-                                            <option value="pre-believer">Pre-Believer</option>
-                                            <option value="believer">Believer</option>
-                                            <option value="disciple">Disciple</option>
-                                            <option value="leader">Leader</option>
+                                            <option value="pre-believer" {{old('journey') == 'pre-believer' ? 'selected' : ''}}>Pre-Believer</option>
+                                            <option value="believer" {{old('journey') == 'believer' ? 'selected' : ''}}>Believer</option>
+                                            <option value="disciple" {{old('journey') == 'disciple' ? 'selected' : ''}}>Disciple</option>
+                                            <option value="leader" {{old('journey') == 'leader' ? 'selected' : ''}}>Leader</option>
                                         </select>
 
                                         @if ($errors->has('journey'))
@@ -234,14 +252,14 @@
 
                                 {{--CDLP--}}
                                 <div class="form-group row">
-                                    <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP</label>
+                                    <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                            <option value="0" {{old('cldp') == '0' ? 'selected' : ''}}>0</option>
+                                            <option value="1" {{old('cldp') == '1' ? 'selected' : ''}}>1</option>
+                                            <option value="2" {{old('cldp') == '2' ? 'selected' : ''}}>2</option>
+                                            <option value="3" {{old('cldp') == '3' ? 'selected' : ''}}>3</option>
                                         </select>
 
                                         @if ($errors->has('cldp'))
@@ -252,49 +270,21 @@
                                     </div>
                                 </div>
 
-                                {{--USERNAME--}}
-                                <div class="form-group row">
-                                    <label for="username" class="col-md-12 col-form-label text-md-left">Username</label>
-
-                                    <div class="col-md-12">
-                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" autofocus>
-
-                                        @if ($errors->has('username'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('username') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{--PASSWORD--}}
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-12 col-form-label text-md-left">Password</label>
-
-                                    <div class="col-md-12">
-                                        <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
-
-                                        @if ($errors->has('password'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--TYPE--}}
                                 <div class="form-group row">
-                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type</label>
+                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleHeads()">
-                                            <option value="member">Member</option>
-                                            <option value="leader">Leader</option>
-                                            <option value="cluster head">Cluster Head</option>
+                                            <option value="member" {{old('type') == 'member' ? 'selected' : ''}}>Member</option>
+                                            <option value="leader" {{old('type') == 'leader' ? 'selected' : ''}}>Leader</option>
 
+                                            @if(Auth::user()->type == 'department head' || Auth::user()->type == 'master' || Auth::user()->type == 'admin')
+                                                <option value="cluster head" {{old('type') == 'cluster head' ? 'selected' : ''}}>Cluster Head</option>
+                                            @endif
                                             @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin')
-                                                <option value="department head">Department Head</option>
-                                                <option value="admin">Admin</option>
+                                                <option value="department head" {{old('type') == 'department head' ? 'selected' : ''}}>Department Head</option>
+                                                <option value="admin" {{old('type') == 'admin' ? 'selected' : ''}}>Admin</option>
                                             @endif
 
                                         </select>
@@ -309,10 +299,12 @@
 
                                 {{--HEAD CLUSTER AREA--}}
                                 <div class="form-group row" id="cluster-head-div" style="display: none">
-                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area</label>
+                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" autofocus>
+                                        <input id="head_cluster_area" type="text"
+                                               class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}"
+                                               name="head_cluster_area" autofocus value="{{old('head_cluster_area')}}">
 
                                         @if ($errors->has('head_cluster_area'))
                                             <span class="invalid-feedback" role="alert">
@@ -324,7 +316,7 @@
 
                                 {{--HEAD DEPARTMENT--}}
                                 <div class="form-group row" id="department-head-div" style="display: none">
-                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head</label>
+                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="head_department" class="form-control{{ $errors->has('head_department') ? ' is-invalid' : '' }} py-0" id="head_department" autofocus>
@@ -341,19 +333,33 @@
                                     </div>
                                 </div>
 
-                                {{--IS LEADER--}}
-                                <div class="form-group row">
-                                    <label for="is_leader" class="col-md-12 col-form-label text-md-left">Is Leader?</label>
+                                {{--USERNAME--}}
+                                <div class="form-group row" id="username-div" style="display: none">
+                                    <label for="username" class="col-md-12 col-form-label text-md-left">Username <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="is_leader" class="form-control{{ $errors->has('is_leader') ? ' is-invalid' : '' }} py-0" id="is_leader" autofocus>
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
+                                        <input id="username" type="text"
+                                               class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                                               name="username" autofocus value="{{old('username')}}">
 
-                                        @if ($errors->has('is_leader'))
+                                        @if ($errors->has('username'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('is_leader') }}</strong>
+                                                <strong>{{ $errors->first('username') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--PASSWORD--}}
+                                <div class="form-group row" id="password-div" style="display: none">
+                                    <label for="password" class="col-md-12 col-form-label text-md-left">Password <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <input id="password" type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
+
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -395,16 +401,28 @@
     </div>
 
     <script>
+        toggleHeads();
+
         function toggleHeads() {
+            if (document.getElementById("type").value !== 'member') {
+                document.getElementById('username-div').style = 'display: block';
+                document.getElementById('password-div').style = 'display: block';
+            }
+
             if (document.getElementById("type").value === 'cluster head') {
                 document.getElementById('cluster-head-div').style = 'display: block';
                 document.getElementById('department-head-div').style = 'display: none';
             } else if (document.getElementById("type").value === 'department head') {
                 document.getElementById('department-head-div').style = 'display: block';
                 document.getElementById('cluster-head-div').style = 'display: none';
+            } else if (document.getElementById("type").value === 'admin' || document.getElementById("type").value === 'leader') {
+                document.getElementById('cluster-head-div').style = 'display: none';
+                document.getElementById('department-head-div').style = 'display: none';
             } else {
                 document.getElementById('cluster-head-div').style = 'display: none';
                 document.getElementById('department-head-div').style = 'display: none';
+                document.getElementById('username-div').style = 'display: none';
+                document.getElementById('password-div').style = 'display: none';
             }
         }
     </script>

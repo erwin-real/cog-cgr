@@ -29,11 +29,9 @@ class CreateReportsTable extends Migration
             $table->text('consolidation_report')->nullable();
             $table->timestamp('date_submitted')->nullable();
 
-            $table->boolean('is_verified_ch')->default(0);
             $table->text('comment_ch')->nullable();
             $table->timestamp('date_verified_ch')->nullable();
 
-            $table->boolean('is_verified_dh')->default(0);
             $table->text('comment_dh')->nullable();
             $table->timestamp('date_verified_dh')->nullable();
 

@@ -144,7 +144,6 @@
                                     </div>
                                 </div>
 
-
                                 {{--GROUP AGE--}}
                                 <div class="form-group row">
                                     <label for="group_age" class="col-md-12 col-form-label text-md-left">Group Age <span class="text-danger">*</span></label>
@@ -237,7 +236,7 @@
 
                                 {{--CDLP--}}
                                 <div class="form-group row">
-                                    <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP</label>
+                                    <label for="cldp" class="col-md-12 col-form-label text-md-left">CLDP <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="cldp" class="form-control{{ $errors->has('cldp') ? ' is-invalid' : '' }} py-0" id="cldp" autofocus>
@@ -255,32 +254,23 @@
                                     </div>
                                 </div>
 
-                                {{--USERNAME--}}
-                                <div class="form-group row">
-                                    <label for="username" class="col-md-12 col-form-label text-md-left">Username</label>
-
-                                    <div class="col-md-12">
-                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{$user->username}}" autofocus>
-
-                                        @if ($errors->has('username'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('username') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--TYPE--}}
                                 <div class="form-group row">
-                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type</label>
+                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus onchange="toggleHeads()">
                                             <option value="member" {{$user->type == 'member' ? 'selected' : ''}}>Member</option>
                                             <option value="leader" {{$user->type == 'leader' ? 'selected' : ''}}>Leader</option>
-                                            <option value="cluster head" {{$user->type == 'cluster head' ? 'selected' : ''}}>Cluster Head</option>
-                                            <option value="department head" {{$user->type == 'department head' ? 'selected' : ''}}>Department Head</option>
-                                            <option value="admin" {{$user->type == 'admin' ? 'selected' : ''}}>Admin</option>
+
+                                            @if(Auth::user()->type == 'department head' || Auth::user()->type == 'master' || Auth::user()->type == 'admin')
+                                                <option value="cluster head" {{$user->type == 'cluster head' ? 'selected' : ''}}>Cluster Head</option>
+                                            @endif
+                                            @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin')
+                                                <option value="department head" {{$user->type == 'department head' ? 'selected' : ''}}>Department Head</option>
+                                                <option value="admin" {{$user->type == 'admin' ? 'selected' : ''}}>Admin</option>
+                                            @endif
+
                                         </select>
 
                                         @if ($errors->has('type'))
@@ -291,24 +281,9 @@
                                     </div>
                                 </div>
 
-                                {{--HEAD CLUSTER AREA--}}
-                                <div class="form-group row" id="cluster-head-div" style="display: none">
-                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area</label>
-
-                                    <div class="col-md-12">
-                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" value="{{$user->head_cluster_area}}" autofocus>
-
-                                        @if ($errors->has('head_cluster_area'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('head_cluster_area') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--HEAD DEPARTMENT--}}
                                 <div class="form-group row" id="department-head-div" style="display: none">
-                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head</label>
+                                    <label for="head_department" class="col-md-12 col-form-label text-md-left">Department Head <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
                                         <select name="head_department" class="form-control{{ $errors->has('head_department') ? ' is-invalid' : '' }} py-0" id="head_department" autofocus>
@@ -325,19 +300,31 @@
                                     </div>
                                 </div>
 
-                                {{--IS LEADER--}}
-                                <div class="form-group row">
-                                    <label for="is_leader" class="col-md-12 col-form-label text-md-left">Is Leader?</label>
+                                {{--HEAD CLUSTER AREA--}}
+                                <div class="form-group row" id="cluster-head-div" style="display: none">
+                                    <label for="head_cluster_area" class="col-md-12 col-form-label text-md-left">Head Cluster Area <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="is_leader" class="form-control{{ $errors->has('is_leader') ? ' is-invalid' : '' }} py-0" id="is_leader" autofocus>
-                                            <option value="1" {{$user->is_leader == '1' ? 'selected' : ''}}>Yes</option>
-                                            <option value="0" {{$user->is_leader == '0' ? 'selected' : ''}}>No</option>
-                                        </select>
+                                        <input id="head_cluster_area" type="text" class="form-control{{ $errors->has('head_cluster_area') ? ' is-invalid' : '' }}" name="head_cluster_area" value="{{$user->head_cluster_area}}" autofocus>
 
-                                        @if ($errors->has('is_leader'))
+                                        @if ($errors->has('head_cluster_area'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('is_leader') }}</strong>
+                                                <strong>{{ $errors->first('head_cluster_area') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{--USERNAME--}}
+                                <div class="form-group row" id="username-div" style="display:none">
+                                    <label for="username" class="col-md-12 col-form-label text-md-left">Username <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{$user->username}}" autofocus>
+
+                                        @if ($errors->has('username'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('username') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -380,16 +367,24 @@
 
     <script>
         toggleHeads();
+
         function toggleHeads() {
+            if (document.getElementById("type").value !== 'member')
+                document.getElementById('username-div').style = 'display: block';
+
             if (document.getElementById("type").value === 'cluster head') {
                 document.getElementById('cluster-head-div').style = 'display: block';
                 document.getElementById('department-head-div').style = 'display: none';
             } else if (document.getElementById("type").value === 'department head') {
                 document.getElementById('department-head-div').style = 'display: block';
                 document.getElementById('cluster-head-div').style = 'display: none';
+            } else if (document.getElementById("type").value === 'admin' || document.getElementById("type").value === 'leader') {
+                document.getElementById('cluster-head-div').style = 'display: none';
+                document.getElementById('department-head-div').style = 'display: none';
             } else {
                 document.getElementById('cluster-head-div').style = 'display: none';
                 document.getElementById('department-head-div').style = 'display: none';
+                document.getElementById('username-div').style = 'display: none';
             }
         }
     </script>

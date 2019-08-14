@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\DeclareDeclare;
 
 class UserController extends Controller
@@ -43,9 +44,27 @@ class UserController extends Controller
                 'cluster_area' => 'required',
                 'journey' => 'required',
                 'type' => 'required',
-                'is_leader' => 'required',
                 'is_active' => 'required'
             ]);
+
+            if ($validatedData['type'] != 'member') {
+                if ($validatedData['type'] == 'cluster head') {
+                    $head_cluster_area = Validator::make($request->all(), [
+                        'head_cluster_area' => 'required',
+                        'username' => 'required',
+                        'password' => 'required'
+                    ]);
+                    if ($head_cluster_area->fails()) return redirect()->back()->withErrors($head_cluster_area)->withInput();
+                }
+
+                $usernameAndPassword = Validator::make($request->all(), [
+                    'username' => 'required',
+                    'password' => 'required'
+                ]);
+
+                if ($usernameAndPassword->fails())
+                    return redirect()->back()->withErrors($usernameAndPassword)->withInput();
+            }
 
             $user = new User(array(
                 'first_name' => $validatedData['first_name'],
@@ -56,23 +75,25 @@ class UserController extends Controller
                 'group_age' => $validatedData['group_age'],
                 'address' => $validatedData['address'],
                 'cluster_area' => strtolower($validatedData['cluster_area']),
-                'password' => Hash::make($request->input('password')),
                 'leader_id' => 0,
                 'birthday' => $request->input('birthday'),
                 'contact' => $request->input('contact'),
                 'journey' => $validatedData['journey'],
                 'cldp' => $request->input('cldp'),
                 'type' => $validatedData['type'],
-                'is_leader' => $validatedData['is_leader'],
                 'is_active' => $validatedData['is_active'],
                 'remember_token' => $request->input('_token')
             ));
 
-            $user->head_cluster_area = ($validatedData['type'] == 'cluster head') ? $request->input('head_cluster_area') : null;
-            $user->head_department = ($validatedData['type'] == 'department head') ? $request->input('head_department') : null;
-
             $user->email = ($request->input('email') || strlen($request->input('email')) > 0) ? $request->input('email') : null;
-            $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
+
+            if ($validatedData['type'] != 'member') {
+                $user->is_leader = 1;
+                $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
+                $user->password = Hash::make($request->input('password'));
+                $user->head_cluster_area = ($validatedData['type'] == 'cluster head') ? $request->input('head_cluster_area') : null;
+                $user->head_department = ($validatedData['type'] == 'department head') ? $request->input('head_department') : null;
+            } else $user->is_leader = 0;
 
             $user->save();
 
@@ -87,7 +108,10 @@ class UserController extends Controller
     public function show($id) {
         if ($this->isDeptHeadOrAdminOrMaster()) {
             $user = User::find($id);
-            if (Auth::user()->type == 'department head' && $user->group_age == Auth::user()->head_department)
+            if (
+                (Auth::user()->type == 'department head' && $user->group_age == Auth::user()->head_department) ||
+                Auth::user()->type == 'admin' || Auth::user()->type == 'master'
+            )
                 return view('pages.users.show')->with('user', $user);
             else if (Auth::user()->type == 'department head' && $user->group_age != Auth::user()->head_department)
                 return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that user.');
@@ -116,9 +140,23 @@ class UserController extends Controller
                 'cluster_area' => 'required',
                 'journey' => 'required',
                 'type' => 'required',
-                'is_leader' => 'required',
                 'is_active' => 'required'
             ]);
+
+            if ($validatedData['type'] != 'member') {
+                if ($validatedData['type'] == 'cluster head') {
+                    $head_cluster_area = Validator::make($request->all(), [
+                        'head_cluster_area' => 'required',
+                        'username' => 'required'
+                    ]);
+                    if ($head_cluster_area->fails()) return redirect()->back()->withErrors($head_cluster_area)->withInput();
+                }
+
+                $username = Validator::make($request->all(), [ 'username' => 'required' ]);
+
+                if ($username->fails())
+                    return redirect()->back()->withErrors($username)->withInput();
+            }
 
             $user = User::find($id);
             $user->first_name = $validatedData['first_name'];
@@ -134,18 +172,17 @@ class UserController extends Controller
             $user->journey = $validatedData['journey'];
             $user->cldp = $request->input('cldp');
             $user->type = $validatedData['type'];
-            $user->is_leader = $validatedData['is_leader'];
             $user->is_active = $validatedData['is_active'];
             $user->remember_token = $request->input('_token');
 
-            $user->head_cluster_area = ($validatedData['type'] == 'cluster head') ? $request->input('head_cluster_area') : null;
-            $user->head_department = ($validatedData['type'] == 'department head') ? $request->input('head_department') : null;
-
             $user->email = ($request->input('email') || strlen($request->input('email')) > 0) ? $request->input('email') : null;
-            $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
 
-//            if (strlen($request->input('password')) != 0)
-//                $user->password = Hash::make($request->input('password'));
+            if ($validatedData['type'] != 'member') {
+                $user->is_leader = 1;
+                $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
+                $user->head_cluster_area = ($validatedData['type'] == 'cluster head') ? $request->input('head_cluster_area') : null;
+                $user->head_department = ($validatedData['type'] == 'department head') ? $request->input('head_department') : null;
+            } else $user->is_leader = 0;
 
             $user->save();
 

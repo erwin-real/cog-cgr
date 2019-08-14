@@ -55,12 +55,37 @@ class ReportController extends Controller
             'offering' => $request->get('offering')
         ));
 
-        $temp = '';
+        $present = '';
         for ($i = 0; $i < count($request->input('present')); $i++) {
-            $temp .= $request->input('present')[$i];
-            if (($i+1) < count($request->input('present'))) $temp .= ',';
+            $present .= $request->input('present')[$i];
+            if (($i+1) < count($request->input('present'))) $present .= ',';
         }
-        $report->present = $temp;
+
+        $report->present = $present;
+
+        $membersID = array();
+        foreach ($group->members as $member) array_push($membersID,$member->id);
+
+
+        for ($i = 0; $i < count($request->input('present')); $i++) {
+            foreach ($group->members as $member) {
+                if ($request->input('present')[$i] == $member->id)
+                    $membersID = \array_diff($membersID, [$member->id]);
+            }
+        }
+
+        $absent = '';
+        for ($i = 0; $i < count($membersID); $i++) {
+            if (isset($membersID[$i])) {
+                $absent .= $membersID[$i];
+                if (($i+1) < count($membersID)) $absent .= ',';
+            }
+        }
+
+        $report->absent = $absent;
+
+
+
 
         dd($report);
     }
