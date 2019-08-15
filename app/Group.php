@@ -21,6 +21,8 @@ class Group extends Model
         'leader_id', 'department', 'day_cg', 'time_cg', 'cluster_area', 'venue'
     ];
 
+    public function reports() { return $this->hasMany('App\Report', 'cg_id'); }
+
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
 
     public function members() { return $this->hasMany('App\User', 'cg_id'); }

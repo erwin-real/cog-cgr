@@ -103,7 +103,11 @@
 
                             <div class="buttons-holder mt-4">
                                 <a href="{{ action('MyCareGroupController@edit', $group->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                                <a href="/reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-plus"></i> Create Report</a>
+
+
+                                @if(count($group->members) > 0)
+                                    <a href="/reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-plus"></i> Create Report</a>
+                                @endif
                                 {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delGroupModal">--}}
                                     {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}
                                     {{--Delete--}}

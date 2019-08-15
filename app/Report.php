@@ -28,4 +28,10 @@ class Report extends Model
         'date_verified_ch', 'comment_dh', 'date_verified_dh'
     ];
 
+    public function group() { return $this->belongsTo('App\Group', 'cg_id'); }
+
+    public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
+
+//    public function present() { return $this->belongsTo('App\User', 'leader_id'); }
+
 }

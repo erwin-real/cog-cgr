@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Report;
+use App\User;
+use Carbon\Carbon;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +18,11 @@ class ReportController extends Controller
     }
 
     public function create(Request $request) {
-        return view('pages.reports.create')->with('group', Group::find($request->get('cg_id')));
+        $group = Group::find($request->get('cg_id'));
+        if (count($group->members) > 0)
+            return view('pages.reports.create')->with('group', $group);
+
+        return redirect('/my-profile')->with('error', 'Cannot create report without any members');
     }
 
     public function store(Request $request) {
@@ -55,6 +62,9 @@ class ReportController extends Controller
             'offering' => $request->get('offering')
         ));
 
+        $report->date_submitted = Carbon::now();
+        $report->consolidation_report = $request->get('consolidation_report');
+
         $present = '';
         for ($i = 0; $i < count($request->input('present')); $i++) {
             $present .= $request->input('present')[$i];
@@ -65,7 +75,6 @@ class ReportController extends Controller
 
         $membersID = array();
         foreach ($group->members as $member) array_push($membersID,$member->id);
-
 
         for ($i = 0; $i < count($request->input('present')); $i++) {
             foreach ($group->members as $member) {
@@ -82,16 +91,21 @@ class ReportController extends Controller
             }
         }
 
-        $report->absent = $absent;
+        $report->absent = strlen($absent) > 0 ? $absent : null;
+        $report->save();
 
-
-
-
-        dd($report);
+        return redirect('/reports/'.$report->id)
+            ->with('report', $report)
+            ->with('success', 'Report Created Successfully!');
     }
 
     public function show($id) {
-        //
+        $report = Report::find($id);
+//        dd($report->consolidation_report);
+        return view('pages.reports.show')
+            ->with('absents', User::find(explode(",", $report->absent)))
+            ->with('presents', User::find(explode(",", $report->present)))
+            ->with('report', $report);
     }
 
     public function edit($id) {

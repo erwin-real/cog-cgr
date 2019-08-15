@@ -155,7 +155,7 @@
                                         </ol>
                                     </div>
                                 </div>
-                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
+                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Member</button>
 
                                 <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
