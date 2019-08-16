@@ -61,6 +61,7 @@ Route::resource('users', 'UserController');
 Route::resource('caregroups', 'GroupController');
 Route::resource('department', 'DepartmentController');
 Route::resource('reports', 'ReportController');
+Route::resource('my-reports', 'MyReportController');
 //Route::resource('accounts', 'AccountController');
 
 // Registration Routes...

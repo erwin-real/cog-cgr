@@ -51,7 +51,7 @@
                                                         <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
                                                     @endif
                                                     <td>{{ucfirst($report->cluster_area)}}</td>
-                                                    <td>{{$report->group->department}}</td>
+                                                    <td>{{ucfirst($report->group->department)}}</td>
                                                     <td>{{count(explode(",", $report->present)) + count(explode(",", $report->absent))}}</td>
                                                     <td>{{count(explode(",", $report->present))}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>

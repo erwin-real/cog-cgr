@@ -5,9 +5,9 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Reports</h4>
+                    <h4 class="page-title pull-left">My Reports</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/reports">Reports</a></li>
+                        <li><a href="/my-reports">My Reports</a></li>
                         <li><a href="#">{{$report->group->day_cg}} {{ date('h:i A', strtotime($report->group->time_cg)) }}</a></li>
                         <li><span>{{$report->id}}</span></li>
                     </ul>
@@ -38,6 +38,8 @@
                             <p> <strong>Time</strong>: {{ date('h:i A', strtotime($report->time_cg)) }}</p>
                             <p> <strong>Venue</strong>: {{ $report->venue }}</p>
                             <p> <strong>Cluster Area</strong>: {{ ucfirst($report->cluster_area) }}</p>
+                            <p> <strong>Offering</strong>: {{ $report->offering ? $report->offering : 'None' }}</p>
+                            <p> <strong>Date Submitted</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</p>
                         </div>
 
                         <div class="row ml-5">
@@ -88,21 +90,25 @@
                             <p class="font-weight-bold">Status:</p><br>
                             <p class="ml-5 mt-0 pt-0">
                                 @if($report->date_verified_dh)
-                                    Verified by Department Head
+                                    Verified by Department Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</small>
                                 @elseif($report->date_verified_ch)
-                                    Verified by Cluster Head
+                                    Verified by Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_ch)) }}</small>
                                 @else
-                                    Submitted to Cluster Head
+                                    Submitted to Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</small>
                                 @endif
                             </p>
                         </div>
 
                         <div class="buttons-holder mt-4">
-                            <a href="{{ action('ReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">
-                                <i class="fa fa-trash fa-sm fa-fw"></i>
-                                Delete
-                            </button>
+                            @if($report->date_verified_ch)
+                                <span>* You cannot update or delete this report because it has been verified.</span>
+                            @else
+                                <a href="{{ action('MyReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
+                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">
+                                    <i class="fa fa-trash fa-sm fa-fw"></i>
+                                    Delete
+                                </button>
+                            @endif
                         </div>
 
                     </div>
@@ -116,7 +122,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Care Group?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Report?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -125,7 +131,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
 
-                    <form action="{{ action('ReportController@destroy', $report->id) }}" method="POST">
+                    <form action="{{ action('MyReportController@destroy', $report->id) }}" method="POST">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-outline-danger">Delete</button>

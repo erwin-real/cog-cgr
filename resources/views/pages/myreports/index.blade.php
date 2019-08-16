@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Reports</h4>
+                    <h4 class="page-title pull-left">My Reports</h4>
                     <ul class="breadcrumbs pull-left">
                     </ul>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">List of Reports</h4>
+                            <h4 class="header-title mb-0">List of My Reports</h4>
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($reports->isEmpty())
@@ -33,7 +33,7 @@
                                     <table class="table table-hover text-center">
                                         <thead>
                                             <tr>
-                                                <th>Leader</th>
+                                                <th>Show</th>
                                                 <th>Cluster Area</th>
                                                 <th>Department</th>
                                                 <th>Members</th>
@@ -46,14 +46,14 @@
                                             @foreach($reports as $report)
                                                 <tr>
                                                     @if($report->leader_id == Auth::id())
-                                                        <td><a href="/my-care-group">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
+                                                        <td><a href="/my-reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
                                                     @else
                                                         <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
                                                     @endif
                                                     <td>{{ucfirst($report->cluster_area)}}</td>
-                                                    <td>{{$report->group->department}}</td>
-                                                    <td>{{count(explode(",", $report->present)) + count(explode(",", $report->absent))}}</td>
+                                                    <td>{{ucfirst($report->group->department)}}</td>
                                                     <td>{{count(explode(",", $report->present))}}</td>
+                                                    <td>{{count(explode(",", $report->absent))}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>
                                                     <td>
                                                         @if($report->date_verified_dh)

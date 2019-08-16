@@ -88,22 +88,22 @@
                             <p class="font-weight-bold">Status:</p><br>
                             <p class="ml-5 mt-0 pt-0">
                                 @if($report->date_verified_dh)
-                                    Verified by Department Head
+                                    Verified by Department Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</small>
                                 @elseif($report->date_verified_ch)
-                                    Verified by Cluster Head
+                                    Verified by Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_ch)) }}</small>
                                 @else
-                                    Submitted to Cluster Head
+                                    Submitted to Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</small>
                                 @endif
                             </p>
                         </div>
 
-                        <div class="buttons-holder mt-4">
-                            <a href="{{ action('ReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">
-                                <i class="fa fa-trash fa-sm fa-fw"></i>
-                                Delete
-                            </button>
-                        </div>
+                        {{--<div class="buttons-holder mt-4">--}}
+                            {{--<a href="{{ action('ReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>--}}
+                            {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">--}}
+                                {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}
+                                {{--Delete--}}
+                            {{--</button>--}}
+                        {{--</div>--}}
 
                     </div>
                 </div>
@@ -116,7 +116,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Care Group?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Report?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

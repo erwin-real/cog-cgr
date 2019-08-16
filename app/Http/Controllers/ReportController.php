@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
+    public function __construct() { $this->middleware('auth'); }
 
     public function index() {
         return view('pages.reports.index')->with('reports', Report::all());
@@ -101,7 +102,6 @@ class ReportController extends Controller
 
     public function show($id) {
         $report = Report::find($id);
-//        dd($report->consolidation_report);
         return view('pages.reports.show')
             ->with('absents', User::find(explode(",", $report->absent)))
             ->with('presents', User::find(explode(",", $report->present)))
