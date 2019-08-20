@@ -58,13 +58,13 @@
                                                     @else
                                                         <td><a href="/cluster/{{$group->id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>
                                                     @endif
-                                                    <td>{{$group->department}}</td>
+                                                    <td>{{ucfirst($group->department)}}</td>
                                                     <td>{{count($group->members)}}</td>
                                                     <td>{{count($group->activeMembers)}}</td>
                                                     <td>{{$group->day_cg}}</td>
                                                     <td>{{ date('h:i A', strtotime($group->time_cg)) }}</td>
-                                                    <td>{{$group->venue}}</td>
-                                                    <td>{{$group->cluster_area}}</td>
+                                                    <td>{{ucfirst($group->venue)}}</td>
+                                                    <td>{{ucfirst($group->cluster_area)}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($group->created_at)) }}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($group->updated_at)) }}</td>
                                                 </tr>

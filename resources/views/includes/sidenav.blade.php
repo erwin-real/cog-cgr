@@ -12,6 +12,26 @@
                         <a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
 
+                    @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('reports') || request()->is('reports/*') ? 'active border-left-info' : '' }}">
+                            <a href="/reports"><i class="fa fa-list-ul"></i>
+                                @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                                    <span>All Reports</span>
+                                @elseif(Auth::user()->type == 'department head')
+                                    <span>{{ucfirst(Auth::user()->head_department)}} Reports</span>
+                                @elseif(Auth::user()->type == 'cluster head')
+                                    <span>{{ucfirst(Auth::user()->head_cluster_area)}} Reports</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                            <a href="/caregroups"><i class="fa fa-users"></i> <span>All Care Groups</span></a>
+                        </li>
+                    @endif
+
                     @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type == 'cluster head')
                         <li class="{{ request()->is('cluster') || request()->is('cluster/*') ? 'active border-left-info' : '' }}">
                             <a href="/cluster"><i class="fa fa-users"></i> <span>{{ucfirst(Auth::user()->head_cluster_area)}} Care Groups</span></a>
@@ -24,12 +44,6 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-                        <li class="{{ request()->is('reports') || request()->is('reports/*') ? 'active border-left-info' : '' }}">
-                            <a href="/reports"><i class="fa fa-list-ul"></i> <span>Reports</span></a>
-                        </li>
-                    @endif
-
                     <li class="{{ request()->is('my-reports') || request()->is('my-reports/*') ? 'active border-left-info' : '' }}">
                         <a href="/my-reports"><i class="fa fa-list-ul"></i> <span>My Reports</span></a>
                     </li>
@@ -39,12 +53,6 @@
                             {{--<a href="/caregroups?cluster_area={{Auth::user()->head_cluster_area}}"><i class="fa fa-users"></i> <span>{{Auth::user()->head_cluster_area}} CG</span></a>--}}
                         {{--</li>--}}
                     {{--@endif--}}
-
-                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
-                            <a href="/caregroups"><i class="fa fa-users"></i> <span>All Care Groups</span></a>
-                        </li>
-                    @endif
 
                     @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master' || Auth::user()->type == 'department head')
                         <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">

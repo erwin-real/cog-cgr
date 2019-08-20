@@ -32,6 +32,10 @@ class Report extends Model
 
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
 
+    public function clusterHead() { return $this->hasOne('App\User', 'head_cluster_area', 'cluster_area'); }
+
+    public function departmentHead() { return $this->hasOne('App\User', 'head_department', 'department'); }
+
 //    public function present() { return $this->belongsTo('App\User', 'leader_id'); }
 
 }

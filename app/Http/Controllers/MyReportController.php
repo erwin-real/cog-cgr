@@ -53,6 +53,7 @@ class MyReportController extends Controller
             'time_cg' => $validatedData['time_cg'],
             'venue' => $validatedData['venue'],
             'cluster_area' => $group->cluster_area,
+            'department' => $group->department,
             'topic' => $validatedData['topic'],
             'offering' => $request->get('offering')
         ));
@@ -96,7 +97,6 @@ class MyReportController extends Controller
 
     public function show($id) {
         $report = Report::find($id);
-        dd($report);
         return view('pages.myreports.show')
             ->with('absents', User::find(explode(",", $report->absent)))
             ->with('presents', User::find(explode(",", $report->present)))

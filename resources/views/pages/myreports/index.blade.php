@@ -36,8 +36,8 @@
                                                 <th>Show</th>
                                                 <th>Cluster Area</th>
                                                 <th>Department</th>
-                                                <th>Members</th>
                                                 <th>Present</th>
+                                                <th>Absent</th>
                                                 <th>Date Submitted</th>
                                                 <th>Status</th>
                                             </tr>

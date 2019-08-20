@@ -38,6 +38,7 @@
                             <p> <strong>Time</strong>: {{ date('h:i A', strtotime($report->time_cg)) }}</p>
                             <p> <strong>Venue</strong>: {{ $report->venue }}</p>
                             <p> <strong>Cluster Area</strong>: {{ ucfirst($report->cluster_area) }}</p>
+                            <p> <strong>Department</strong>: {{ ucfirst($report->department) }}</p>
                             <p> <strong>Offering</strong>: {{ $report->offering ? $report->offering : 'None' }}</p>
                             <p> <strong>Date Submitted</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</p>
                         </div>

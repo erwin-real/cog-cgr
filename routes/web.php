@@ -32,6 +32,8 @@ Route::get('/cluster/{group}', 'ClusterController@show');
 //Route::get('/department', 'DepartmentGroupController@index');
 //Route::get('/department/{group}', 'DepartmentGroupController@show');
 
+Route::post('/reports/update-status/{id}','ReportController@updateStatus');
+
 // MY CARE GROUP
 Route::get('/my-care-group', 'MyCareGroupController@index');
 Route::get('/my-care-group/{group}/edit', 'MyCareGroupController@edit');

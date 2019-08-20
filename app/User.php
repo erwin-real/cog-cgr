@@ -68,8 +68,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Group', "cluster_area", "head_cluster_area");
     }
 
+    public function clusterReports() {
+        return $this->hasMany('App\Report', "cluster_area", "head_cluster_area");
+    }
+
     public function departmentGroups() {
         return $this->hasMany('App\Group', "department", "head_department");
+    }
+
+    public function departmentReports() {
+        return $this->hasMany('App\Report', "department", "head_department");
     }
 
     public function reports() { return $this->hasMany('App\Report', 'leader_id'); }

@@ -5,7 +5,15 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Reports</h4>
+
+                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <h4 class="page-title pull-left">All Reports</h4>
+                    @elseif(Auth::user()->type == 'department head')
+                        <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Reports</h4>
+                    @elseif(Auth::user()->type == 'cluster head')
+                        <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>
+                    @endif
+
                     <ul class="breadcrumbs pull-left">
                     </ul>
                 </div>
@@ -22,7 +30,15 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">List of Reports</h4>
+
+                            @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                                <h4 class="header-title mb-0">List of All Reports</h4>
+                            @elseif(Auth::user()->type == 'department head')
+                                <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_department)}} Reports</h4>
+                            @elseif(Auth::user()->type == 'cluster head')
+                                <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>
+                            @endif
+
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($reports->isEmpty())
@@ -36,8 +52,8 @@
                                                 <th>Leader</th>
                                                 <th>Cluster Area</th>
                                                 <th>Department</th>
-                                                <th>Members</th>
                                                 <th>Present</th>
+                                                <th>Absent</th>
                                                 <th>Date Submitted</th>
                                                 <th>Status</th>
                                             </tr>
@@ -52,8 +68,8 @@
                                                     @endif
                                                     <td>{{ucfirst($report->cluster_area)}}</td>
                                                     <td>{{ucfirst($report->group->department)}}</td>
-                                                    <td>{{count(explode(",", $report->present)) + count(explode(",", $report->absent))}}</td>
                                                     <td>{{count(explode(",", $report->present))}}</td>
+                                                    <td>{{count(explode(",", $report->absent))}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>
                                                     <td>
                                                         @if($report->date_verified_dh)
