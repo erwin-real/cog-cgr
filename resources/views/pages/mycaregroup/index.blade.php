@@ -106,7 +106,7 @@
 
 
                                 @if(count($group->members) > 0)
-                                    <a href="/reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-plus"></i> Create Report</a>
+                                    <a href="/my-reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-plus"></i> Create Report</a>
                                 @endif
                                 {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delGroupModal">--}}
                                     {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}

@@ -5,10 +5,10 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Care Groups</h4>
+                    <h4 class="page-title pull-left">My Reports</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups</a></li>
-                        <li><a href="/department/{{$group->id}}">{{$group->id}}</a></li>
+                        <li><a href="/my-reports">My Reports</a></li>
+                        <li><a href="/my-reports/{{$report->id}}">{{$report->group->day_cg}} {{ date('h:i A', strtotime($report->group->time_cg)) }}</a></li>
                         <li><span>Update</span></li>
                     </ul>
                 </div>
@@ -25,31 +25,21 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">Update Care Group</h4>
+                            <h4 class="header-title mb-0">Update My Report</h4>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ action('DepartmentController@update', $group->id) }}" method="POST">
+                            <form action="{{ action('MyReportController@update', $report->id) }}" method="POST">
                                 <input type="hidden" name="_method" value="PUT">
                                 @csrf
 
-                                {{-- LEADER --}}
+                                {{-- LEADER ID AND CG ID --}}
                                 <div class="form-group row">
                                     <label for="leader" class="col-md-12 col-form-label text-md-left">Leader <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
-                                            @foreach($users as $user)
-                                                @if($user->id != Auth::id() && $user->type != 'master')
-                                                    <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-
-                                        @if ($errors->has('leader'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('leader') }}</strong>
-                                            </span>
-                                        @endif
+                                        <span class="ml-3 font-weight-bold">{{$group->leader->first_name}} {{$group->leader->last_name}}</span>
+                                        <input type="hidden" name="leader_id" value="{{$group->leader_id}}">
+                                        <input type="hidden" name="cg_id" value="{{$group->id}}">
                                     </div>
                                 </div>
 
@@ -58,14 +48,14 @@
                                     <label for="day_cg" class="col-md-12 col-form-label text-md-left">Day <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <select name="day_cg" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="day_cg" required autofocus>
-                                            <option value="Sunday" {{$group->day_cg == 'Sunday' ? 'selected' : ''}}>Sunday</option>
-                                            <option value="Monday" {{$group->day_cg == 'Monday' ? 'selected' : ''}}>Monday</option>
-                                            <option value="Tuesday" {{$group->day_cg == 'Tuesday' ? 'selected' : ''}}>Tuesday</option>
-                                            <option value="Wednesday" {{$group->day_cg == 'Wednesday' ? 'selected' : ''}}>Wednesday</option>
-                                            <option value="Thursday" {{$group->day_cg == 'Thursday' ? 'selected' : ''}}>Thursday</option>
-                                            <option value="Friday" {{$group->day_cg == 'Friday' ? 'selected' : ''}}>Friday</option>
-                                            <option value="Saturday" {{$group->day_cg == 'Saturday' ? 'selected' : ''}}>Saturday</option>
+                                        <select name="day_cg" class="form-control{{ $errors->has('day_cg') ? ' is-invalid' : '' }} py-0" id="day_cg" required autofocus>
+                                            <option value="Sunday" {{$report->day_cg == 'Sunday' ? 'selected' : ''}}>Sunday</option>
+                                            <option value="Monday" {{$report->day_cg == 'Monday' ? 'selected' : ''}}>Monday</option>
+                                            <option value="Tuesday" {{$report->day_cg == 'Tuesday' ? 'selected' : ''}}>Tuesday</option>
+                                            <option value="Wednesday" {{$report->day_cg == 'Wednesday' ? 'selected' : ''}}>Wednesday</option>
+                                            <option value="Thursday" {{$report->day_cg == 'Thursday' ? 'selected' : ''}}>Thursday</option>
+                                            <option value="Friday" {{$report->day_cg == 'Friday' ? 'selected' : ''}}>Friday</option>
+                                            <option value="Saturday" {{$report->day_cg == 'Saturday' ? 'selected' : ''}}>Saturday</option>
                                         </select>
 
                                         @if ($errors->has('day_cg'))
@@ -81,7 +71,9 @@
                                     <label for="time_cg" class="col-md-12 col-form-label text-md-left">Time <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="time_cg" type="time" class="form-control{{ $errors->has('time_cg') ? ' is-invalid' : '' }}" name="time_cg" value="{{$group->time_cg}}" required autofocus>
+                                        <input id="time_cg" type="time" value="{{$report->time_cg}}"
+                                               class="form-control{{ $errors->has('time_cg') ? ' is-invalid' : '' }}"
+                                               name="time_cg" required autofocus>
 
                                         @if ($errors->has('time_cg'))
                                             <span class="invalid-feedback" role="alert">
@@ -96,7 +88,9 @@
                                     <label for="venue" class="col-md-12 col-form-label text-md-left">Venue <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="venue" type="text" class="form-control{{ $errors->has('venue') ? ' is-invalid' : '' }}" name="venue" value="{{$group->venue}}" required autofocus>
+                                        <input id="venue" type="text" value="{{$report->venue}}"
+                                               class="form-control{{ $errors->has('venue') ? ' is-invalid' : '' }}"
+                                               name="venue" required autofocus>
 
                                         @if ($errors->has('venue'))
                                             <span class="invalid-feedback" role="alert">
@@ -106,34 +100,51 @@
                                     </div>
                                 </div>
 
-                                {{-- CLUSTER AREA --}}
+                                {{-- TOPIC --}}
                                 <div class="form-group row">
-                                    <label for="cluster_area" class="col-md-12 col-form-label text-md-left">Cluster Area <span class="text-danger">*</span></label>
+                                    <label for="topic" class="col-md-12 col-form-label text-md-left">Topic <span class="text-danger">*</span></label>
 
                                     <div class="col-md-12">
-                                        <input id="cluster_area" type="text" class="form-control{{ $errors->has('cluster_area') ? ' is-invalid' : '' }}" name="cluster_area" value="{{$group->cluster_area}}" required autofocus>
+                                        <input id="topic" type="text" value="{{$report->topic}}"
+                                               class="form-control{{ $errors->has('topic') ? ' is-invalid' : '' }}"
+                                               name="topic" required autofocus>
 
-                                        @if ($errors->has('cluster_area'))
+                                        @if ($errors->has('topic'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('cluster_area') }}</strong>
+                                                <strong>{{ $errors->first('topic') }}</strong>
                                             </span>
                                         @endif
                                     </div>
                                 </div>
 
-                                {{-- MEMBERS --}}
+                                {{-- OFFERING --}}
                                 <div class="form-group row">
-                                    <label for="members" class="col-md-12 col-form-label text-md-left">Members <span class="text-danger">*</span></label>
+                                    <label for="offering" class="col-md-12 col-form-label text-md-left">Offering</label>
 
                                     <div class="col-md-12">
-                                        <ol id="members" class="ml-4">
-                                            @foreach($group->members as $member)
+                                        <input id="offering" type="number" step=".01"
+                                               class="form-control{{ $errors->has('offering') ? ' is-invalid' : '' }}"
+                                               name="offering" autofocus value="{{$report->offering}}">
+
+                                        @if ($errors->has('offering'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('offering') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{-- PRESENT --}}
+                                <div class="form-group row">
+                                    <label for="present" class="col-md-12 col-form-label text-md-left">Present <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <ol id="present" class="ml-4">
+                                            @foreach($presents as $present)
                                                 <li class="mb-1">
-                                                    <select id="members" class="mb-1" name="members[]" required="required">
-                                                        @foreach($users as $user)
-                                                            @if($user->id != Auth::id() && $user->type != 'master')
-                                                                <option value="{{$user->id}}" {{$user->id === $member->id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
-                                                            @endif
+                                                    <select id="present" class="mb-1" name="present[]" required="required">
+                                                        @foreach($group->members as $member)
+                                                            <option value="{{$member->id}}" {{$member->id == $present->id ? 'selected' : ''}}>{{$member->first_name}} {{$member->last_name}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span onclick="deleteItem(this)" style="cursor: pointer; color: rgb(231, 74, 59);"> X</span>
@@ -142,7 +153,26 @@
                                         </ol>
                                     </div>
                                 </div>
-                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
+                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Member Present</button>
+
+                                {{-- CONSOLIDATION REPORT --}}
+                                <div class="form-group row mt-5">
+                                    <label for="consolidation_report" class="col-md-12 col-form-label text-md-left">
+                                        Consolidation Report <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="col-md-12">
+                                        <textarea id="consolidation_report" rows="10"
+                                                  class="form-control{{ $errors->has('consolidation_report') ? ' is-invalid' : '' }}"
+                                                  name="consolidation_report" required autofocus>{{$report->consolidation_report}}</textarea>
+
+                                        @if ($errors->has('consolidation_report'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('consolidation_report') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group row mb-0 text-center">
                                     <div class="col-md-12">
@@ -164,11 +194,9 @@
     <script>
         var values = [];
         var ids = [];
-        @foreach($users as $user)
-        @if($user->id != Auth::user()->id && $user->type != 'master')
-        values.push('{{$user->first_name}} {{$user->last_name}}');
-        ids.push('{{$user->id}}');
-        @endif
+        @foreach($group->members as $member)
+        values.push('{{$member->first_name}} {{$member->last_name}}');
+        ids.push('{{$member->id}}');
         @endforeach
         function append() {
             let newItem = document.createElement("li");
@@ -176,7 +204,7 @@
 
             let selectList = document.createElement("select");
             selectList.classList.add('mb-1');
-            selectList.name = 'members[]';
+            selectList.name = 'present[]';
             selectList.setAttribute("required", "required");
 
             for (let i = 0; i < values.length; i++) {
@@ -194,12 +222,12 @@
             span.innerHTML = " X";
             newItem.appendChild(span);
 
-            let list = document.getElementById("members");
+            let list = document.getElementById("present");
             list.insertBefore(newItem, list.childNodes[list.childNodes.length]);
         }
 
         function deleteItem(r) {
-            document.getElementById("members").removeChild(r.parentNode);
+            document.getElementById("present").removeChild(r.parentNode);
         }
 
     </script>

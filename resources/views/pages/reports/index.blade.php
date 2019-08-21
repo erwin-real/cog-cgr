@@ -61,11 +61,7 @@
                                         <tbody>
                                             @foreach($reports as $report)
                                                 <tr>
-                                                    @if($report->leader_id == Auth::id())
-                                                        <td><a href="/my-care-group">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
-                                                    @else
-                                                        <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
-                                                    @endif
+                                                    <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
                                                     <td>{{ucfirst($report->cluster_area)}}</td>
                                                     <td>{{ucfirst($report->group->department)}}</td>
                                                     <td>{{count(explode(",", $report->present))}}</td>

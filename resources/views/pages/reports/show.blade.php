@@ -127,19 +127,17 @@
                                     @endif
                                     @if($report->date_verified_dh)
                                             <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->cluster_area)}} Department Head</p>
-                                            <p>
-                                                <strong>Remarks:</strong>
-                                                <br>
-                                                    @php
-                                                        echo nl2br($report->comment_dh)
-                                                    @endphp
+                                            <strong>Remarks:</strong>
+                                            <p class="ml-2">
+                                                @php
+                                                    echo nl2br($report->comment_dh)
+                                                @endphp
                                             </p>
                                             <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>
                                             <br><br>
                                     @endif
                                 @endif
                             </div>
-
 
                         </div>
 
@@ -149,42 +147,10 @@
                             @include('pages.reports.form')
                         @endif
 
-                        {{--<div class="buttons-holder mt-4">--}}
-                            {{--<a href="{{ action('ReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>--}}
-                            {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">--}}
-                                {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}
-                                {{--Delete--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DELETE Modal-->
-    <div class="modal fade" id="delReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Report?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Are you sure you want to delete this report?</div>
-                <div class="modal-footer">
-                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-                    <form action="{{ action('ReportController@destroy', $report->id) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

@@ -18,14 +18,14 @@ class Report extends Model
         'leader_id', 'cg_id', 'type', 'day_cg', 'time_cg', 'venue',
         'cluster_area', 'topic', 'offering', 'present', 'absent',
         'consolidation_report', 'date_submitted', 'comment_ch',
-        'date_verified_ch', 'comment_dh', 'date_verified_dh'
+        'date_verified_ch', 'comment_dh', 'date_verified_dh', 'department'
     ];
 
     protected $sortable = [
         'leader_id', 'cg_id', 'type', 'day_cg', 'time_cg', 'venue',
         'cluster_area', 'topic', 'offering', 'present', 'absent',
         'consolidation_report', 'date_submitted', 'comment_ch',
-        'date_verified_ch', 'comment_dh', 'date_verified_dh'
+        'date_verified_ch', 'comment_dh', 'date_verified_dh', 'department'
     ];
 
     public function group() { return $this->belongsTo('App\Group', 'cg_id'); }

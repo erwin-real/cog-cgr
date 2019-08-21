@@ -44,10 +44,6 @@
                         </li>
                     @endif
 
-                    <li class="{{ request()->is('my-reports') || request()->is('my-reports/*') ? 'active border-left-info' : '' }}">
-                        <a href="/my-reports"><i class="fa fa-list-ul"></i> <span>My Reports</span></a>
-                    </li>
-
                     {{--@if(Auth::user()->type == 'cluster head' && Auth::user()->type != 'admin' && Auth::user()->type != 'master')--}}
                         {{--<li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">--}}
                             {{--<a href="/caregroups?cluster_area={{Auth::user()->head_cluster_area}}"><i class="fa fa-users"></i> <span>{{Auth::user()->head_cluster_area}} CG</span></a>--}}
@@ -65,6 +61,10 @@
                             </a>
                         </li>
                     @endif
+
+                    <li class="{{ request()->is('my-reports') || request()->is('my-reports/*') ? 'active border-left-info' : '' }}">
+                        <a href="/my-reports"><i class="fa fa-list-ul"></i> <span>My Reports</span></a>
+                    </li>
 
                     @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type != 'master' && Auth::user()->type != 'member')
                         <li class="{{ request()->is('my-care-group') || request()->is('my-care-group/*') ? 'active border-left-info' : '' }}">

@@ -5,9 +5,10 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">Reports</h4>
+                    <h4 class="page-title pull-left">My Reports</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a href="/reports">Reports</a></li>
+                        <li><a href="/my-reports">My Reports</a></li>
+                        <li><a href="#">{{$group->day_cg}} {{ date('h:i A', strtotime($group->time_cg)) }}</a></li>
                         <li><span>Create</span></li>
 {{--                        <li><a href="#">{{$group->day_cg}} {{ date('h:i A', strtotime($group->time_cg)) }}</a></li>--}}
                     </ul>
@@ -28,7 +29,7 @@
                             <h4 class="header-title mb-0">Create New Report</h4>
                         </div>
                         <div class="mt-4">
-                            <form action="{{ action('ReportController@store') }}" method="POST">
+                            <form action="{{ action('MyReportController@store') }}" method="POST">
                                 @csrf
 
                                 {{-- LEADER ID AND CG ID --}}

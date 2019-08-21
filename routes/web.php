@@ -62,7 +62,7 @@ Route::post('/users/change-password','UserController@changePassword');
 Route::resource('users', 'UserController');
 Route::resource('caregroups', 'GroupController');
 Route::resource('department', 'DepartmentController');
-Route::resource('reports', 'ReportController');
+Route::resource('reports', 'ReportController', ['only' => ['index', 'show']]);
 Route::resource('my-reports', 'MyReportController');
 //Route::resource('accounts', 'AccountController');
 

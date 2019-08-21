@@ -89,28 +89,55 @@
 
                         <div class="mt-4">
                             <p class="font-weight-bold">Status:</p><br>
-                            <p class="ml-5 mt-0 pt-0">
-                                @if($report->date_verified_dh)
-                                    Verified by Department Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</small>
-                                @elseif($report->date_verified_ch)
-                                    Verified by Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_verified_ch)) }}</small>
-                                @else
+
+
+                            <div class="ml-5">
+                                @if(!$report->date_verified_dh && !$report->date_verified_ch)
                                     Submitted to Cluster Head <br><small> -- {{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</small>
+                                @else
+                                    @if($report->date_verified_ch)
+                                        <p> <strong>Verified by:</strong> {{$report->clusterHead->first_name}} {{$report->clusterHead->last_name}} - {{ucfirst($report->cluster_area)}} Cluster Head</p>
+
+                                        <strong>Remarks:</strong>
+                                        <p class="ml-2">
+                                            @php
+                                                echo nl2br($report->comment_ch)
+                                            @endphp
+                                        </p>
+                                        <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_ch)) }}</p>
+                                        <br><br>
+                                    @endif
+                                    @if($report->date_verified_dh)
+                                        <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->cluster_area)}} Department Head</p>
+                                        <p>
+                                            <strong>Remarks:</strong>
+                                            <p class="ml-2">
+                                                @php
+                                                    echo nl2br($report->comment_dh)
+                                                @endphp
+                                            </p>
+                                        <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>
+                                        <br><br>
+                                    @endif
                                 @endif
-                            </p>
+                            </div>
+
+
                         </div>
 
-                        <div class="buttons-holder mt-4">
-                            @if($report->date_verified_ch)
-                                <span>* You cannot update or delete this report because it has been verified.</span>
-                            @else
-                                <a href="{{ action('MyReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
-                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">
-                                    <i class="fa fa-trash fa-sm fa-fw"></i>
-                                    Delete
-                                </button>
-                            @endif
-                        </div>
+                        @if($report->leader_id == Auth::id())
+                            <div class="buttons-holder mt-4">
+                                @if($report->date_verified_ch)
+                                    <span>* You cannot update or delete this report because it has been verified.</span>
+                                @else
+                                    <a href="{{ action('MyReportController@edit', $report->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
+                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delReportModal">
+                                        <i class="fa fa-trash fa-sm fa-fw"></i>
+                                        Delete
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
 
                     </div>
                 </div>
