@@ -14,13 +14,31 @@ class ReportController extends Controller
 {
     public function __construct() { $this->middleware('auth'); }
 
-    public function index() {
-        if (Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-            return view('pages.reports.index')->with('reports', Report::all());
-        else if (Auth::user()->type == 'department head')
-            return view('pages.reports.index')->with('reports', Auth::user()->departmentReports);
-        else if (Auth::user()->type == 'cluster head')
-            return view('pages.reports.index')->with('reports', Auth::user()->clusterReports);
+    public function index(Request $request) {
+        if (Auth::user()->type == 'admin' || Auth::user()->type == 'master') {
+            if ($request->has('status')) {
+                if ($request->get('status') == 'checked')
+                    return view('pages.reports.admin')->with('reports', Report::onlyTrashed()->get())->with('status', 'Checked');
+                else return view('pages.reports.admin')->with('reports', Report::all())->with('status', 'Unchecked');
+            }
+            return view('pages.reports.admin')->with('reports', Report::all()->merge(Report::onlyTrashed()->get()));
+        } else if (Auth::user()->type == 'department head') {
+            if ($request->has('status'))
+                return view('pages.reports.department')
+                    ->with('reports', Auth::user()->departmentReports()->get())
+                    ->with('status', ucfirst($request->get('status')));
+
+            return view('pages.reports.department')
+                ->with('reports', Auth::user()->departmentReports()->get());
+        } else if (Auth::user()->type == 'cluster head') {
+            if ($request->has('status'))
+                return view('pages.reports.cluster')
+                    ->with('reports', Auth::user()->clusterReports()->get())
+                    ->with('status', ucfirst($request->get('status')));
+
+            return view('pages.reports.cluster')
+                ->with('reports', Auth::user()->clusterReports()->get());
+        }
 
         return redirect('/my-profile')->with('error', 'Cannot show all reports.');
     }
@@ -41,7 +59,7 @@ class ReportController extends Controller
             $report->save();
 
             return redirect('/reports/'.$id)->with('success', 'Validated Report Successfully!');
-        } elseif (Auth::user()->type == 'department head' && !$report->date_verified_dh && $report->date_verified_ch && $report->departmentHead->id == Auth::user()->id) {
+        } elseif (Auth::user()->type == 'department head' && !$report->date_verified_dh && $report->date_verified_ch && $report->departmentHead->id == Auth::id()) {
             $report->comment_dh = $request->get('comment');
             $report->date_verified_dh = Carbon::now();
             $report->save();
@@ -52,17 +70,27 @@ class ReportController extends Controller
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to validate reports!');
     }
 
-    public function edit($id) {
-        //
+    public function check($id) {
+        if (Auth::user()->type == 'admin') {
+            Report::destroy($id);
+
+            return redirect('/reports')->with('success', 'Checked Report Successfully!');
+        }
+
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to validate reports!');
     }
 
-    public function update(Request $request, $id) {
-        //
-    }
-
-    public function destroy($id) {
-        //
-    }
+//    public function edit($id) {
+//        //
+//    }
+//
+//    public function update(Request $request, $id) {
+//        //
+//    }
+//
+//    public function destroy($id) {
+//        //
+//    }
 
 //    public function create(Request $request) {
 //        $group = Group::find($request->get('cg_id'));

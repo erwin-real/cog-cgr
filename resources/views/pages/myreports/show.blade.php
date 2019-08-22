@@ -119,6 +119,11 @@
                                         <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>
                                         <br><br>
                                     @endif
+                                    @if($report->deleted_at)
+                                        <p> <strong>Checked by:</strong> {{User::find(2)->first_name}} {{User::find(2)->last_name}} - Admin</p>
+                                        <p> <strong>Date Checked</strong>: {{ date('D M d, Y h:i a', strtotime($report->deleted_at)) }}</p>
+                                        <br><br>
+                                    @endif
                                 @endif
                             </div>
 

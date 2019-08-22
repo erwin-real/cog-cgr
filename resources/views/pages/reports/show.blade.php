@@ -126,15 +126,20 @@
                                         <br><br>
                                     @endif
                                     @if($report->date_verified_dh)
-                                            <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->cluster_area)}} Department Head</p>
-                                            <strong>Remarks:</strong>
-                                            <p class="ml-2">
-                                                @php
-                                                    echo nl2br($report->comment_dh)
-                                                @endphp
-                                            </p>
-                                            <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>
-                                            <br><br>
+                                        <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->cluster_area)}} Department Head</p>
+                                        <strong>Remarks:</strong>
+                                        <p class="ml-2">
+                                            @php
+                                                echo nl2br($report->comment_dh)
+                                            @endphp
+                                        </p>
+                                        <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>
+                                        <br><br>
+                                    @endif
+                                    @if($report->deleted_at)
+                                        <p> <strong>Checked by:</strong> {{User::find(2)->first_name}} {{User::find(2)->last_name}} - Admin</p>
+                                        <p> <strong>Date Checked</strong>: {{ date('D M d, Y h:i a', strtotime($report->deleted_at)) }}</p>
+                                        <br><br>
                                     @endif
                                 @endif
                             </div>
@@ -145,6 +150,13 @@
                             @include('pages.reports.form')
                         @elseif(Auth::user()->type == 'department head' && !$report->date_verified_dh && $report->date_verified_ch && $report->departmentHead->id == Auth::id())
                             @include('pages.reports.form')
+                        @elseif(Auth::user()->type == 'admin' && $report->date_verified_dh && $report->date_verified_ch)
+                            <form method="POST" action="{{ action('ReportController@check', $report->id) }}" class="m-auto">
+                                @csrf
+                                <div class="w-100 text-center">
+                                    <button type="submit" class="btn btn-outline-success"><i class="fa fa-check"></i> Check</button>
+                                </div>
+                            </form>
                         @endif
 
                     </div>

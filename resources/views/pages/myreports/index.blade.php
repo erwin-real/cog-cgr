@@ -52,7 +52,9 @@
                                                     <td>{{$report->absent ? count(explode(",", $report->absent)) : '0'}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>
                                                     <td>
-                                                        @if($report->date_verified_dh)
+                                                        @if($report->deleted_at)
+                                                            Checked by Admin
+                                                        @elseif($report->date_verified_dh)
                                                             Verified by Department Head
                                                         @elseif($report->date_verified_ch)
                                                             Verified by Cluster Head

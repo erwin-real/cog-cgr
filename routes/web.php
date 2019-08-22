@@ -33,6 +33,7 @@ Route::get('/cluster/{group}', 'ClusterController@show');
 //Route::get('/department/{group}', 'DepartmentGroupController@show');
 
 Route::post('/reports/update-status/{id}','ReportController@updateStatus');
+Route::post('/reports/check/{id}','ReportController@check');
 
 // MY CARE GROUP
 Route::get('/my-care-group', 'MyCareGroupController@index');

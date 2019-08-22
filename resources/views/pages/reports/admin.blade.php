@@ -6,13 +6,13 @@
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
 
-                    @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                    {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
                         <h4 class="page-title pull-left">All Reports</h4>
-                    @elseif(Auth::user()->type == 'department head')
-                        <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Reports</h4>
-                    @elseif(Auth::user()->type == 'cluster head')
-                        <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>
-                    @endif
+                    {{--@elseif(Auth::user()->type == 'department head')--}}
+                        {{--<h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Reports</h4>--}}
+                    {{--@elseif(Auth::user()->type == 'cluster head')--}}
+                        {{--<h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>--}}
+                    {{--@endif--}}
 
                     <ul class="breadcrumbs pull-left">
                     </ul>
@@ -31,20 +31,33 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
 
-                            @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-                                <h4 class="header-title mb-0">List of All Reports</h4>
-                            @elseif(Auth::user()->type == 'department head')
-                                <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_department)}} Reports</h4>
-                            @elseif(Auth::user()->type == 'cluster head')
-                                <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>
-                            @endif
+{{--                            @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
+                                <h4 class="header-title mb-0">List of All {{isset($status) ? $status: ''}} Reports</h4>
+                            {{--@elseif(Auth::user()->type == 'department head')--}}
+                                {{--<h4 class="header-title mb-0">List of {{isset($status) ? $status: ''}} {{ucfirst(Auth::user()->head_department)}} Reports</h4>--}}
+                            {{--@elseif(Auth::user()->type == 'cluster head')--}}
+                                {{--<h4 class="header-title mb-0">List of {{isset($status) ? $status: ''}} {{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>--}}
+                            {{--@endif--}}
 
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($reports->isEmpty())
                                 <p> There are no reports yet.</p>
                             @else
-                                {{--{{$accounts->links()}}--}}
+
+
+                                <strong>Filter: </strong>
+{{--                                @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
+                                    <a href="/reports?status=unchecked">Unchecked Reports</a> |
+                                    <a href="/reports?status=checked">Checked Reports</a> |
+                                    <a href="/reports">Reset</a><br><br>
+                                {{--@elseif(Auth::user()->type == 'department head' || Auth::user()->type == 'cluster head')--}}
+                                    {{--<a href="/reports?status=verified">Verified Reports</a> |--}}
+                                    {{--<a href="/reports?status=unverified">Unverified Reports</a> |--}}
+                                    {{--<a href="/reports">Reset</a><br><br>--}}
+                                {{--@endif--}}
+
+
                                 <div class="table-responsive">
                                     <table class="table table-hover text-center">
                                         <thead>
@@ -68,7 +81,9 @@
                                                     <td>{{count(explode(",", $report->absent))}}</td>
                                                     <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>
                                                     <td>
-                                                        @if($report->date_verified_dh)
+                                                        @if($report->deleted_at)
+                                                            Checked by Admin
+                                                        @elseif($report->date_verified_dh)
                                                             Verified by Department Head
                                                         @elseif($report->date_verified_ch)
                                                             Verified by Cluster Head
@@ -81,6 +96,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                {{--{{$reports->links()}}--}}
                             @endif
                         </div>
                     </div>
