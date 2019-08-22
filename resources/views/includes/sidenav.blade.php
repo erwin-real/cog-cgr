@@ -8,9 +8,11 @@
         <div class="menu-inner">
             <nav>
                 <ul class="metismenu" id="menu">
-                    <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}">
-                        <a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
-                    </li>
+                    @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
+                        <li class="{{ request()->is('dashboard') ? 'active border-left-info' : '' }}">
+                            <a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+                    @endif
 
                     @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                         <li class="{{ request()->is('reports') || request()->is('reports/*') ? 'active border-left-info' : '' }}">

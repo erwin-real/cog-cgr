@@ -40,7 +40,7 @@ class ReportController extends Controller
                 ->with('reports', Auth::user()->clusterReports()->get());
         }
 
-        return redirect('/my-profile')->with('error', 'Cannot show all reports.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see all reports.');
     }
 
     public function show($id) {
