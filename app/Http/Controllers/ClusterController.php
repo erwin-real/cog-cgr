@@ -13,7 +13,7 @@ class ClusterController extends Controller
     public function index() {
         if(
             Auth::user()->is_leader == 1 &&
-            count(Auth::user()->groups) > 0 &&
+//            count(Auth::user()->groups) > 0 &&
             Auth::user()->type == 'cluster head'
         )
             return view('pages.cluster.index')->with('groups', Auth::user()->clusterCareGroups);
@@ -24,7 +24,7 @@ class ClusterController extends Controller
     public function show($id) {
         if(
             Auth::user()->is_leader == 1 &&
-            count(Auth::user()->groups) > 0 &&
+//            count(Auth::user()->groups) > 0 &&
             Auth::user()->type == 'cluster head'
         )
             return view('pages.cluster.show')->with('group', Group::find($id));

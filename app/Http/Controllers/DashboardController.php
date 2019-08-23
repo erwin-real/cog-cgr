@@ -17,7 +17,7 @@ class DashboardController extends Controller
             return view('dashboard')
                 ->with('reports', Report::all()->count())
                 ->with('groups', Group::all()->count())
-                ->with('users', User::all()->count());
+                ->with('users', User::all()->count()-1);
         elseif (Auth::user()->type == 'department head')
             return view('dashboard')
                 ->with('reports', Report::where('department', Auth::user()->head_department)->whereNull('date_verified_dh')->count())

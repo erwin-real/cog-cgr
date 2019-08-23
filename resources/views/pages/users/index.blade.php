@@ -30,7 +30,7 @@
                             <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
                         </div>
                         <div class="market-status-table mt-4">
-                            @if ($users->isEmpty())
+                            @if ((count($users) - 1) == 0)
                                 <p> There are no users yet.</p>
                             @else
                                 {{--{{$users->links()}}--}}
@@ -58,26 +58,28 @@
                                         </thead>
                                         <tbody>
                                             @foreach($users as $user)
-                                                <tr>
-                                                    <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
-                                                    <td>{{ucfirst($user->cluster_area)}}</td>
+                                                @if($user->type != 'master')
+                                                    <tr>
+                                                        <td><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></td>
+                                                        <td>{{ucfirst($user->cluster_area)}}</td>
 
-                                                    @if($user->type == 'cluster head')
-                                                        <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_cluster_area)}}</td>
-                                                    @elseif($user->type == 'department head')
-                                                        <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_department)}}</td>
-                                                    @else
-                                                        <td>{{ucfirst($user->type)}}</td>
-                                                    @endif
+                                                        @if($user->type == 'cluster head')
+                                                            <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_cluster_area)}}</td>
+                                                        @elseif($user->type == 'department head')
+                                                            <td>{{ucfirst($user->type)}} - {{ucfirst($user->head_department)}}</td>
+                                                        @else
+                                                            <td>{{ucfirst($user->type)}}</td>
+                                                        @endif
 
-                                                    @if(Auth::user()->type != 'department head')
-                                                        <td>{{ucfirst($user->group_age)}}</td>
-                                                    @endif
+                                                        @if(Auth::user()->type != 'department head')
+                                                            <td>{{ucfirst($user->group_age)}}</td>
+                                                        @endif
 
-                                                    <td>{{ucfirst($user->is_active == 1 ? 'Yes' : 'No')}}</td>
-                                                    <td>{{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</td>
-                                                    <td>{{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</td>
-                                                </tr>
+                                                        <td>{{ucfirst($user->is_active == 1 ? 'Yes' : 'No')}}</td>
+                                                        <td>{{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</td>
+                                                        <td>{{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
