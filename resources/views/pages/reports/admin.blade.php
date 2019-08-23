@@ -5,17 +5,8 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-
-                    {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
-                        <h4 class="page-title pull-left">All Reports</h4>
-                    {{--@elseif(Auth::user()->type == 'department head')--}}
-                        {{--<h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Reports</h4>--}}
-                    {{--@elseif(Auth::user()->type == 'cluster head')--}}
-                        {{--<h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>--}}
-                    {{--@endif--}}
-
-                    <ul class="breadcrumbs pull-left">
-                    </ul>
+                    <h4 class="page-title pull-left">All Reports</h4>
+                    <ul class="breadcrumbs pull-left"></ul>
                 </div>
             </div>
             @include('includes.user-profile')
@@ -30,16 +21,9 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-
-{{--                            @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
-                                <h4 class="header-title mb-0">List of All {{isset($status) ? $status: ''}} Reports</h4>
-                            {{--@elseif(Auth::user()->type == 'department head')--}}
-                                {{--<h4 class="header-title mb-0">List of {{isset($status) ? $status: ''}} {{ucfirst(Auth::user()->head_department)}} Reports</h4>--}}
-                            {{--@elseif(Auth::user()->type == 'cluster head')--}}
-                                {{--<h4 class="header-title mb-0">List of {{isset($status) ? $status: ''}} {{ucfirst(Auth::user()->head_cluster_area)}} Reports</h4>--}}
-                            {{--@endif--}}
-
+                            <h4 class="header-title mb-0">List of All {{isset($status) ? $status: ''}} Reports</h4>
                         </div>
+
                         <div class="market-status-table mt-4">
                             @if ($reports->isEmpty())
                                 <p> There are no reports yet.</p>
@@ -47,15 +31,9 @@
 
 
                                 <strong>Filter: </strong>
-{{--                                @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
-                                    <a href="/reports?status=unchecked">Unchecked Reports</a> |
-                                    <a href="/reports?status=checked">Checked Reports</a> |
-                                    <a href="/reports">Reset</a><br><br>
-                                {{--@elseif(Auth::user()->type == 'department head' || Auth::user()->type == 'cluster head')--}}
-                                    {{--<a href="/reports?status=verified">Verified Reports</a> |--}}
-                                    {{--<a href="/reports?status=unverified">Unverified Reports</a> |--}}
-                                    {{--<a href="/reports">Reset</a><br><br>--}}
-                                {{--@endif--}}
+                                <a href="/reports?status=unchecked">Unchecked Reports</a> |
+                                <a href="/reports?status=checked">Checked Reports</a> |
+                                <a href="/reports">All</a><br><br>
 
 
                                 <div class="table-responsive">

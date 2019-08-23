@@ -33,7 +33,7 @@
                                 <strong>Filter: </strong>
                                 <a href="/reports?status=unverified">Unverified Reports</a> |
                                 <a href="/reports?status=verified">Verified Reports</a> |
-                                <a href="/reports">Reset</a><br><br>
+                                <a href="/reports">All</a><br><br>
 
                                 <div class="table-responsive">
                                     <table class="table table-hover text-center">

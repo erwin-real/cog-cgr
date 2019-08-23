@@ -16,7 +16,7 @@
 
                     @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                         <li class="{{ request()->is('reports') || request()->is('reports/*') ? 'active border-left-info' : '' }}">
-                            <a href="/reports"><i class="fa fa-list-ul"></i>
+                            <a href="/reports"><i class="fa fa-line-chart"></i>
                                 @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                                     <span>All Reports</span>
                                 @elseif(Auth::user()->type == 'department head')
@@ -40,7 +40,7 @@
                         </li>
                     @endif
 
-                    @if(Auth::user()->is_leader == 1 && count(Auth::user()->groups) > 0 && Auth::user()->type == 'department head')
+                    @if(Auth::user()->is_leader == 1 && Auth::user()->type == 'department head')
                         <li class="{{ request()->is('department') || request()->is('department/*') ? 'active border-left-info' : '' }}">
                             <a href="/department"><i class="fa fa-users"></i> <span>{{ucfirst(Auth::user()->head_department)}} Care Groups</span></a>
                         </li>

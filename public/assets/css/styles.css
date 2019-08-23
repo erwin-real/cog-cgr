@@ -2300,7 +2300,8 @@ table.dataTable thead td {
 /*-------------------- 23. Login ------------------- */
 
 .login-area {
-    background: #F3F8FB;
+    background: rgb(17,159,163);
+    background: linear-gradient(45deg, rgba(17,159,163,0.9528186274509804) 0%, rgba(9,9,121,1) 63%, rgba(0,255,235,1) 100%);
 }
 
 .login-box {
@@ -2320,8 +2321,8 @@ table.dataTable thead td {
 
 .login-form-head {
     text-align: center;
-    background: #8655FC;
-    padding: 50px;
+    background: #007;
+    padding: 20px;
 }
 
 .login-form-head h4 {

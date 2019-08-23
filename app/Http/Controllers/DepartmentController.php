@@ -174,7 +174,7 @@ class DepartmentController extends Controller
     private function isLeaderAndDeptHead() {
         return (
             Auth::user()->is_leader == 1 &&
-            count(Auth::user()->groups) > 0 &&
+//            count(Auth::user()->groups) > 0 &&
             Auth::user()->type == 'department head'
         ) ? true : false;
     }
