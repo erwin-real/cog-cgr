@@ -28,6 +28,9 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/cluster', 'ClusterController@index');
 Route::get('/cluster/{group}', 'ClusterController@show');
 
+// GUIDE
+Route::get('/guide', 'DashboardController@guide');
+
 // DEPARTMENT CARE GROUPS
 //Route::get('/department', 'DepartmentGroupController@index');
 //Route::get('/department/{group}', 'DepartmentGroupController@show');
