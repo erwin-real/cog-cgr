@@ -88,32 +88,28 @@
                 </div>
             </div>
         </div>
+
+
         <!-- sales report area end -->
         <!-- overview area start -->
-        {{--<div class="row">--}}
-            {{--<div class="col-xl-9 col-lg-8">--}}
-                {{--<div class="card">--}}
-                    {{--<div class="card-body">--}}
-                        {{--<div class="d-flex justify-content-between align-items-center">--}}
-                            {{--<h4 class="header-title mb-0">Overview</h4>--}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="header-title mb-5">Report Summary</h4>
                             {{--<select class="custome-select border-0 pr-3">--}}
                                 {{--<option selected>Last 24 Hours</option>--}}
                                 {{--<option value="0">01 July 2018</option>--}}
                             {{--</select>--}}
-                        {{--</div>--}}
-                        {{--<div id="verview-shart"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="col-xl-3 col-lg-4 coin-distribution">--}}
-                {{--<div class="card h-full shadow">--}}
-                    {{--<div class="card-body">--}}
-                        {{--<h4 class="header-title mb-0">Coin Distribution</h4>--}}
-                        {{--<div id="coin_distribution"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+                        </div>
+                        <div id="verview-shart">
+                            {!! $chart->container() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- overview area end -->
         <!-- market value area start -->
         {{--<div class="row mt-5 mb-5">--}}
@@ -386,3 +382,8 @@
         {{--</div>--}}
     </div>
 @endsection
+
+<script src="{{ asset('assets/js/vue.js') }}"></script>
+<script src="{{ asset('assets/js/echarts-en.min.js') }}"></script>
+{!! $chart->script() !!}
+<script src="{{ asset('assets/js/highcharts.js') }}"></script>
