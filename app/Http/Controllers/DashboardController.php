@@ -70,7 +70,4 @@ class DashboardController extends Controller
             });
     }
 
-    public function guide() {
-        return view('guide');
-    }
 }

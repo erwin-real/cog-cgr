@@ -65,7 +65,7 @@
                                 <div class="form-group text-center mt-5">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
-                                            <i class="fa fa-user-check"></i> Submit
+                                            <i class="fa fa-check"></i> Submit
                                         </button>
                                     </div>
                                 </div>

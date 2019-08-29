@@ -17,6 +17,7 @@
         </div>
     </div>
 
+
     <div class="main-content-inner">
         @include('includes.messages')
         <div class="row mt-5 mb-5">
@@ -24,7 +25,8 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">My Profile</h4>
+                            <h4 class="header-title">My Profile</h4>
+                            <a class="btn btn-outline-info" href="/guides/my-profile"><i class="fa fa-question"></i>&nbsp; Guide</a>
                         </div>
                         <div class="ml-5 mt-4">
 

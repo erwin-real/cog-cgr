@@ -29,7 +29,9 @@ Route::get('/cluster', 'ClusterController@index');
 Route::get('/cluster/{group}', 'ClusterController@show');
 
 // GUIDE
-Route::get('/guide', 'DashboardController@guide');
+Route::get('/guides/my-profile', 'GuideController@myProfile');
+Route::get('/guides/reports', 'GuideController@reports');
+Route::get('/guides/users', 'GuideController@users');
 
 // DEPARTMENT CARE GROUPS
 //Route::get('/department', 'DepartmentGroupController@index');

@@ -28,6 +28,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
                             <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
+                            <a href="/guides/users" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                         </div>
                         <div class="market-status-table mt-4">
                             @if ((count($users) - 1) == 0)

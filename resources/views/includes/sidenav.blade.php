@@ -15,7 +15,7 @@
                     @endif
 
                     @if(Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head' || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-                        <li class="{{ request()->is('reports') || request()->is('reports/*') ? 'active border-left-info' : '' }}">
+                        <li class="{{ request()->is('reports') || request()->is('reports/*') || request()->is('guides/reports') ? 'active border-left-info' : '' }}">
                             <a href="/reports"><i class="fa fa-line-chart"></i>
                                 @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                                     <span>All Reports</span>
@@ -53,7 +53,7 @@
                     {{--@endif--}}
 
                     @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master' || Auth::user()->type == 'department head')
-                        <li class="{{ request()->is('users') || request()->is('users/*') ? 'active border-left-info' : '' }}">
+                        <li class="{{ request()->is('users') || request()->is('users/*') || request()->is('guides/users') ? 'active border-left-info' : '' }}">
                             <a href="/users"><i class="fa fa-user"></i>
                                 @if(Auth::user()->type == 'department head')
                                     <span>{{ucfirst(Auth::user()->head_department)}}</span>
@@ -76,12 +76,8 @@
                         </li>
                     @endif
 
-                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') ? 'active border-left-info' : '' }}">
+                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') || request()->is('guides/my-profile') ? 'active border-left-info' : '' }}">
                         <a href="/my-profile"><i class="fa fa-user"></i> <span>My Profile</span></a>
-                    </li>
-
-                    <li class="{{ request()->is('guide') ? 'active border-left-info' : '' }}">
-                        <a href="/guide"><i class="fa fa-question"></i> <span>Guide</span></a>
                     </li>
                     {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}
                         {{--<li class="{{ request()->is('accounts') || request()->is('accounts/*') ? 'active border-left-info' : '' }}">--}}
