@@ -148,13 +148,13 @@
                                 {{-- CONSOLIDATION REPORT --}}
                                 <div class="form-group row mt-5">
                                     <label for="consolidation_report" class="col-md-12 col-form-label text-md-left">
-                                        Consolidation Report <span class="text-danger">*</span>
+                                        Consolidation Report
                                     </label>
 
                                     <div class="col-md-12">
                                         <textarea id="consolidation_report" type="text" rows="10"
                                                class="form-control{{ $errors->has('consolidation_report') ? ' is-invalid' : '' }}"
-                                                  name="consolidation_report" required autofocus></textarea>
+                                                  name="consolidation_report" autofocus></textarea>
 
                                         @if ($errors->has('consolidation_report'))
                                             <span class="invalid-feedback" role="alert">
@@ -167,7 +167,7 @@
                                 <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
-                                            <i class="fa fa-user-plus"></i> Save
+                                            <i class="fa fa-check"></i> Save
                                         </button>
                                     </div>
                                 </div>

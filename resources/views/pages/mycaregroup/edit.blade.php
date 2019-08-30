@@ -141,7 +141,7 @@
                                 </div>
                                 <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Member</button>
 
-                                <div class="form-group row mb-0 text-center">
+                                <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
                                             <i class="fa fa-user-plus"></i> Save

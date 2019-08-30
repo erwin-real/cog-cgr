@@ -24,6 +24,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_department)}} care groups</h4>
                             <a href="/department/create" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Create</a>
+                            <a href="/guides/department-care-group" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                             {{--<select class="custome-select border-0 pr-3">--}}
                                 {{--<option selected>Last 24 Hours</option>--}}
                                 {{--<option value="0">01 July 2018</option>--}}

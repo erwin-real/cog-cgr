@@ -23,6 +23,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of My Reports</h4>
+                            <a class="btn btn-outline-info" href="/guides/my-reports"><i class="fa fa-question"></i>&nbsp; Guide</a>
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($reports->isEmpty())
@@ -45,7 +46,10 @@
                                         <tbody>
                                             @foreach($reports as $report)
                                                 <tr>
-                                                    <td><a href="/my-reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
+                                                    <td>
+                                                        <a href="/my-reports/{{$report->id}}">{{ date('D M d, Y', strtotime($report->day_cg)) }}
+                                                            <br> {{ date('h:i a', strtotime($report->time_cg)) }}</a>
+                                                    </td>
                                                     <td>{{ucfirst($report->cluster_area)}}</td>
                                                     <td>{{ucfirst($report->group->department)}}</td>
                                                     <td>{{count(explode(",", $report->present))}}</td>

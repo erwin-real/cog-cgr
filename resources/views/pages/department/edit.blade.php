@@ -8,7 +8,7 @@
                     <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Care Groups</h4>
                     <ul class="breadcrumbs pull-left">
                         <li><a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups</a></li>
-                        <li><a href="/department/{{$group->id}}">{{$group->id}}</a></li>
+                        <li><a href="/department/{{$group->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a></li>
                         <li><span>Update</span></li>
                     </ul>
                 </div>
@@ -144,10 +144,10 @@
                                 </div>
                                 <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
 
-                                <div class="form-group row mb-0 text-center">
+                                <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
-                                            <i class="fa fa-user-plus"></i> Save
+                                            <i class="fa fa-check"></i> Save
                                         </button>
                                     </div>
                                 </div>

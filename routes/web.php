@@ -30,6 +30,9 @@ Route::get('/cluster/{group}', 'ClusterController@show');
 
 // GUIDE
 Route::get('/guides/my-profile', 'GuideController@myProfile');
+Route::get('/guides/my-reports', 'GuideController@myReports');
+Route::get('/guides/my-care-group', 'GuideController@myCareGroup');
+Route::get('/guides/department-care-group', 'GuideController@departmentCareGroup');
 Route::get('/guides/reports', 'GuideController@reports');
 Route::get('/guides/users', 'GuideController@users');
 

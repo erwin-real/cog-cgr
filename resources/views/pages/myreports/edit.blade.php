@@ -177,7 +177,7 @@
                                 <div class="form-group row mb-0 text-center">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-outline-primary">
-                                            <i class="fa fa-user-plus"></i> Save
+                                            <i class="fa fa-check"></i> Save
                                         </button>
                                     </div>
                                 </div>

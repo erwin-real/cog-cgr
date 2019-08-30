@@ -80,6 +80,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Report', "department", "head_department");
     }
 
+    public function departmentHead() { return $this->hasOne('App\User', 'head_department', 'group_age'); }
+
     public function reports() { return $this->hasMany('App\Report', 'leader_id'); }
 
     public function groups() { return $this->hasMany('App\Group', 'leader_id'); }

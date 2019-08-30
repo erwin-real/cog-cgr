@@ -6,10 +6,6 @@
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
                     <h4 class="page-title pull-left">My Care Group</h4>
-                    <ul class="breadcrumbs pull-left">
-                        {{--<li><a href="index.html">Home</a></li>--}}
-                        {{--<li><span>Dashboard</span></li>--}}
-                    </ul>
                 </div>
             </div>
             @include('includes.user-profile')
@@ -20,13 +16,15 @@
     <div class="main-content-inner">
         @include('includes.messages')
 
-        @foreach($user->groups as $group)
+        @if(count($user->groups) > 0)
+            @foreach($user->groups as $group)
             <div class="row mt-5 mb-5">
                 <div class="col-12">
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h4 class="header-title mb-0">My Care Group Details</h4>
+                                <a class="btn btn-outline-info" href="/guides/my-care-group"><i class="fa fa-question"></i>&nbsp; Guide</a>
                             </div>
                             <div class="ml-5 my-4">
 
@@ -106,7 +104,7 @@
 
 
                                 @if(count($group->members) > 0)
-                                    <a href="/my-reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-plus"></i> Create Report</a>
+                                    <a href="/my-reports/create?cg_id={{$group->id}}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-list"></i> Create Report</a>
                                 @endif
                                 {{--<button class="btn btn-outline-danger" data-toggle="modal" data-target="#delGroupModal">--}}
                                     {{--<i class="fa fa-trash fa-sm fa-fw"></i>--}}
@@ -119,6 +117,27 @@
                 </div>
             </div>
         @endforeach
+        @else
+            <div class="row mt-5 mb-5">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="header-title mb-0">You don't have care group yet.</h4>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+                                <p>
+                                    Please ask your department head for {{ucfirst($user->group_age)}},
+                                    {{$user->departmentHead->first_name}} {{$user->departmentHead->last_name}}, to create you one.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        @endif
 
 
     </div>
