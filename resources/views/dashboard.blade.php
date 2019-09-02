@@ -103,7 +103,7 @@
                                 {{--<option value="0">01 July 2018</option>--}}
                             {{--</select>--}}
                         </div>
-                        <div id="verview-shart">
+                        <div id="chart-holder">
                             {!! $chart->container() !!}
                         </div>
                     </div>

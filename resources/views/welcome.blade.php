@@ -9,6 +9,10 @@
 </head>
 <body>
 
+@foreach($users as $user)
+    <h1>{{$user->first_name}}</h1>
+@endforeach
+
 <a href="/login">Login</a>
 </body>
 </html>

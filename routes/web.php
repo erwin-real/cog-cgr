@@ -11,13 +11,13 @@
 |
 */
 
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WelcomeController@welcome');
 
 // DASHBOARD
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/home', function () { return redirect('/dashboard'); });
 
 //Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
