@@ -1,4 +1,4 @@
-@if(Auth::user()->head_cluster_area == $report->cluster_area || Auth::user()->head_department == $report->department)
+@if(Auth::user()->head_cluster_area == ucfirst($report->cluster_area) || Auth::user()->head_department == $report->department)
     <form method="POST" action="{{ action('ReportController@updateStatus', $report->id) }}" class="m-auto">
         @csrf
         <input type="hidden" name="type" value="{{Auth::user()->type}}">

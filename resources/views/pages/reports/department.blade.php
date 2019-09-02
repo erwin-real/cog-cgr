@@ -22,6 +22,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of {{isset($status) ? $status: ''}} {{ucfirst(Auth::user()->head_department)}} Reports</h4>
+                            <a class="btn btn-outline-info" href="/guides/reports"><i class="fa fa-question"></i>&nbsp; Guide</a>
 
                         </div>
                         <div class="market-status-table mt-4">

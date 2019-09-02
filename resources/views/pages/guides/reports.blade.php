@@ -30,7 +30,7 @@
                             <div class="ml-5">
                                 <ol>
                                     <li>Go to <a href="/reports">Reports Page</a>.</li>
-                                    <li>Simply click the name of the care group leader in the table.</li>
+                                    <li>Click the name of the care group leader in the table.</li>
                                     <li>Finish!</li>
                                 </ol>
                             </div>
@@ -42,13 +42,20 @@
                     <div class="card shadow">
                         <div class="card-body">
                             <div class="d-sm-flex justify-content-between align-items-center">
-                                <h4 class="header-title"><i class="fa fa-check text-success"></i> Check a report</h4>
+                                <h4 class="header-title"><i class="fa fa-check text-success"></i>
+                                    {{Auth::user()->type == 'admin' ? 'Check' : 'Verify'}} a report
+                                </h4>
                             </div>
                             <div class="ml-5">
                                 <ol>
                                     <li>Go to <a href="/reports">Reports Page</a>.</li>
-                                    <li>Simply click the name of the care group leader in the table.</li>
-                                    <li>Click the "Check" button at the bottom.</li>
+                                    <li>Click the name of the care group leader in the table.</li>
+                                    @if(Auth::user()->type == 'admin')
+                                        <li>Click the "Check" button at the bottom.</li>
+                                    @else
+                                        <li>Fill-up the Remarks field (Optional)</li>
+                                        <li>Click the "Verify" button at the bottom.</li>
+                                    @endif
                                     <li>Finish!</li>
                                 </ol>
                             </div>

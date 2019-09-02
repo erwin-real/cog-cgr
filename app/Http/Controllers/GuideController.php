@@ -19,7 +19,12 @@ class GuideController extends Controller
 
     public function departmentCareGroup() { return view('pages.guides.department-care-group'); }
 
-    public function reports() { return view('pages.guides.reports'); }
+    public function reports() {
+        if (Auth::user()->type == 'master' ||Auth::user()->type == 'admin' || Auth::user()->type == 'cluster head' || Auth::user()->type == 'department head')
+            return view('pages.guides.reports');
+
+        return redirect('/my-profile');
+    }
 
     public function users() {
         if (Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head')

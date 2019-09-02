@@ -126,7 +126,7 @@
                                         <br><br>
                                     @endif
                                     @if($report->date_verified_dh)
-                                        <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->cluster_area)}} Department Head</p>
+                                        <p> <strong>Verified by:</strong> {{$report->departmentHead->first_name}} {{$report->departmentHead->last_name}} - {{ucfirst($report->department)}} Department Head</p>
                                         <strong>Remarks:</strong>
                                         <p class="ml-2">
                                             @php

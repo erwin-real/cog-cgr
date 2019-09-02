@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="market-status-table mt-4">
-                            @if ($reports->isEmpty())
+                            @if(count(\App\Report::all()->merge(\App\Report::onlyTrashed()->get())) == 0)
                                 <p> There are no reports yet.</p>
                             @else
 
@@ -36,10 +36,12 @@
                                 <a href="/reports?status=checked">Checked Reports</a> |
                                 <a href="/reports">All</a><br><br>
 
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover text-center">
-                                        <thead>
+                                @if ($reports->isEmpty())
+                                    <p> There are no {{$status}} reports yet.</p>
+                                @else
+                                    <div class="table-responsive">
+                                        <table class="table table-hover text-center">
+                                            <thead>
                                             <tr>
                                                 <th>Leader</th>
                                                 <th>Cluster Area</th>
@@ -49,8 +51,8 @@
                                                 <th>Date Submitted</th>
                                                 <th>Status</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
+                                            <tbody>
                                             @foreach($reports as $report)
                                                 <tr>
                                                     <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
@@ -72,9 +74,11 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                            @endif
                                 {{--{{$reports->links()}}--}}
                             @endif
                         </div>
