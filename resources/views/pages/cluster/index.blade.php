@@ -23,6 +23,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of {{ucfirst(Auth::user()->head_cluster_area)}} care groups</h4>
+                            <a href="/guides/cluster-care-group" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                             {{--<a href="/caregroups/create" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Create</a>--}}
                             {{--<select class="custome-select border-0 pr-3">--}}
                                 {{--<option selected>Last 24 Hours</option>--}}

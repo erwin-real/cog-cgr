@@ -15,6 +15,8 @@ class GuideController extends Controller
 
     public function myCareGroup() { return view('pages.guides.my-care-group'); }
 
+    public function clusterCareGroup() { return view('pages.guides.cluster-care-group'); }
+
     public function departmentCareGroup() { return view('pages.guides.department-care-group'); }
 
     public function reports() { return view('pages.guides.reports'); }

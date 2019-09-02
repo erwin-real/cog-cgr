@@ -35,7 +35,7 @@
                     @endif
 
                     @if(Auth::user()->is_leader == 1 && Auth::user()->type == 'cluster head')
-                        <li class="{{ request()->is('cluster') || request()->is('cluster/*') ? 'active border-left-info' : '' }}">
+                        <li class="{{ request()->is('cluster') || request()->is('cluster/*') || request()->is('guides/cluster-care-group') ? 'active border-left-info' : '' }}">
                             <a href="/cluster"><i class="fa fa-users"></i> <span>{{ucfirst(Auth::user()->head_cluster_area)}} Care Groups</span></a>
                         </li>
                     @endif
