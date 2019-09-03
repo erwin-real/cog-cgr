@@ -26,6 +26,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="header-title mb-0">List of care groups</h4>
                             <a href="/caregroups/create" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Create</a>
+                            <a href="/guides/caregroups" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                         </div>
                         <div class="market-status-table mt-4">
                             @if ($groups->isEmpty())

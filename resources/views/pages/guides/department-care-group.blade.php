@@ -5,9 +5,9 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Care Group</h4>
+                    <h4 class="page-title pull-left">{{ucfirst(Auth::user()->head_department)}} Care Groups</h4>
                     <ul class="breadcrumbs pull-left">
-                    <li><a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Group</a></li>
+                    <li><a href="/{{Auth::user()->type == 'department head' ? 'department' : 'caregroups'}}">{{ucfirst(Auth::user()->head_department)}} Care Groups</a></li>
                     <li><span>Guide</span></li>
                     </ul>
                 </div>
@@ -29,7 +29,10 @@
                             </div>
                             <div class="ml-5">
                                 <ol>
-                                    <li>Go to <a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.</li>
+                                    <li>
+                                        Go to <a href="/{{Auth::user()->type == 'department head' ? 'department' : 'caregroups'}}">
+                                            {{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.
+                                    </li>
                                     <li>Simply click the name of the care group leader in the table.</li>
                                     <li>Finish!</li>
                                 </ol>
@@ -46,7 +49,10 @@
                             </div>
                             <div class="ml-5">
                                 <ol>
-                                    <li>Go to <a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.</li>
+                                    <li>
+                                        Go to <a href="/{{Auth::user()->type == 'department head' ? 'department' : 'caregroups'}}">
+                                            {{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.
+                                    </li>
                                     <li>Click the "Create" button.</li>
                                     <li>Fill-up all fields.</li>
                                     <li>Click the "Save" button.</li>
@@ -65,7 +71,10 @@
                             </div>
                             <div class="ml-5">
                                 <ol>
-                                    <li>Go to <a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.</li>
+                                    <li>
+                                        Go to <a href="/{{Auth::user()->type == 'department head' ? 'department' : 'caregroups'}}">
+                                            {{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.
+                                    </li>
                                     <li>Click the name of the care group leader in the table.</li>
                                     <li>Click the "Edit" button.</li>
                                     <li>Fill-up all desired fields.</li>
@@ -85,7 +94,10 @@
                             </div>
                             <div class="ml-5">
                                 <ol>
-                                    <li>Go to <a href="/department">{{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.</li>
+                                    <li>
+                                        Go to <a href="/{{Auth::user()->type == 'department head' ? 'department' : 'caregroups'}}">
+                                            {{ucfirst(Auth::user()->head_department)}} Care Groups Page</a>.
+                                    </li>
                                     <li>Click the name of the care group leader in the table.</li>
                                     <li>Click the "Delete" button.</li>
                                     <li>Click "Delete" button in the alertbox that will show up for confirmation.</li>

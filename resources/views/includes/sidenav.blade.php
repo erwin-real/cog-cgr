@@ -29,7 +29,7 @@
                     @endif
 
                     @if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')
-                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') ? 'active border-left-info' : '' }}">
+                        <li class="{{ request()->is('caregroups') || request()->is('caregroups/*') || request()->is('guides/caregroups') ? 'active border-left-info' : '' }}">
                             <a href="/caregroups"><i class="fa fa-users"></i> <span>All Care Groups</span></a>
                         </li>
                     @endif
