@@ -182,7 +182,11 @@ class UserController extends Controller
                 $user->username = ($request->input('username') || strlen($request->input('username')) > 0) ? $request->input('username') : null;
                 $user->head_cluster_area = ($validatedData['type'] == 'cluster head') ? $request->input('head_cluster_area') : null;
                 $user->head_department = ($validatedData['type'] == 'department head') ? $request->input('head_department') : null;
-            } else $user->is_leader = 0;
+            } else {
+                $user->username = null;
+                $user->password = null;
+                $user->is_leader = 0;
+            }
 
             $user->save();
 
