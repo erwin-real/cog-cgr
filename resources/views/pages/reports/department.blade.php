@@ -42,6 +42,7 @@
                                                 <th>Leader</th>
                                                 <th>Cluster Area</th>
                                                 <th>Department</th>
+                                                <th>Type</th>
                                                 <th>Present</th>
                                                 <th>Absent</th>
                                                 <th>Date Submitted</th>
@@ -59,6 +60,7 @@
                                                         <td><a href="/reports/{{$report->id}}">{{$report->leader->first_name}} {{$report->leader->last_name}}</a></td>
                                                         <td>{{ucfirst($report->cluster_area)}}</td>
                                                         <td>{{ucfirst($report->group->department)}}</td>
+                                                        <td>{{$report->type == 'cg' ? 'Care Group' : 'C2S'}}</td>
                                                         <td>{{count(explode(",", $report->present))}}</td>
                                                         <td>{{count(explode(",", $report->absent))}}</td>
                                                         <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>

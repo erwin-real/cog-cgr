@@ -58,6 +58,7 @@ class GroupController extends Controller
                 'leader' => 'required',
                 'department' => 'required',
                 'day_cg' => 'required',
+                'type' => 'required',
                 'time_cg' => 'required',
                 'venue' => 'required',
                 'cluster_area' => 'required'
@@ -67,6 +68,7 @@ class GroupController extends Controller
                 'leader_id' => $validatedData['leader'],
                 'department' => $validatedData['department'],
                 'time_cg' => $validatedData['time_cg'],
+                'type' => $validatedData['type'],
                 'venue' => $validatedData['venue'],
                 'day_cg' => $validatedData['day_cg'],
                 'cluster_area' => strtolower($validatedData['cluster_area'])
@@ -138,6 +140,7 @@ class GroupController extends Controller
                 'department' => 'required',
                 'day_cg' => 'required',
                 'time_cg' => 'required',
+                'type' => 'required',
                 'venue' => 'required',
                 'cluster_area' => 'required'
             ]);
@@ -146,6 +149,7 @@ class GroupController extends Controller
             $group->leader_id = $validatedData['leader'];
             $group->department = $validatedData['department'];
             $group->time_cg = $validatedData['time_cg'];
+            $group->type = $validatedData['type'];
             $group->venue = $validatedData['venue'];
             $group->cluster_area = $validatedData['cluster_area'];
             $group->day_cg = $validatedData['day_cg'];

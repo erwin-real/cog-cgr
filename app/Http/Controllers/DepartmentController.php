@@ -54,6 +54,7 @@ class DepartmentController extends Controller
                 'day_cg' => 'required',
                 'time_cg' => 'required',
                 'venue' => 'required',
+                'type' => 'required',
                 'cluster_area' => 'required'
             ]);
 
@@ -62,6 +63,7 @@ class DepartmentController extends Controller
                 'leader_id' => $validatedData['leader'],
                 'department' => Auth::user()->head_department,
                 'time_cg' => $validatedData['time_cg'],
+                'type' => $validatedData['type'],
                 'venue' => $validatedData['venue'],
                 'day_cg' => $validatedData['day_cg'],
                 'cluster_area' => strtolower($validatedData['cluster_area'])
@@ -131,6 +133,7 @@ class DepartmentController extends Controller
                 'leader' => 'required',
                 'day_cg' => 'required',
                 'time_cg' => 'required',
+                'type' => 'required',
                 'venue' => 'required',
                 'cluster_area' => 'required'
             ]);
@@ -140,6 +143,7 @@ class DepartmentController extends Controller
             $group->department = Auth::user()->head_department;
             $group->time_cg = $validatedData['time_cg'];
             $group->venue = $validatedData['venue'];
+            $group->type = $validatedData['type'];
             $group->cluster_area = $validatedData['cluster_area'];
             $group->day_cg = $validatedData['day_cg'];
             $group->save();

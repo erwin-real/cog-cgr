@@ -34,6 +34,7 @@
                                     <a href="/my-profile">{{ $report->leader->first_name }} {{ $report->leader->last_name }}</a>
                                 @endif
                             </p>
+                            <p> <strong>Type</strong>: {{$report->type == 'cg' ? 'Care Group' : 'C2S'}}</p>
                             <p> <strong>Day</strong>: {{ $report->day_cg }}</p>
                             <p> <strong>Time</strong>: {{ date('h:i A', strtotime($report->time_cg)) }}</p>
                             <p> <strong>Venue</strong>: {{ $report->venue }}</p>

@@ -49,6 +49,7 @@
 
                                                 <th>@sortablelink('leader.first_name', 'Leader',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>@sortablelink('department', 'Department',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
+                                                <th>@sortablelink('type', 'Type',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
                                                 <th>Members</th>
                                                 <th>Active</th>
                                                 <th>@sortablelink('day_cg', 'Day',[],['style' => 'text-decoration: none;', 'rel' => 'nofollow'])</th>
@@ -68,6 +69,7 @@
                                                         <td><a href="/caregroups/{{$group->id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>
                                                     @endif
                                                     <td>{{ucfirst($group->department)}}</td>
+                                                    <td>{{$group->type == 'cg' ? 'Care Group' : 'C2S'}}</td>
                                                     <td>{{count($group->members)}}</td>
                                                     <td>{{count($group->activeMembers)}}</td>
                                                     <td>{{$group->day_cg}}</td>

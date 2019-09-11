@@ -17,7 +17,7 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('leader_id');
             $table->unsignedInteger('cg_id');
-            $table->string('type')->nullable()->default('cg');
+            $table->string('type');
             $table->string('day_cg');
             $table->time('time_cg');
             $table->string('venue')->nullable();

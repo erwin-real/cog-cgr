@@ -59,6 +59,7 @@ class MyReportController extends Controller
             'venue' => $validatedData['venue'],
             'cluster_area' => $group->cluster_area,
             'department' => $group->department,
+            'type' => $group->type,
             'topic' => $validatedData['topic'],
             'offering' => $request->get('offering')
         ));

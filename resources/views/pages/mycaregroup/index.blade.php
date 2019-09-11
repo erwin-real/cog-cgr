@@ -36,9 +36,22 @@
                                         <a href="/my-profile">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
                                     @endif
                                 </p>
+                                <p> <strong>Type</strong>: {{$group->type == 'cg' ? 'Care Group' : 'C2S'}}</p>
                                 <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
                                 <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                                 <p> <strong>Venue</strong>: {{ $group->venue }}</p>
+                                <p> <strong>Department</strong>: {{ $group->department }}</p>
+                                <p> <strong>Department Head</strong>:
+                                    @if($group->departmentHead)
+                                        @if($group->departmentHead->id == Auth::id())
+                                            <a href="/my-profile">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                        @else
+                                            <a href="/my-profile/users/{{$group->departmentHead->id}}">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                        @endif
+                                    @else
+                                        <span>none</span>
+                                    @endif
+                                </p>
                                 <p> <strong>Cluster Area</strong>: {{ ucfirst($group->cluster_area) }}</p>
                                 <p> <strong>Cluster Head</strong>:
                                     @if($group->clusterHead)

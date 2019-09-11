@@ -41,6 +41,7 @@
                                             <tr>
                                                 <th>Leader</th>
                                                 <th>Department</th>
+                                                <th>Type</th>
                                                 <th>Members</th>
                                                 <th>Active</th>
                                                 <th>Day</th>
@@ -60,6 +61,7 @@
                                                         <td><a href="/cluster/{{$group->id}}">{{$group->leader->first_name}} {{$group->leader->last_name}}</a></td>
                                                     @endif
                                                     <td>{{ucfirst($group->department)}}</td>
+                                                    <td>{{$group->type == 'cg' ? 'Care Group' : 'C2S'}}</td>
                                                     <td>{{count($group->members)}}</td>
                                                     <td>{{count($group->activeMembers)}}</td>
                                                     <td>{{$group->day_cg}}</td>

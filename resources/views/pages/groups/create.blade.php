@@ -70,6 +70,24 @@
                                     </div>
                                 </div>
 
+                                {{-- TYPE --}}
+                                <div class="form-group row">
+                                    <label for="type" class="col-md-12 col-form-label text-md-left">Type <span class="text-danger">*</span></label>
+
+                                    <div class="col-md-12">
+                                        <select name="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }} py-0" id="type" autofocus required>
+                                            <option value="cg">Care Group</option>
+                                            <option value="c2s">C2S</option>
+                                        </select>
+
+                                        @if ($errors->has('type'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('type') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 {{-- DAY OF CARE GROUP --}}
                                 <div class="form-group row">
                                     <label for="day_cg" class="col-md-12 col-form-label text-md-left">Day <span class="text-danger">*</span></label>
