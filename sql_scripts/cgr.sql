@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2019 at 08:30 AM
+-- Generation Time: Oct 14, 2019 at 04:41 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `leader_id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `department` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `day_cg` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_cg` time NOT NULL,
@@ -44,11 +45,8 @@ CREATE TABLE `groups` (
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `leader_id`, `department`, `day_cg`, `time_cg`, `cluster_area`, `venue`, `created_at`, `updated_at`) VALUES
-(1, 3, 'women', 'Friday', '17:30:00', 'clark', 'oclub', '2019-08-07 17:45:34', '2019-08-07 17:45:34'),
-(2, 4, 'women', 'Monday', '19:00:00', 'clark', 'clark 2', '2019-08-07 17:55:21', '2019-08-07 17:55:21'),
-(4, 2, 'youth', 'Sunday', '15:30:00', 'malabanias', 'church', '2019-08-07 22:56:48', '2019-08-07 22:56:48'),
-(6, 4, 'women', 'Wednesday', '19:27:00', 'clark', 'air base clark asd', '2019-08-11 23:32:04', '2019-08-11 23:46:50');
+INSERT INTO `groups` (`id`, `leader_id`, `type`, `department`, `day_cg`, `time_cg`, `cluster_area`, `venue`, `created_at`, `updated_at`) VALUES
+(1, 11, 'cg', 'women', 'Wednesday', '10:00:00', 'clarkview', 'COG CLarkview', '2019-10-13 05:10:34', '2019-10-13 05:10:34');
 
 -- --------------------------------------------------------
 
@@ -71,7 +69,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_05_162612_create_groups_table', 1),
 (4, '2019_08_13_092003_create_reports_table', 1),
-(5, '2019_08_20_161832_add_department_to_reports', 2);
+(5, '2019_08_20_161832_add_department_to_reports', 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +93,7 @@ CREATE TABLE `reports` (
   `id` int(10) UNSIGNED NOT NULL,
   `leader_id` int(10) UNSIGNED NOT NULL,
   `cg_id` int(10) UNSIGNED NOT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'cg',
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `day_cg` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_cg` time NOT NULL,
   `venue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -115,16 +113,6 @@ CREATE TABLE `reports` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `department` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `reports`
---
-
-INSERT INTO `reports` (`id`, `leader_id`, `cg_id`, `type`, `day_cg`, `time_cg`, `venue`, `cluster_area`, `topic`, `offering`, `present`, `absent`, `consolidation_report`, `date_submitted`, `comment_ch`, `date_verified_ch`, `comment_dh`, `date_verified_dh`, `deleted_at`, `created_at`, `updated_at`, `department`) VALUES
-(2, 4, 6, 'cg', 'Sunday', '17:30:00', 'new report venue', 'clark', 'new report topic', 25.0000, '5', NULL, 'c\r\no\r\nn\r\ns\r\no\r\nl\r\ni\r\nd\r\na\r\nt\r\ni\r\no\r\n\'\r\n\"\r\n/\r\n~\r\nn', '2019-08-15 07:14:37', 'test\r\nui', '2019-08-20 09:09:15', 'approve\r\nby\r\nthe \r\ndeparment\r\nhead\r\nme', '2019-08-21 03:35:30', '2019-08-22 05:49:36', '2019-08-16 06:35:19', '2019-08-22 05:49:36', 'women'),
-(3, 4, 6, 'cg', 'Friday', '07:57:00', 'CHURCH 123', 'clark', 'test TOPIC 123', 456.8700, '5,7', NULL, 'test', '2019-08-19 08:32:56', NULL, NULL, NULL, NULL, '2019-08-22 03:52:25', '2019-08-19 08:32:56', '2019-08-22 03:52:25', 'women'),
-(4, 4, 6, 'cg', 'Saturday', '03:55:00', 'test venue', 'clark', 'test topic', 32231.0000, '7', '5', 'test\r\nre\r\nport', '2019-08-21 03:49:41', NULL, NULL, NULL, NULL, NULL, '2019-08-21 03:49:41', '2019-08-21 03:49:41', 'women'),
-(5, 3, 1, 'cg', 'Monday', '05:55:00', 'bonk', 'clark', 'bonk topic', 412.0000, '6', NULL, 'test', '2019-08-21 08:13:58', 'approve\r\nmy\r\nreport', '2019-08-21 08:15:13', 'check !', '2019-08-22 08:12:33', NULL, '2019-08-21 08:13:58', '2019-08-22 08:12:33', 'women');
 
 -- --------------------------------------------------------
 
@@ -167,18 +155,27 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `email`, `gender`, `birthday`, `age`, `group_age`, `address`, `cluster_area`, `head_cluster_area`, `head_department`, `contact`, `journey`, `cldp`, `username`, `password`, `type`, `leader_id`, `cg_id`, `is_leader`, `is_active`, `remember_token`, `email_verified_at`, `created_at`, `updated_at`) VALUES
-(1, 'Master', NULL, 'User', 'master@gmail.com', 'm', NULL, 0, 'N/A', 'N/A', 'N/A', NULL, NULL, NULL, 'N/A', NULL, 'master', '$2y$10$v7Wr1lAM4mqw55CJ4sNbO.YlatLlDAaPWZMtj2P9bJCyg.Svcwp7e', 'master', 0, NULL, 0, 1, 'gRqKtG8mMTNpdW77IWB2javr8stvoDriYiKaGmqxx0urgj64NO3G30oImAGm', NULL, '2019-05-26 19:38:17', '2019-08-07 21:33:15'),
-(2, 'Sharon Rose', 'Ordillo', 'Tiru', NULL, 'f', NULL, 55, 'women', 'Church', 'malabanias', NULL, 'women', NULL, 'leader', 3, 'sharon', '$2y$10$mwiGBOpiT7aYkGbbb1TNkeHptsc2RbmSq1cCS/OJzaJ1Ii.zDG/BC', 'department head', 0, NULL, 1, 1, 'Uk0mGnlp0AzFCkkuBzb0sg0wUtQuk7uuedKXxrXEHkeWy740PjE9SGmwURUd', NULL, '2019-08-07 21:33:37', '2019-08-14 03:29:18'),
-(3, 'Machelle', NULL, 'Del Mundo', NULL, 'f', '1996-04-15', 23, 'women', 'Machelle Address', 'clark', 'clark', NULL, '1234567', 'leader', 3, 'machelle', '$2y$10$0LdWioI4QKEiYOTfqH4yDeXFUWuxfFAw20UExkIgjf4dVOx2am7m.', 'cluster head', 2, 4, 1, 1, 'iXVThW7heBURWVzc6YTHAauERaTFRBTh91R8DrVsFKbJjS3XxJJgIdWd2O25', NULL, '2019-08-07 09:32:40', '2019-08-20 06:48:52'),
-(4, 'Narlyn', NULL, 'Soberano', NULL, 'f', '1996-04-15', 23, 'women', 'Narlyn Soberano address', 'clark', NULL, NULL, '321123', 'leader', 3, 'narlyn', '$2y$10$N./6wJ7jWfvP3s2FSTB35OTW3/Kk3OV0ju5Cz3xAFFO64qWwGFHGC', 'leader', 2, 4, 1, 1, 'ee1SG88hXXK5ZP0sANewt8pH5JdldXD2GHfI3yMdesCsY0WcFlDQB2p1sNle', NULL, '2019-08-05 22:19:19', '2019-08-14 08:28:58'),
-(5, 'Sonia', 'ANGELES', 'Pili', NULL, 'f', NULL, 35, 'women', 'Sonia Pili ADDRESS', 'clark', NULL, NULL, '321317', 'believer', 2, NULL, '$2y$10$C36X9.k./fidSjUoqT325OHbDKgNL9ox2ZQxTQM4QIZnKYGvEq3Gy', 'member', 4, 6, 0, 1, 'EO6tKbfDz919J4U3yzM1CXqhBbKZKTfv07bCTt68', NULL, '2019-08-05 22:39:24', '2019-08-15 06:50:15'),
-(6, 'Alpha', NULL, 'Bansil', NULL, 'f', '1990-06-05', 29, 'women', 'Alpha Bansil Address', 'clark', NULL, NULL, NULL, 'believer', 1, NULL, '$2y$10$b7onsn1IG3qION5j8cgbxeZVsvY2W1r7hISKZCSs7DBpzNIZrfnn2', 'member', 3, 1, 0, 0, 'E090FBO8UV6RSQWWisvGNtQucvDyHEUc4hzJhQj6', NULL, '2019-08-07 17:42:54', '2019-08-08 10:58:59'),
-(7, 'Shaira', NULL, 'Isip', NULL, 'f', NULL, 23, 'youth', 'Clark barracks', 'clark', NULL, NULL, NULL, 'disciple', 3, NULL, '$2y$10$o.dLCzSD0cDO1ZsCP.8mnuExsBbTAuXJcoSbjJojUwRxykHf1SgDG', 'member', 4, 6, 1, 1, 'jPgfctSdtFdJyuXolg2Zj0KjKhXxhy0f8ZxUt5eA', NULL, '2019-08-08 14:27:02', '2019-08-15 06:50:15'),
-(8, 'Augusto', NULL, 'Resada', NULL, 'm', NULL, 57, 'men', 'Angeles City', 'angeles', NULL, 'men', NULL, 'leader', 3, 'augusto', '$2y$10$DRgaVz6ELXTGgNR9/jAcYezUojqPiM2h2sx7xyJPJZIaK4Vgo9Vbe', 'department head', 0, NULL, 1, 1, 'TVfWoWuHHd59dxggcJhyYVDNdfi9qYd3pttt2VMEh0sAFB8bTNoXbPDnEQZW', NULL, '2019-08-11 19:50:22', '2019-08-11 19:50:22'),
-(9, 'Bong', NULL, 'Tiru', NULL, 'm', NULL, 45, 'men', 'Church', 'clarkview', NULL, NULL, NULL, 'leader', 3, 'bong', '$2y$10$wZzeYjJtW5vGrBzVZ/cs7.Kmf/jFsoGYQ2E9WTdPZZZ/aP0jQLA/u', 'admin', 0, NULL, 1, 1, '7HoFYbK8YWd2cCYg9C2q7MMEVY9Kv5U4iv8GmdyR', NULL, '2019-08-11 21:17:50', '2019-08-11 21:24:40'),
-(10, 'Jason', NULL, 'Nabong sadasdas', NULL, 'm', NULL, 33, 'Men', 'santol st malabanias', 'malabanias', NULL, NULL, NULL, 'disciple', 2, NULL, '$2y$10$D5DDiqcTflLO1x7khxB26OLxMmkGMLl3UMZ6Qsj.mjoWe4C3Qns6G', 'member', 0, NULL, 0, 1, 'WoQxoTQufGk2V58eW3ssMRFtaQt5VqBZ9Mc6NsRr', NULL, '2019-08-12 01:15:00', '2019-08-12 01:17:16'),
-(11, '123', '456', '789', 'TEST@GMAIL.COM', 'f', '1996-04-15', 25, 'women', '6789', '0123', '789', NULL, '456', 'disciple', 2, 'test123', '$2y$10$5TSV4FrHP6WmMuiYKwyHZ.0jpYW/3VP430QiTu5tSUuLFLHAIpjwS', 'member', 2, 4, 0, 1, 'x93EhzMaxsz3nXiA0gZQXPaJ0WEApvpfrITW3qYp', NULL, '2019-08-14 03:38:08', '2019-08-15 09:10:44'),
-(12, 'abc', 'efg', 'hij', 'temp@temp.com', 'f', '1997-04-15', 35, 'youth', 'test addresses', 'test cluster', NULL, NULL, '123456', 'disciple', 2, NULL, NULL, 'member', 2, 4, 0, 1, 'x93EhzMaxsz3nXiA0gZQXPaJ0WEApvpfrITW3qYp', NULL, '2019-08-14 03:41:51', '2019-08-15 09:10:44');
+(1, 'Master', NULL, 'User', 'master@gmail.com', 'm', NULL, 0, 'youth', 'N/A', 'n/a', NULL, NULL, NULL, 'N/A', NULL, 'master', '$2y$10$Q7O1xox/nYnVUehDuJyLCew.cfNCowqMRZ/yDpNhDxqcbtZLAdVnu', 'master', 0, NULL, 0, 1, 'sjxHjHcn9JXf6LjRp5O663O2be7rDkFrRpKDH5lxaAIBpiONK6kAuxOmSH2X', NULL, '2019-05-26 03:38:17', '2019-08-22 22:45:17'),
+(2, 'Bong', NULL, 'Tiru', NULL, 'm', '1967-10-03', 51, 'men', 'COG Clarkview', 'n/a', NULL, NULL, NULL, 'leader', 3, 'admin', '$2y$10$Njbg.M2ajv7X3L6ASQOpzuRrcPu4O.N3viUaICcn7ZImm1deXtAgS', 'admin', 0, NULL, 1, 1, 'Iul7HsXHkjoUoHFjtXZyPmde5M76uqvJ79EbPYZbq9KtDjvt4iv0zdbWPt3j', NULL, '2019-08-22 22:44:21', '2019-08-22 22:44:21'),
+(3, 'Steven', NULL, 'Baluyut', NULL, 'm', NULL, 55, 'men', 'Angeles City', 'balibago', NULL, 'men', NULL, 'leader', 3, 'steven', '$2y$10$UxegEosW6WwoUiJo3p5fVOqujVT6BIO0OA0C30v.ab9kqRUl77Rc2', 'department head', 0, NULL, 1, 1, 'dC6B1uytIj0hONZgveh0YtGNdOanwe8bK3WP0X6f', NULL, '2019-08-29 19:44:26', '2019-10-14 02:41:16'),
+(4, 'Sharon Rose', NULL, 'Tiru', NULL, 'f', NULL, 47, 'women', 'Church apartment', 'malabanias', NULL, 'women', NULL, 'leader', 3, 'sharon', '$2y$10$W3pGOz.IRNesepzuN37F8.B6Ns.l6WoPIpMcVpVxm83LKhUurgPTu', 'department head', 0, NULL, 1, 1, 'AMeOdUEHIwhBnPbBk6FgxvxJiPKSaslOp99SKDjq', NULL, '2019-08-28 00:08:33', '2019-08-28 00:08:33'),
+(5, 'Chie', NULL, 'Nabong', NULL, 'f', NULL, 40, 'youth', 'santol st malabanias', 'malabanias', NULL, 'youth', NULL, 'leader', 3, 'chie', '$2y$10$JaawIjOI4NIQQ3HQGilVeumq.I5bP3Pgxef/WgjZRVhlPYz4b2MnC', 'department head', 0, NULL, 1, 1, 'cXuJ1pQhZOKf33NtMhmzmUHWwgTb0QUfhZ9kL0hU', NULL, '2019-08-29 19:43:09', '2019-08-29 19:43:50'),
+(6, 'Machelle', NULL, 'Del Mundo', NULL, 'f', NULL, 43, 'women', 'Clark Housing', 'clark', 'Clark', NULL, NULL, 'leader', 3, 'machelle', '$2y$10$j2X7fXyv.wCG4a1pCbf1k.SOC.HMjkBBPFc446rEpgQMKknYzWeL6', 'cluster head', 0, NULL, 1, 1, 'sRktUvOSSkYVedxv5NdHj1ahFBnXe34OU729BtKL6ihtduTVHdaMN5vZhD6G', NULL, '2019-08-28 00:04:25', '2019-08-28 00:04:25'),
+(7, 'Narlyn', NULL, 'Soberano', NULL, 'f', NULL, 45, 'women', 'Clark Housing', 'clark', NULL, NULL, NULL, 'leader', 3, 'narlyn', '$2y$10$B4MDBokvrbSjzd.2vgcc.eZOYkvWqs7BdsTAuNeFsRKcw/FoiEH12', 'leader', 0, NULL, 1, 1, 'jGpVrndYrfXVvnudxwmeJN3hNyOxJURG6xxGQnTjOxHmhN0pgMzHRUR3Qqja', NULL, '2019-08-28 00:02:22', '2019-08-29 01:11:51'),
+(8, 'Beth', NULL, 'Sales', NULL, 'f', NULL, 30, 'women', 'Mabalacat', 'clark', NULL, NULL, NULL, 'leader', 3, 'beth', '$2y$10$EDrZSLRdfgVTSWUFB754vuo9T9YBq.PH2aFCPqG3Z6FsPF/UMur7q', 'leader', 0, NULL, 1, 1, 'cXuJ1pQhZOKf33NtMhmzmUHWwgTb0QUfhZ9kL0hU', NULL, '2019-08-29 20:01:47', '2019-08-29 20:01:47'),
+(9, 'Lorie', NULL, 'Olan', NULL, 'f', NULL, 30, 'women', 'Savana', 'clark', NULL, NULL, NULL, 'leader', 3, 'lorie', '$2y$10$jdHmrgBZNuQxRepDNS/2aeuk77X9NMxK0S8L9WAG781InWlXll4Ge', 'leader', 0, NULL, 1, 1, 'cXuJ1pQhZOKf33NtMhmzmUHWwgTb0QUfhZ9kL0hU', NULL, '2019-08-29 20:07:12', '2019-08-29 20:07:12'),
+(10, 'Nancy', NULL, 'Isip', NULL, 'f', NULL, 30, 'women', 'Margot', 'clark', NULL, NULL, NULL, 'leader', 3, 'nancy', '$2y$10$8zcu5t1qhzH4S1R4/9vpX.6UaQC/ExN3ynzCE4fnKfg7GuOiBBRKW', 'leader', 0, NULL, 1, 1, 'cXuJ1pQhZOKf33NtMhmzmUHWwgTb0QUfhZ9kL0hU', NULL, '2019-08-29 20:07:55', '2019-08-29 20:07:55'),
+(11, 'Norma', 'Manguerra', 'Flores', NULL, 'f', NULL, 54, 'women', 'Angeles City', 'clarkview', 'Clarkview', NULL, NULL, 'leader', 3, 'norma', '$2y$10$PcEQ/7vaKlq24lF8OnoNSuIqDrC6w8.rHShveHPaucCNphY/U5Vqi', 'cluster head', 0, NULL, 1, 1, 'wFVjQSrUWKcLfLV2XIxzMnsFDPKJe9CDvLYgHL9J', NULL, '2019-10-13 05:07:07', '2019-10-13 05:07:07'),
+(12, 'Ann Margarette', NULL, 'Chua', 'marga_chua@gmail.com', 'f', NULL, 28, 'women', 'Angeles City', 'clarkview', NULL, NULL, '09087036342', 'believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'wFVjQSrUWKcLfLV2XIxzMnsFDPKJe9CDvLYgHL9J', NULL, '2019-10-13 05:08:36', '2019-10-13 05:10:34'),
+(13, 'Mary Ann', NULL, 'Sevilla', 'gmbean1990@gmail.com', 'f', NULL, 28, 'women', 'Angeles City', 'clarkview', NULL, NULL, '09287675605', 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'wFVjQSrUWKcLfLV2XIxzMnsFDPKJe9CDvLYgHL9J', NULL, '2019-10-13 05:09:34', '2019-10-13 05:10:34'),
+(14, 'Aljin', NULL, 'Singzon', 'singzonaljin@yahoo.com', 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, '09298571199', 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 07:57:43', '2019-10-13 08:05:15'),
+(15, 'Susan', NULL, 'Lannon', 'suzy.val@yahoo.com', 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, '09059555710', 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 07:59:27', '2019-10-13 08:05:15'),
+(16, 'Lani', 'M', 'Montoya', NULL, 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, '09482231010', 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:00:22', '2019-10-13 08:05:16'),
+(17, 'Debra', NULL, 'Pamintuan', 'iamhisperfumeph@gmail.com', 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, NULL, 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:01:30', '2019-10-13 08:05:16'),
+(18, 'Annabelle', NULL, 'Bautista', 'aerhabella29@gmail.com', 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, NULL, 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:02:16', '2019-10-13 08:05:16'),
+(19, 'Jocelyn', NULL, 'Matol', NULL, 'm', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, NULL, 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:02:46', '2019-10-13 08:05:16'),
+(20, 'Daisy', NULL, 'Ducusin', NULL, 'f', NULL, 28, 'Women', 'Angeles City', 'clarkview', NULL, NULL, NULL, 'pre-believer', 0, NULL, NULL, 'member', 11, 1, 0, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:03:10', '2019-10-13 08:05:16'),
+(21, 'Almira', NULL, 'Cortez', NULL, 'f', NULL, 28, 'Women', 'Lanzones st.', 'clarkview', NULL, NULL, NULL, 'leader', 3, 'almira', '$2y$10$oYPRoJe5m82E/52OYQhHp.H12kLFTDUeHYOAKPZcihrswf5Xq.mIe', 'leader', 0, NULL, 1, 1, 'fSAm7faTmMqOOJZiq1eQ6AUxgQP3pqS2r7KcYE3T', NULL, '2019-10-13 08:09:11', '2019-10-13 08:09:11');
 
 --
 -- Indexes for dumped tables
@@ -226,7 +223,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -238,13 +235,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
