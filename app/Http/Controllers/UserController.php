@@ -17,9 +17,11 @@ class UserController extends Controller
         if ($this->isDeptHeadOrAdminOrMaster()) {
             if (Auth::user()->type == 'department head')
                 return view('pages.users.index')
-                    ->with('users', User::where('group_age', Auth::user()->head_department)->sortable()->paginate(20));
+                    ->with('users', User::where('group_age', Auth::user()->head_department)->sortable()->get());
+//            ->with('users', User::where('group_age', Auth::user()->head_department)->sortable()->paginate(20));
 
-            return view('pages.users.index')->with('users', User::sortable()->paginate(20));
+            return view('pages.users.index')->with('users', User::sortable()->get());
+//            return view('pages.users.index')->with('users', User::sortable()->paginate(20));
         }
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see all users.');
@@ -72,7 +74,7 @@ class UserController extends Controller
                 'last_name' => $validatedData['last_name'],
                 'gender' => strtolower($validatedData['gender']),
                 'age' => $validatedData['age'],
-                'group_age' => $validatedData['group_age'],
+                'group_age' => strtolower($validatedData['group_age']),
                 'address' => $validatedData['address'],
                 'cluster_area' => strtolower($validatedData['cluster_area']),
                 'leader_id' => 0,
@@ -109,7 +111,7 @@ class UserController extends Controller
         if ($this->isDeptHeadOrAdminOrMaster()) {
             $user = User::find($id);
             if (
-                (Auth::user()->type == 'department head' && $user->group_age == Auth::user()->head_department) ||
+                (Auth::user()->type == 'department head' && strtolower($user->group_age) == Auth::user()->head_department) ||
                 Auth::user()->type == 'admin' || Auth::user()->type == 'master'
             )
                 return view('pages.users.show')->with('user', $user);
@@ -164,7 +166,7 @@ class UserController extends Controller
             $user->last_name = $validatedData['last_name'];
             $user->gender = strtolower($validatedData['gender']);
             $user->age = $validatedData['age'];
-            $user->group_age = $validatedData['group_age'];
+            $user->group_age = strtolower($validatedData['group_age']);
             $user->address = $validatedData['address'];
             $user->cluster_area = strtolower($validatedData['cluster_area']);
             $user->birthday = $request->input('birthday');

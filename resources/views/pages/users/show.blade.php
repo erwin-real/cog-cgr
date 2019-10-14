@@ -28,7 +28,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="d-sm-flex justify-content-between align-items-center">
-                            <h4 class="header-title mb-0">User Profile</h4>
+                            <h4 class="header-title mb-0">{{ucfirst($user->type)}}'s Profile</h4>
                         </div>
                         <div class="ml-5 mt-4">
 

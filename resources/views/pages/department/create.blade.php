@@ -37,7 +37,7 @@
                                     <div class="col-md-12">
                                         <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
                                             @foreach($users as $user)
-                                                @if($user->type != 'master' && $user->group_age == Auth::user()->head_department)
+                                                @if($user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department && $user->is_leader)
                                                     <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
                                                 @endif
                                             @endforeach
@@ -146,7 +146,7 @@
                                             <li class="mb-1">
                                                 <select id="members" class="mb-1" name="members[]" required="required">
                                                     @foreach($users as $user)
-                                                        @if($user->id != Auth::id() && $user->type != 'master' && $user->type != 'admin')
+                                                        @if($user->id != Auth::id() && $user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department)
                                                             <option value="{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</option>
                                                         @endif
                                                     @endforeach
@@ -179,7 +179,7 @@
         var values = [];
         var ids = [];
         @foreach($users as $user)
-            @if($user->id != Auth::user()->id && $user->type != 'master' && $user->type != 'admin')
+            @if($user->id != Auth::user()->id && $user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department)
                 values.push('{{$user->first_name}} {{$user->last_name}}');
                 ids.push('{{$user->id}}');
             @endif

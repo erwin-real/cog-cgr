@@ -30,11 +30,7 @@
 
                                 {{-- BASIC INFO --}}
                                 <p> <strong>Care Group Leader</strong>:
-                                    @if($group->leader_id != Auth::id())
-                                        <a href="/my-profile/users/{{$group->leader->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
-                                    @else
-                                        <a href="/my-profile">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
-                                    @endif
+                                    <a href="/my-profile">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
                                 </p>
                                 <p> <strong>Type</strong>: {{$group->type == 'cg' ? 'Care Group' : 'C2S'}}</p>
                                 <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
@@ -74,7 +70,6 @@
                                 @if ($group->members->isEmpty())
                                     <p> There are no members yet.</p>
                                 @else
-                                    {{--{{$accounts->links()}}--}}
                                     <div class="table-responsive">
                                         <table class="table table-hover text-center">
                                             <thead>

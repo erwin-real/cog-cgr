@@ -39,7 +39,7 @@
                                     <div class="col-md-12">
                                         <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
                                             @foreach($users as $user)
-                                                @if($user->id != Auth::id() && $user->type != 'master')
+                                                @if($user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department && $user->is_leader)
                                                     <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
                                                 @endif
                                             @endforeach
@@ -149,7 +149,7 @@
                                                 <li class="mb-1">
                                                     <select id="members" class="mb-1" name="members[]" required="required">
                                                         @foreach($users as $user)
-                                                            @if($user->id != Auth::id() && $user->type != 'master' && $user->type != 'admin')
+                                                            @if($user->id != Auth::id() && $user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department)
                                                                 <option value="{{$user->id}}" {{$user->id === $member->id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
                                                             @endif
                                                         @endforeach
@@ -160,7 +160,7 @@
                                         </ol>
                                     </div>
                                 </div>
-                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Attribute</button>
+                                <button type="button" class="ml-3 btn btn-outline-primary" onclick="append()"><i class="fa fa-plus"></i> Add Member</button>
 
                                 <div class="form-group row mt-5 mb-0 text-center">
                                     <div class="col-md-12">
@@ -183,7 +183,7 @@
         var values = [];
         var ids = [];
         @foreach($users as $user)
-        @if($user->id != Auth::user()->id && $user->type != 'master' && $user->type != 'admin')
+        @if($user->id != Auth::user()->id && $user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department)
         values.push('{{$user->first_name}} {{$user->last_name}}');
         ids.push('{{$user->id}}');
         @endif

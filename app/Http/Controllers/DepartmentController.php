@@ -58,7 +58,11 @@ class DepartmentController extends Controller
                 'cluster_area' => 'required'
             ]);
 
-//            dd($request);
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                if ($request->input('members')[$i] == $validatedData['leader'])
+                    return redirect('/department/create')->with('error', 'Cannot create the care group because the leader should not be one of the members!');
+            }
+
             $group = new Group(array(
                 'leader_id' => $validatedData['leader'],
                 'department' => Auth::user()->head_department,
@@ -127,7 +131,7 @@ class DepartmentController extends Controller
                     else $dups[$val] = array($key);
                 }
             }
-            if ($dups) return redirect('/department/' . $id . '/edit')->with('error', 'Cannot create the care group because it has duplicate members!');
+            if ($dups) return redirect('/department/' . $id . '/edit')->with('error', 'Cannot update the care group because it has duplicate members!');
 
             $validatedData = $request->validate([
                 'leader' => 'required',
@@ -137,6 +141,12 @@ class DepartmentController extends Controller
                 'venue' => 'required',
                 'cluster_area' => 'required'
             ]);
+
+
+            for ($i = 0; $i < count($request->input('members')); $i++) {
+                if ($request->input('members')[$i] == $validatedData['leader'])
+                    return redirect()->back()->with('error', 'Cannot update the care group because the leader should not be one of the members!');
+            }
 
             $group = Group::find($id);
             $group->leader_id = $validatedData['leader'];
@@ -152,6 +162,11 @@ class DepartmentController extends Controller
             $leader->is_leader = 1;
             if ($leader->type == 'member') $leader->type = 'leader';
             $leader->save();
+
+            foreach ($group->members as $user) {
+                $user->cg_id = null;
+                $user->save();
+            }
 
             for ($i = 0; $i < count($request->input('members')); $i++) {
                 $member = User::find($request->input('members')[$i]);
