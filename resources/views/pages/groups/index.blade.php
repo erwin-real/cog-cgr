@@ -28,6 +28,7 @@
                             <a href="/caregroups/create" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Create</a>
                             <a href="/guides/caregroups" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                         </div>
+                        <h6>Total : {{count($groups)}}</h6>
                         <div class="market-status-table mt-4">
                             @if ($groups->isEmpty())
                                 <p> There are no care groups yet.</p>

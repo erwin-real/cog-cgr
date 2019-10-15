@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +25,7 @@ class User extends Authenticatable
     public $sortable = [
         'first_name', 'middle_name', 'last_name', 'username',
         'email', 'leader_id', 'cg_id', 'address',
-        'cluster_area', 'gender', 'group_age', 'age',
+        'cluster_area', 'gender', 'group_age',
         'birthday', 'head_cluster_area', 'head_department', 'contact',
         'journey', 'cldp', 'type', 'is_leader',
         'is_active', 'created_at', 'updated_at'
@@ -40,7 +41,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name', 'middle_name', 'last_name', 'username',
         'email', 'password', 'leader_id', 'cg_id', 'address',
-        'cluster_area', 'gender', 'group_age', 'age',
+        'cluster_area', 'gender', 'group_age',
         'birthday', 'head_cluster_area', 'head_department', 'contact',
         'journey', 'cldp', 'type', 'is_leader',
         'is_active', 'remember_token'
@@ -91,4 +92,6 @@ class User extends Authenticatable
     public function leader() { return $this->belongsTo('App\User', 'leader_id'); }
 
     public function members() { return $this->hasMany('App\User', 'leader_id'); }
+
+    public function getAgeAttribute() { return Carbon::parse($this->attributes['birthday'])->age; }
 }

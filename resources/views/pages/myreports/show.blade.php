@@ -29,7 +29,8 @@
                         <div class="ml-5 mt-4">
                             <p> <strong>Leader</strong>:
                                 @if($report->leader_id != Auth::id())
-                                    <a href="/my-profile/users/{{$report->leader->id}}">{{ $report->leader->first_name }} {{ $report->leader->last_name }}</a>
+                                    <a href="/users/{{$report->leader->id}}">{{ $report->leader->first_name }} {{ $report->leader->last_name }}</a>
+                                    {{--<a href="/my-profile/users/{{$report->leader->id}}">{{ $report->leader->first_name }} {{ $report->leader->last_name }}</a>--}}
                                 @else
                                     <a href="/my-profile">{{ $report->leader->first_name }} {{ $report->leader->last_name }}</a>
                                 @endif
@@ -55,7 +56,8 @@
                                             @if($present->id == Auth::id())
                                                 <li><a href="/my-profile">{{$present->first_name}} {{$present->last_name}}</a></li>
                                             @else
-                                                <li><a href="/my-profile/users/{{$present->id}}">{{$present->first_name}} {{$present->last_name}}</a></li>
+                                                <li><a href="/users/{{$present->id}}">{{$present->first_name}} {{$present->last_name}}</a></li>
+                                                {{--<li><a href="/my-profile/users/{{$present->id}}">{{$present->first_name}} {{$present->last_name}}</a></li>--}}
                                             @endif
                                         @endforeach
                                     </ol>
@@ -71,7 +73,8 @@
                                             @if($absent->id == Auth::id())
                                                 <li><a href="/my-profile">{{$absent->first_name}} {{$absent->last_name}}</a></li>
                                             @else
-                                                <li><a href="/my-profile/users/{{$absent->id}}">{{$absent->first_name}} {{$absent->last_name}}</a></li>
+                                                <li><a href="/users/{{$absent->id}}">{{$absent->first_name}} {{$absent->last_name}}</a></li>
+                                                {{--<li><a href="/my-profile/users/{{$absent->id}}">{{$absent->first_name}} {{$absent->last_name}}</a></li>--}}
                                             @endif
                                         @endforeach
                                     </ol>

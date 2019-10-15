@@ -45,7 +45,8 @@
                             <p> <strong>Username</strong>: {{ $user->username ? $user->username : 'none'}}</p>
 
                             @if($user->leader_id != 0)
-                                <p> <strong>Leader</strong>: <a href="/my-profile/users/{{$user->leader->id}}">{{ $user->leader->first_name.' '.$user->leader->last_name }}</a></p>
+                                <p> <strong>Leader</strong>: <a href="/users/{{$user->leader->id}}">{{ $user->leader->first_name.' '.$user->leader->last_name }}</a></p>
+                                {{--<p> <strong>Leader</strong>: <a href="/my-profile/users/{{$user->leader->id}}">{{ $user->leader->first_name.' '.$user->leader->last_name }}</a></p>--}}
                             @else
                                 {{--<p> <strong>Leader</strong>: </p>--}}
                             @endif

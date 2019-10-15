@@ -11,27 +11,19 @@ class MyProfileController extends Controller
 {
     public function __construct() { $this->middleware('auth'); }
 
-    public function index() {
-        return view('pages.myprofile.index')->with('user', Auth::user());
-    }
+    public function index() { return view('pages.myprofile.index')->with('user', Auth::user()); }
 
-    public function show($id) {
-        if ($id != auth()->user()->id)
-            return view('pages.myprofile.show')->with('user', User::find($id));
+//    public function show($id) {
+//        return ($id != auth()->user()->id) ? view('pages.myprofile.show')->with('user', User::find($id)) : redirect('/my-profile');
+//    }
 
-        return redirect('/my-profile');
-    }
-
-    public function edit() {
-        return view('pages.myprofile.edit')->with('user', Auth::user());
-    }
+    public function edit() { return view('pages.myprofile.edit')->with('user', Auth::user()); }
 
     public function update(Request $request) {
         $validatedData = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
             'gender' => 'required',
-            'age' => 'required',
             'group_age' => 'required',
             'address' => 'required',
             'cluster_area' => 'required'
@@ -42,7 +34,6 @@ class MyProfileController extends Controller
         $user->middle_name = $request->input('middle_name');
         $user->last_name = $validatedData['last_name'];
         $user->gender = strtolower($validatedData['gender']);
-        $user->age = $validatedData['age'];
         $user->group_age = $validatedData['group_age'];
         $user->address = $validatedData['address'];
         $user->cluster_area = strtolower($validatedData['cluster_area']);
@@ -67,9 +58,7 @@ class MyProfileController extends Controller
     }
 
     // CHANGE PASSWORD
-    public function showChangePasswordForm(){
-        return view('pages.myprofile.changepassword')->with('user', Auth::user());
-    }
+    public function showChangePasswordForm(){ return view('pages.myprofile.changepassword')->with('user', Auth::user()); }
 
     public function changePassword(Request $request){
         $user = Auth::user();

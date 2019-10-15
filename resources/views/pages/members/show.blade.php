@@ -57,7 +57,8 @@
                             <p> <strong>Username</strong>: {{ $member->username ? $member->username : 'none'}}</p>
 
                             @if($member->leader_id != 0 && $member->leader_id != Auth()->user()->id)
-                                <p> <strong>Leader</strong>: <a href="/my-profile/users/{{$member->leader->id}}">{{ $member->leader->first_name.' '.$member->leader->last_name }}</a></p>
+                                <p> <strong>Leader</strong>: <a href="/users/{{$member->leader->id}}">{{ $member->leader->first_name.' '.$member->leader->last_name }}</a></p>
+                                {{--<p> <strong>Leader</strong>: <a href="/my-profile/users/{{$member->leader->id}}">{{ $member->leader->first_name.' '.$member->leader->last_name }}</a></p>--}}
                             @elseif($member->leader_id == Auth()->user()->id)
                                 <p> <strong>Leader</strong>: <a href="/my-profile">{{ $member->leader->first_name.' '.$member->leader->last_name }}</a></p>
                             @endif

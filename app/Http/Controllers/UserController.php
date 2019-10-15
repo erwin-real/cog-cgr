@@ -41,7 +41,6 @@ class UserController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'gender' => 'required',
-                'age' => 'required',
                 'group_age' => 'required',
                 'address' => 'required',
                 'cluster_area' => 'required',
@@ -74,7 +73,6 @@ class UserController extends Controller
                 'middle_name' => ucfirst($request->input('middle_name')),
                 'last_name' => ucfirst($validatedData['last_name']),
                 'gender' => strtolower($validatedData['gender']),
-                'age' => $validatedData['age'],
                 'group_age' => strtolower($validatedData['group_age']),
                 'address' => $validatedData['address'],
                 'cluster_area' => strtolower($validatedData['cluster_area']),
@@ -109,18 +107,20 @@ class UserController extends Controller
     }
 
     public function show($id) {
-        if ($this->isDeptHeadOrAdminOrMaster()) {
-            $user = User::find($id);
-            if (
-                (Auth::user()->type == 'department head' && strtolower($user->group_age) == Auth::user()->head_department) ||
-                Auth::user()->type == 'admin' || Auth::user()->type == 'master'
-            )
-                return view('pages.users.show')->with('user', $user);
-            else if (Auth::user()->type == 'department head' && $user->group_age != Auth::user()->head_department)
-                return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that user.');
-        }
+//        if ($this->isDeptHeadOrAdminOrMaster()) {
+//            $user = User::find($id);
+//            if (
+//                (Auth::user()->type == 'department head' && strtolower($user->group_age) == Auth::user()->head_department) ||
+//                Auth::user()->type == 'admin' || Auth::user()->type == 'master'
+//            )
+//                return view('pages.users.show')->with('user', $user);
+//            else if (Auth::user()->type == 'department head' && $user->group_age != Auth::user()->head_department)
+//                return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that user.');
+//        }
+//
+//        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that user.');
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see that user.');
+        return ($id != 1 && $id != Auth::id()) ? view('pages.users.show')->with('user', User::find($id)) : redirect('/my-profile');
     }
 
     public function edit($id) {
@@ -137,7 +137,6 @@ class UserController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'gender' => 'required',
-                'age' => 'required',
                 'group_age' => 'required',
                 'address' => 'required',
                 'cluster_area' => 'required',
@@ -166,7 +165,6 @@ class UserController extends Controller
             $user->middle_name = ucfirst($request->input('middle_name'));
             $user->last_name = ucfirst($validatedData['last_name']);
             $user->gender = strtolower($validatedData['gender']);
-            $user->age = $validatedData['age'];
             $user->group_age = strtolower($validatedData['group_age']);
             $user->address = $validatedData['address'];
             $user->cluster_area = strtolower($validatedData['cluster_area']);

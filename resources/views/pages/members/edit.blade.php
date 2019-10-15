@@ -121,21 +121,6 @@
                                     </div>
                                 </div>
 
-                                {{--AGE--}}
-                                <div class="form-group row">
-                                    <label for="age" class="col-md-12 col-form-label text-md-left">Age <span class="text-danger">*</span></label>
-
-                                    <div class="col-md-12">
-                                        <input id="age" type="number" class="form-control{{ $errors->has('age') ? ' is-invalid' : '' }}" name="age" value="{{$member->age}}" required autofocus>
-
-                                        @if ($errors->has('age'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('age') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 {{--GROUP AGE--}}
                                 <div class="form-group row">
                                     <label for="group_age" class="col-md-12 col-form-label text-md-left">Group Age <span class="text-danger">*</span></label>

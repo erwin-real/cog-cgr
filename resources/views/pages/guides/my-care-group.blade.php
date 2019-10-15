@@ -60,6 +60,26 @@
                     </div>
                 </div>
 
+                <div class="col-md-6 mt-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="d-sm-flex justify-content-between align-items-center">
+                                <h4 class="header-title"><i class="fa fa-check text-success"></i> Update my member's profile</h4>
+                            </div>
+                            <div class="ml-5">
+                                <ol>
+                                    <li>Go to <a href="/my-care-group">My Care Group Page</a>.</li>
+                                    <li>Click one of your members name in the table.</li>
+                                    <li>Click the "Edit" button.</li>
+                                    <li>Fill-up all desired fields.</li>
+                                    <li>Click the "Save" button.</li>
+                                    <li>Finish!</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

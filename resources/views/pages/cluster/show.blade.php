@@ -28,7 +28,8 @@
                         <div class="ml-5 mt-4">
                             <p> <strong>Leader</strong>:
                                 @if($group->leader_id != Auth::id())
-                                    <a href="/my-profile/users/{{$group->leader->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
+                                    <a href="/users/{{$group->leader->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
+                                    {{--<a href="/my-profile/users/{{$group->leader->id}}">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>--}}
                                 @else
                                     <a href="/my-profile">{{ $group->leader->first_name }} {{ $group->leader->last_name }}</a>
                                 @endif
@@ -43,7 +44,8 @@
                                     @if($group->departmentHead->id == Auth::id())
                                         <a href="/my-profile">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
                                     @else
-                                        <a href="/my-profile/users/{{$group->departmentHead->id}}">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                        <a href="/users/{{$group->departmentHead->id}}">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>
+                                        {{--<a href="/my-profile/users/{{$group->departmentHead->id}}">{{$group->departmentHead->first_name}} {{$group->departmentHead->last_name}}</a>--}}
                                     @endif
                                 @else
                                     <span>none</span>
@@ -55,7 +57,8 @@
                                     @if($group->clusterHead->id == Auth::id())
                                         <a href="/my-profile">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
                                     @else
-                                        <a href="/my-profile/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                        <a href="/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>
+                                        {{--<a href="/my-profile/users/{{$group->clusterHead->id}}">{{$group->clusterHead->first_name}} {{$group->clusterHead->last_name}}</a>--}}
                                     @endif
                                 @else
                                     <span>none</span>
@@ -92,7 +95,8 @@
                                                 @if($member->id == Auth::id())
                                                     <td><a href="/my-profile">{{$member->first_name}} {{$member->last_name}}</a></td>
                                                 @else
-                                                    <td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                    <td><a href="/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                    {{--<td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>--}}
                                                 @endif
                                                 <td>{{$member->address}}</td>
                                                 <td>{{ $member->birthday ? date('M d, Y', strtotime($member->birthday)) : '' }}</td>

@@ -57,9 +57,9 @@ Route::put('/my-care-group/members/{user}', 'MemberController@update');
 
 // MY PROFILE
 Route::get('/my-profile', 'MyProfileController@index');
-Route::get('/my-profile/users/{user}', 'MyProfileController@show');
 Route::get('/my-profile/edit', 'MyProfileController@edit');
 Route::put('/my-profile', 'MyProfileController@update');
+//Route::get('/my-profile/users/{user}', 'MyProfileController@show');
 
 // MY PROFILE CHANGE PASSWORD
 Route::get('/my-profile/change-password','MyProfileController@showChangePasswordForm');

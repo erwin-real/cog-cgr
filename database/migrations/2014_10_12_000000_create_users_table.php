@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->char('gender', 1);
             $table->date('birthday')->nullable();
-            $table->unsignedInteger('age');
             $table->char('group_age', 5);
             $table->text('address');
             $table->string('cluster_area');

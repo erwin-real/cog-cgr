@@ -37,7 +37,6 @@ class MemberController extends Controller
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'gender' => 'required',
-                'age' => 'required',
                 'group_age' => 'required',
                 'address' => 'required',
                 'cluster_area' => 'required',
@@ -49,7 +48,6 @@ class MemberController extends Controller
             $member->middle_name = $request->input('middle_name');
             $member->last_name = $validatedData['last_name'];
             $member->gender = strtolower($validatedData['gender']);
-            $member->age = $validatedData['age'];
             $member->group_age = $validatedData['group_age'];
             $member->address = $validatedData['address'];
             $member->cluster_area = strtolower($validatedData['cluster_area']);

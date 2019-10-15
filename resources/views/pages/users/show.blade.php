@@ -71,26 +71,28 @@
                             <p> <strong>Date Created</strong>: {{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</p>
                             <p> <strong>Date Updated</strong>: {{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</p>
                         </div>
-                        <div class="buttons-holder mt-4">
-                            <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
+                        @if((Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head') && $user->type != 'member')
+                            <div class="buttons-holder mt-4">
+                                <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
 
-                            @if((Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head') && $user->type != 'member')
-                                <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
-                            @endif
+                                @if((Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head') && $user->type != 'member')
+                                    <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
+                                @endif
 
-                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
-                                <i class="fa fa-trash fa-sm fa-fw"></i>
-                                Delete
-                            </button>
+                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
+                                    <i class="fa fa-trash fa-sm fa-fw"></i>
+                                    Delete
+                                </button>
 
-                        </div>
+                            </div>
+                        @endif
 
                     </div>
                 </div>
             </div>
         </div>
 
-        @if($user->type == 'cluster head')
+        @if($user->type == 'cluster head' && Auth::user()->type == 'department head')
             @include('pages.users.cluster')
         @endif
 
