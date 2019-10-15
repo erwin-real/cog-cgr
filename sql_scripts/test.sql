@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS migrations;
+DROP TABLE IF EXISTS password_resets;
+DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS users;
+
+
+
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/

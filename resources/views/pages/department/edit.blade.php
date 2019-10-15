@@ -38,7 +38,7 @@
 
                                     <div class="col-md-12">
                                         <select name="leader" class="form-control{{ $errors->has('leader') ? ' is-invalid' : '' }} py-0" id="leader" required autofocus>
-                                            @foreach($users as $user)
+                                            @foreach($leaders as $user)
                                                 @if($user->type != 'master' && $user->type != 'admin' && $user->group_age == Auth::user()->head_department && $user->is_leader)
                                                     <option value="{{$user->id}}" {{$user->id == $group->leader_id ? 'selected' : ''}}>{{$user->first_name}} {{$user->last_name}}</option>
                                                 @endif

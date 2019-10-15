@@ -30,6 +30,7 @@
                                 {{--<option value="0">01 July 2018</option>--}}
                             {{--</select>--}}
                         </div>
+                        <h6>Total : {{count($groups)}}</h6>
                         <div class="market-status-table mt-4">
                             @if ($groups->isEmpty())
                                 <p> There are no care groups yet.</p>

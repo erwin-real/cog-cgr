@@ -30,7 +30,7 @@ class MyCareGroupController extends Controller
         if ($group->leader->id == auth()->user()->id)
             return view('pages.mycaregroup.edit')
                 ->with('group', $group)
-                ->with('users', User::all());
+                ->with('users', User::whereNull('cg_id')->get()->merge(Group::find($id)->members));
 
         return redirect('/my-care-group');
 //            ->with('error', 'You don\'t have the privilege.');

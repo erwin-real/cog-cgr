@@ -36,7 +36,7 @@
                                 <p> <strong>Day</strong>: {{ $group->day_cg }}</p>
                                 <p> <strong>Time</strong>: {{ date('h:i A', strtotime($group->time_cg)) }}</p>
                                 <p> <strong>Venue</strong>: {{ $group->venue }}</p>
-                                <p> <strong>Department</strong>: {{ $group->department }}</p>
+                                <p> <strong>Department</strong>: {{ ucfirst($group->department) }}</p>
                                 <p> <strong>Department Head</strong>:
                                     @if($group->departmentHead)
                                         @if($group->departmentHead->id == Auth::id())
@@ -90,7 +90,8 @@
                                                     @if($member->id == Auth::id())
                                                         <td><a href="/my-profile">{{$member->first_name}} {{$member->last_name}}</a></td>
                                                     @else
-                                                        <td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
+                                                        {{--<td><a href="/my-profile/users/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>--}}
+                                                        <td><a href="/my-care-group/members/{{$member->id}}">{{$member->first_name}} {{$member->last_name}}</a></td>
                                                     @endif
                                                     <td>{{$member->address}}</td>
                                                     <td>{{$member->birthday ? date('M d, Y', strtotime($member->birthday)) : ''}}</td>

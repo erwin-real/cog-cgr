@@ -20,7 +20,8 @@ class UserController extends Controller
                     ->with('users', User::where('group_age', Auth::user()->head_department)->sortable()->get());
 //            ->with('users', User::where('group_age', Auth::user()->head_department)->sortable()->paginate(20));
 
-            return view('pages.users.index')->with('users', User::sortable()->get());
+            return view('pages.users.index')
+                ->with('users', User::where('group_age', '!=', 'none')->sortable()->get());
 //            return view('pages.users.index')->with('users', User::sortable()->paginate(20));
         }
 
@@ -69,9 +70,9 @@ class UserController extends Controller
             }
 
             $user = new User(array(
-                'first_name' => $validatedData['first_name'],
-                'middle_name' => $request->input('middle_name'),
-                'last_name' => $validatedData['last_name'],
+                'first_name' => ucfirst($validatedData['first_name']),
+                'middle_name' => ucfirst($request->input('middle_name')),
+                'last_name' => ucfirst($validatedData['last_name']),
                 'gender' => strtolower($validatedData['gender']),
                 'age' => $validatedData['age'],
                 'group_age' => strtolower($validatedData['group_age']),
@@ -161,9 +162,9 @@ class UserController extends Controller
             }
 
             $user = User::find($id);
-            $user->first_name = $validatedData['first_name'];
-            $user->middle_name = $request->input('middle_name');
-            $user->last_name = $validatedData['last_name'];
+            $user->first_name = ucfirst($validatedData['first_name']);
+            $user->middle_name = ucfirst($request->input('middle_name'));
+            $user->last_name = ucfirst($validatedData['last_name']);
             $user->gender = strtolower($validatedData['gender']);
             $user->age = $validatedData['age'];
             $user->group_age = strtolower($validatedData['group_age']);
@@ -208,7 +209,7 @@ class UserController extends Controller
             return redirect('/users')->with("success","Deleted User Successfully !");
         }
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to update that user.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to delete that user.');
     }
 
     private function isDeptHeadOrAdminOrMaster() {
@@ -219,7 +220,7 @@ class UserController extends Controller
         if ($this->isDeptHeadOrAdminOrMaster())
             return view('pages.users.changepassword')->with('user', User::find($request->get('id')));
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to change someone\'s password.');
     }
 
     public function changePassword(Request $request){
@@ -235,7 +236,7 @@ class UserController extends Controller
             return redirect('/users/' . $user->id)->with("success", "User's Password changed successfully !");
         }
 
-        return redirect('/my-profile')->with('error', 'You don\'t have the privilege.');
+        return redirect('/my-profile')->with('error', 'You don\'t have the privilege to change someone\'s password.');
     }
 
 }

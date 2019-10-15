@@ -61,7 +61,7 @@
                             </p>
                         </div>
 
-                        @if($user->id == Auth::id() || Auth::user()->type == 'admin')
+                        @if($user->id == Auth::id() || Auth::user()->type == 'admin' || Auth::user()->type == 'master')
                             <div class="buttons-holder mt-4">
                                 <a href="/my-profile/edit" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
                                 <a href="/my-profile/change-password" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>

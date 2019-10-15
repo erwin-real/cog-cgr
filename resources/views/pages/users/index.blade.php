@@ -30,6 +30,7 @@
                             <a href="/users/create" class="btn btn-outline-primary"><i class="fa fa-user-plus"></i> Create</a>
                             <a href="/guides/users" class="btn btn-outline-info"><i class="fa fa-question"></i> Guide</a>
                         </div>
+                        <h6>Total : {{count($users)}}</h6>
                         <div class="market-status-table mt-4">
                             @if ((count($users) - 1) == 0)
                                 <p> There are no users yet.</p>

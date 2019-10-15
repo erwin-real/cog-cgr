@@ -25,7 +25,8 @@ class GroupController extends Controller
 
     public function create() {
         if ($this->isAdminOrMaster())
-            return view('pages.groups.create')->with('users', User::all());
+            return view('pages.department.create')->with('users', User::whereNull('cg_id')->get());
+//            return view('pages.groups.create')->with('users', User::all());
 
         return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to create care groups.');
     }
@@ -111,7 +112,8 @@ class GroupController extends Controller
         if ($this->isAdminOrMaster())
             return view('pages.groups.edit')
                 ->with('group', Group::find($id))
-                ->with('users', User::all());
+                ->with('users', User::whereNull('cg_id')->get()->merge(Group::find($id)->members));
+//                ->with('users', User::all());
 
         return redirect('/my-care-group')->with('error', 'You don\'t have the privilege to update that care group.');
     }

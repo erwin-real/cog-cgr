@@ -74,7 +74,7 @@
                         <div class="buttons-holder mt-4">
                             <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
 
-                            @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head')
+                            @if((Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head') && $user->type != 'member')
                                 <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
                             @endif
 
@@ -89,6 +89,11 @@
                 </div>
             </div>
         </div>
+
+        @if($user->type == 'cluster head')
+            @include('pages.users.cluster')
+        @endif
+
     </div>
 
 

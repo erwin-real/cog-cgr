@@ -21,7 +21,10 @@ class DepartmentController extends Controller
 
     public function create() {
         if($this->isLeaderAndDeptHead())
-            return view('pages.department.create')->with('users', User::all());
+            return view('pages.department.create')
+                ->with('leaders', User::where('is_leader', true)->get())
+                ->with('users', User::whereNull('cg_id')->get());
+//            return view('pages.department.create')->with('users', User::all());
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to create a care group.');
     }
@@ -105,7 +108,9 @@ class DepartmentController extends Controller
         if($this->isLeaderAndDeptHead())
             return view('pages.department.edit')
                 ->with('group', Group::find($id))
-                ->with('users', User::all());
+                ->with('leaders', User::where('is_leader', true)->get())
+                ->with('users', User::whereNull('cg_id')->get()->merge(Group::find($id)->members));
+//                ->with('users', User::all());
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to update that care group.');
     }
@@ -184,8 +189,17 @@ class DepartmentController extends Controller
     }
 
     public function destroy($id) {
-        if($this->isLeaderAndDeptHead())
-            return view('pages.department.index')->with('groups', Auth::user()->departmentGroups);
+        if($this->isLeaderAndDeptHead()) {
+            $group = Group::find($id);
+
+            foreach ($group->members as $member) {
+                $member->cg_id = null;
+                $member->save();
+            }
+
+            $group->delete();
+            return redirect('/department')->with('success', 'Deleted care group successfully.');
+        }
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to see delete that care group.');
     }
