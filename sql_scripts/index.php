@@ -9,7 +9,7 @@ $dbname = "cogclark_cgr";
 # MySQL with PDO_MYSQL
 $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-$query = file_get_contents("test.sql");
+$query = file_get_contents("temp.sql");
 
 $stmt = $db->prepare($query);
 

@@ -69,9 +69,9 @@ class UserController extends Controller
             }
 
             $user = new User(array(
-                'first_name' => ucfirst($validatedData['first_name']),
-                'middle_name' => ucfirst($request->input('middle_name')),
-                'last_name' => ucfirst($validatedData['last_name']),
+                'first_name' => ucfirst(strtolower($validatedData['first_name'])),
+                'middle_name' => ucfirst(strtolower($request->input('middle_name'))),
+                'last_name' => ucfirst(strtolower($validatedData['last_name'])),
                 'gender' => strtolower($validatedData['gender']),
                 'group_age' => strtolower($validatedData['group_age']),
                 'address' => $validatedData['address'],
@@ -161,9 +161,9 @@ class UserController extends Controller
             }
 
             $user = User::find($id);
-            $user->first_name = ucfirst($validatedData['first_name']);
-            $user->middle_name = ucfirst($request->input('middle_name'));
-            $user->last_name = ucfirst($validatedData['last_name']);
+            $user->first_name = ucfirst(strtolower($validatedData['first_name']));
+            $user->middle_name = ucfirst(strtolower($request->input('middle_name')));
+            $user->last_name = ucfirst(strtolower($validatedData['last_name']));
             $user->gender = strtolower($validatedData['gender']);
             $user->group_age = strtolower($validatedData['group_age']);
             $user->address = $validatedData['address'];

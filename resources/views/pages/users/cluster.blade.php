@@ -18,7 +18,6 @@
                                     <th>Day</th>
                                     <th>Time</th>
                                     <th>Venue</th>
-                                    <th>Cluster Area</th>
                                     <th>Date Added</th>
                                     <th>Date Modified</th>
                                 </tr>
@@ -38,7 +37,6 @@
                                         <td>{{$group->day_cg}}</td>
                                         <td>{{ date('h:i A', strtotime($group->time_cg)) }}</td>
                                         <td>{{ucfirst($group->venue)}}</td>
-                                        <td>{{ucfirst($group->cluster_area)}}</td>
                                         <td>{{ date('D M d, Y h:i a', strtotime($group->created_at)) }}</td>
                                         <td>{{ date('D M d, Y h:i a', strtotime($group->updated_at)) }}</td>
                                     </tr>
