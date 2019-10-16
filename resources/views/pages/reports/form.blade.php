@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <textarea id="comment" type="text" rows="10"
                           class="form-control{{ $errors->has('comment') ? ' is-invalid' : '' }}"
-                          name="comment" required autofocus></textarea>
+                          name="comment" autofocus></textarea>
 
                 @if ($errors->has('comment'))
                     <span class="invalid-feedback" role="alert">

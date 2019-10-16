@@ -86,11 +86,9 @@ class MyReportController extends Controller
         }
 
         $absent = '';
-        for ($i = 0; $i < count($membersID); $i++) {
-            if (isset($membersID[$i])) {
-                $absent .= $membersID[$i];
-                if (($i+1) < count($membersID)) $absent .= ',';
-            }
+        foreach ($membersID as $item) {
+            $absent .= $item;
+            if (next($membersID)) $absent .= ',';
         }
 
         $report->absent = strlen($absent) > 0 ? $absent : null;
@@ -174,11 +172,9 @@ class MyReportController extends Controller
         }
 
         $absent = '';
-        for ($i = 0; $i < count($membersID); $i++) {
-            if (isset($membersID[$i])) {
-                $absent .= $membersID[$i];
-                if (($i+1) < count($membersID)) $absent .= ',';
-            }
+        foreach ($membersID as $item) {
+            $absent .= $item;
+            if (next($membersID)) $absent .= ',';
         }
 
         $report->absent = strlen($absent) > 0 ? $absent : null;

@@ -104,7 +104,7 @@
                             <p class="font-weight-bold">Consolidation Report:</p><br>
                             <p class="ml-5">
                                 @php
-                                    echo nl2br($report->consolidation_report)
+                                    echo $report->consolidation_report ? nl2br($report->consolidation_report) : 'none';
                                 @endphp
                             </p>
                         </div>
@@ -123,7 +123,7 @@
                                             <strong>Remarks:</strong>
                                             <p class="ml-2">
                                                 @php
-                                                    echo nl2br($report->comment_ch)
+                                                    echo $report->comment_ch ? nl2br($report->comment_ch) : 'none';
                                                 @endphp
                                             </p>
                                         <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_ch)) }}</p>
@@ -134,7 +134,7 @@
                                         <strong>Remarks:</strong>
                                         <p class="ml-2">
                                             @php
-                                                echo nl2br($report->comment_dh)
+                                                echo $report->comment_dh ? nl2br($report->comment_dh) : 'none';
                                             @endphp
                                         </p>
                                         <p> <strong>Date Verified</strong>: {{ date('D M d, Y h:i a', strtotime($report->date_verified_dh)) }}</p>

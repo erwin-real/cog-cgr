@@ -61,7 +61,7 @@
                                                         <td>{{ucfirst($report->group->department)}}</td>
                                                         <td>{{$report->type == 'cg' ? 'Care Group' : 'C2S'}}</td>
                                                         <td>{{count(explode(",", $report->present))}}</td>
-                                                        <td>{{count(explode(",", $report->absent))}}</td>
+                                                        <td>{{$report->absent ? count(explode(",", $report->absent)) : '0'}}</td>
                                                         <td>{{ date('D M d, Y h:i a', strtotime($report->date_submitted)) }}</td>
                                                         <td>
                                                             @if($report->deleted_at)
