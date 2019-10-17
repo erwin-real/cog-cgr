@@ -23,7 +23,7 @@ class CreateReportsTable extends Migration
             $table->string('venue')->nullable();
             $table->string('cluster_area');
             $table->string('topic');
-            $table->double('offering', 15, 4)->nullable();
+            $table->double('offering', 15, 2)->nullable();
             $table->string('present');
             $table->string('absent')->nullable();
             $table->text('consolidation_report')->nullable();
