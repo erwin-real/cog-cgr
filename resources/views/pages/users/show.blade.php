@@ -5,12 +5,22 @@
         <div class="row align-items-center">
             <div class="col-sm-6">
                 <div class="breadcrumbs-area clearfix">
-                    <h4 class="page-title pull-left">{{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}</h4>
+                    <h4 class="page-title pull-left">
+                        @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head')
+                            {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                        @else
+                            My Profile
+                        @endif
+                    </h4>
                     <ul class="breadcrumbs pull-left">
                         <li>
-                            <a href="/users">
-                                {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
-                            </a>
+                            @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head')
+                                <a href="/users">
+                                    {{(Auth::user()->type == 'department head') ? ucfirst(Auth::user()->head_department) : 'Users'}}
+                                </a>
+                            @else
+                                <a href="/my-profile">My Profile</a>
+                            @endif
                         </li>
                         <li><span>{{$user->first_name}} {{$user->last_name}}</span></li>
                     </ul>
@@ -67,19 +77,23 @@
                                 @endif
                             </p>
 
-                            <p> <strong>Username</strong>: {{ $user->username ? $user->username : ''}}</p>
+                            @if($user->type != 'member')
+                                <p> <strong>Username</strong>: {{ $user->username ? $user->username : ''}}</p>
+                            @endif
                             <p> <strong>Date Created</strong>: {{ date('D M d, Y h:i a', strtotime($user->created_at)) }}</p>
                             <p> <strong>Date Updated</strong>: {{ date('D M d, Y h:i a', strtotime($user->updated_at)) }}</p>
                         </div>
-                        @if((Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head') && $user->type != 'member')
+                        @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head' || Auth::id() == $user->leader_id)
                             <div class="buttons-holder mt-4">
                                 <a href="{{ action('UserController@edit', $user->id) }}" class="btn btn-outline-primary float-left mr-2"><i class="fa fa-pencil"></i> Edit</a>
                                 <a href="/users/change-password?id={{$user->id}}" class="btn btn-outline-warning float-left mr-2"><i class="fa fa-lock"></i> Change Password</a>
 
-                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
-                                    <i class="fa fa-trash fa-sm fa-fw"></i>
-                                    Delete
-                                </button>
+                                @if(Auth::user()->type == 'master' || Auth::user()->type == 'admin' || Auth::user()->type == 'department head')
+                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delUserModal">
+                                        <i class="fa fa-trash fa-sm fa-fw"></i>
+                                        Delete
+                                    </button>
+                                @endif
 
                             </div>
                         @endif

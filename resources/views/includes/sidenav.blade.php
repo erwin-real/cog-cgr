@@ -76,7 +76,8 @@
                         </li>
                     @endif
 
-                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') || request()->is('guides/my-profile') ? 'active border-left-info' : '' }}">
+                    <li class="{{ request()->is('my-profile') || request()->is('my-profile/*') || request()->is('guides/my-profile') ||
+                    (request()->is('users/*') && (Auth::user()->type == 'cluster head' || Auth::user()->type == 'leader')) ? 'active border-left-info' : '' }}">
                         <a href="/my-profile"><i class="fa fa-user"></i> <span>My Profile</span></a>
                     </li>
                     {{--@if(Auth::user()->type == 'admin' || Auth::user()->type == 'master')--}}

@@ -124,14 +124,16 @@ class UserController extends Controller
     }
 
     public function edit($id) {
-        if ($this->isDeptHeadOrAdminOrMaster())
-            return view('pages.users.edit')->with('user', User::find($id));
+        $user = User::find($id);
+        if ($this->isDeptHeadOrAdminOrMaster() || $user->leader_id == Auth::id())
+            return view('pages.users.edit')->with('user', $user);
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to update that user.');
     }
 
     public function update(Request $request, $id) {
-        if ($this->isDeptHeadOrAdminOrMaster()) {
+        $user = User::find($id);
+        if ($this->isDeptHeadOrAdminOrMaster() || $user->leader_id == Auth::id()) {
 
             $validatedData = $request->validate([
                 'first_name' => 'required',
@@ -160,7 +162,6 @@ class UserController extends Controller
                     return redirect()->back()->withErrors($username)->withInput();
             }
 
-            $user = User::find($id);
             $user->first_name = ucfirst(strtolower($validatedData['first_name']));
             $user->middle_name = ucfirst(strtolower($request->input('middle_name')));
             $user->last_name = ucfirst(strtolower($validatedData['last_name']));
@@ -210,10 +211,6 @@ class UserController extends Controller
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to delete that user.');
     }
 
-    private function isDeptHeadOrAdminOrMaster() {
-        return (Auth::user()->type == 'admin' || Auth::user()->type == 'master' || Auth::user()->type == 'department head') ? true : false;
-    }
-
     public function showChangePasswordForm(Request $request){
         if ($this->isDeptHeadOrAdminOrMaster())
             return view('pages.users.changepassword')->with('user', User::find($request->get('id')));
@@ -235,6 +232,10 @@ class UserController extends Controller
         }
 
         return redirect('/my-profile')->with('error', 'You don\'t have the privilege to change someone\'s password.');
+    }
+
+    private function isDeptHeadOrAdminOrMaster() {
+        return (Auth::user()->type == 'admin' || Auth::user()->type == 'master' || Auth::user()->type == 'department head') ? true : false;
     }
 
 }
